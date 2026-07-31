@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.firebase/
+.env
+*.log
+*.tsbuildinfo
+files.zip
+test/sim/lib/
+test/ui/build/

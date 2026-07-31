@@ -1,0 +1,11 @@
+{
+  "name": "ممنوع",
+  "short_name": "ممنوع",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#241638",
+  "theme_color": "#241638",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": []
+}
