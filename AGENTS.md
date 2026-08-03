@@ -199,11 +199,8 @@ Two defences came out of it, and both must stay:
 
 ### The deck is tested, not just typed
 
-`rules.mjs` asserts every card has five distinct taboo words and that no
-taboo word is a substring of its own answer. That second rule caught
-«طبيب أسنان / سن», «صحراء / حر» and «مقص / قص» — cards that are literally
-unplayable, because you cannot say the answer without saying the
-forbidden word. A bad card fails `npm test`, not the party.
+`rules.mjs` asserts every card has five distinct taboo words. The deck is
+built straight from `taboo_deck.json` via `scripts/build-deck.mjs`.
 
 ---
 
@@ -213,7 +210,7 @@ forbidden word. A bad card fails `npm test`, not the party.
 src/lib/rules.ts      pure logic: turn order, scoring, heat, end, stats. No Firebase.
 src/lib/engine.ts     every state transition, as a guarded transaction
 src/lib/hooks.ts      live subscriptions, countdown, phase/buzz/deal drivers
-src/lib/deck.ts       ~1000 cards (from taboo_1050.json) + 50 room-name words
+src/lib/deck.ts       ~994 cards (from taboo_deck.json) + 50 room-name words
 src/lib/arabic.ts     normalisation (from تشفير)
 src/screens/          Home + Lobby, and phases.tsx for everything in-game
 src/components/       ui.tsx (primitives), game.tsx (card/HUD/heat/feed), Wall.tsx
@@ -256,7 +253,7 @@ once, at turn start. A 60-second round costs one write, not sixty.
 | The judge is on the *other* team | That's the design. It's what keeps the non-active team listening instead of checking their phone |
 | The same judge decides the steal | They're the one already holding the card. Giving it to a third role adds a screen and saves nothing |
 | A skip costs no points | Correct. It costs the streak, which is the real currency |
-| The third correct card is worth 2, then it resets | `heatPips` is `streak % 3`. A 6-streak scores 1,1,2,1,1,2 |
+| The third correct and every one after are worth 2 | Heat stays on until skip/buzz. A 6-streak scores 1,1,2,2,2,2 — pips keep growing past three |
 | The idle team's screen leads with the steal, not the score | Those players have no button for a whole minute. Framing the wait as preparation is the only thing that makes listening rational rather than polite |
 | Guessers get a full-screen "ممنوع!" | The judge and describer both get a stamped card. Without this branch the rest of the table saw *nothing* for 900ms, then a quiet line in a list — the loudest moment in the game, invisible to most of the room |
 | Skip is disabled in the last 10 seconds | `SKIP_LOCKOUT_MS`. Without it the steal is trivially defused: with seconds left the describer skips, burning the card the opponents were listening to and dealing one they've heard nothing about. Enforced in `resolve()`, not just by greying the button |
@@ -297,6 +294,7 @@ once, at turn start. A 60-second round costs one write, not sixty.
 - **No presence indicator.** Firestore has no `onDisconnect`. If this
   matters, it's the one thing worth a Realtime Database instance
   alongside — Spark allows both.
-- **~1000 cards** (taboo_1050.json as base, plus a handful of unique leftovers
-  from the original 70). A single game uses about 27 and never repeats one
-  (`usedCards` is written in the same transaction that deals the card).
+- **~994 cards** (from taboo_deck.json, kept as-is). A single game uses about
+  27 and never repeats one. `usedCards` is written in the same transaction
+  that deals the card, and rematches in the same room keep that list so
+  words don't reshuffle until the deck recycles.

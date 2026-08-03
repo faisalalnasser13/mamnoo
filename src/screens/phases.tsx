@@ -75,7 +75,9 @@ export function LivePhase({ room, uid, card }: Ctx) {
           : <CardSkeleton note="جاري السحب…" />}
 
         <Heat streak={room.round.streak}
-          note={buzzed ? "💧 انطفأ الحماس" : room.round.streak % 3 === 2 ? "🔥 القادمة بنقطتين" : undefined} />
+          note={buzzed ? "💧 انطفأ الحماس"
+            : room.round.streak >= 2 ? "🔥 القادمة بنقطتين"
+            : undefined} />
 
         <RunLine red={buzzed}>
           {buzzed ? "−1 · البطاقة محروقة" : `+${room.round.points} هذه الجولة · ${gapText}`}

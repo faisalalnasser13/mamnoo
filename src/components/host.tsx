@@ -191,7 +191,11 @@ export function HostControls({ room }: { room: Room }) {
   const run = (action: HostAction) => {
     setErr(null);
     api.hostControl({ roomId: room.id, action })
-      .then(() => setOpen(false))
+      .then(() => {
+        // Keep the menu open for score taps so the host can correct
+        // more than once without reopening.
+        if (action !== "plusGuess" && action !== "minusGuess") setOpen(false);
+      })
       .catch((e) => setErr(errText(e)));
   };
 

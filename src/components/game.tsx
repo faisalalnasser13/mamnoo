@@ -102,12 +102,17 @@ export function Hud({
 
 /* ------------------------------------------------------------------ */
 
-/** Three pips. The third correct card in a row is worth two. */
+/**
+ * Heat pips under the card. Three empty slots to start; once the 3rd
+ * correct lands, an empty next slot is always waiting — so at 3 you see
+ * ●●●○, at 4 ●●●●○, and so on.
+ */
 export function Heat({ streak, note }: { streak: number; note?: string }) {
   const on = heatPips(streak);
+  const slots = Math.max(HEAT_EVERY, on + 1);
   return (
-    <div className="mt-3.5 flex items-center justify-center gap-2">
-      {Array.from({ length: HEAT_EVERY }, (_, i) => (
+    <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2">
+      {Array.from({ length: slots }, (_, i) => (
         <i
           key={i}
           className="h-3 w-3 rounded-full"
@@ -144,6 +149,8 @@ const OUTCOME: Record<LogEntry["res"], { sym: string; cls: string; label: (p: nu
   buzz:  { sym: "✕", cls: "bg-chili text-white",    label: () => "ممنوع −1" },
   skip:  { sym: "↷", cls: "bg-white/15 text-muted", label: () => "تخطي" },
   steal: { sym: "⚡", cls: "bg-chili text-white",    label: () => "سرقة +1" },
+  // Word is already "host +1" / "host −1"; no trailing label.
+  host:  { sym: "★", cls: "bg-tang text-[#241638]", label: () => "" },
 };
 
 /**

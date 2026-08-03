@@ -317,13 +317,15 @@ async function startGame({ roomId }: { roomId: string }) {
     const turn = rolesForTurn(room.players, 0);
     if (!turn) throw new GameError("failed-precondition", "كل فريق يحتاج لاعبًا واحدًا على الأقل.");
 
+    // Keep usedCards across rematches in the same room so the table
+    // doesn't see the same words again until the deck recycles.
     tx.update(roomRef(roomId), {
       phase: "transition" as Phase,
       turnIndex: 0,
       turn,
       scores: { mint: 0, chili: 0 },
       round: emptyRound(),
-      usedCards: [],
+      usedCards: room.usedCards ?? [],
       winner: null,
       endReason: null,
       phaseStartedAt: Date.now(),
@@ -763,13 +765,37 @@ async function hostControl({
     }
 
     if (action === "plusGuess" || action === "minusGuess") {
+      if (room.phase !== "live" && room.phase !== "steal" && room.phase !== "recap") return;
       const team = guessingTeamOf(room);
-      if (!team) return;
+      if (!team || !room.turn) return;
       const delta = action === "plusGuess" ? 1 : -1;
-      tx.update(roomRef(roomId), {
+      const entry = {
+        w: delta > 0 ? "host +1" : "host −1",
+        res: "host" as Outcome,
+        pts: delta,
+        t: Math.max(0, t - room.phaseStartedAt),
+      };
+      const newLog = [...(room.round.log ?? []), entry];
+      const patch: Record<string, unknown> = {
         [`scores.${team}`]: applyPoints(room.scores[team], delta),
+        "round.log": newLog,
         updatedAt: t,
-      });
+      };
+      // Keep the recap big number in sync when the host corrects the
+      // describing team of this turn.
+      if (team === room.turn.team) {
+        patch["round.points"] = room.round.points + delta;
+      }
+      tx.update(roomRef(roomId), patch);
+      // Recap already froze a rounds/* record — rewrite its log too so
+      // the feed and end-game stats agree on every phone.
+      if (room.phase === "recap") {
+        const roundPatch: Record<string, unknown> = { log: newLog };
+        if (team === room.turn.team) {
+          roundPatch.points = room.round.points + delta;
+        }
+        tx.update(roundRef(roomId, room.turnIndex), roundPatch);
+      }
       return;
     }
 
@@ -804,13 +830,15 @@ async function rematch({ roomId }: { roomId: string }) {
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
     if (room.phase === "lobby") return;
+    // Preserve usedCards — rematches in this room keep drawing fresh
+    // words until drawFrom recycles the whole deck.
     tx.update(roomRef(roomId), {
       phase: "lobby" as Phase,
       turnIndex: 0,
       turn: null,
       scores: { mint: 0, chili: 0 },
       round: emptyRound(),
-      usedCards: [],
+      usedCards: room.usedCards ?? [],
       winner: null,
       endReason: null,
       phaseStartedAt: Date.now(),

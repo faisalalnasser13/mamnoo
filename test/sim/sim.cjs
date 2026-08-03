@@ -251,7 +251,8 @@ async function playOneGame(n) {
 
   // No word may repeat inside one game. usedCards is written in the same
   // transaction that deals the card, so two devices racing to deal cannot
-  // both win — and startGame/rematch clear it, so a new game starts fresh.
+  // both win. Rematches keep the list so a room doesn't reshuffle until
+  // the deck is exhausted.
   const used = room.usedCards ?? [];
   invariant("a card repeated inside one game",
     used.length === new Set(used).size, `${used.length} used`);

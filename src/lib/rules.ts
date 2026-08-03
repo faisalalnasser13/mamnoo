@@ -16,7 +16,7 @@ export const OTHER: Record<TeamId, TeamId> = { mint: "chili", chili: "mint" };
 export const TARGET_SCORE = 21;
 /** Skips per turn. Free — the cost is that a skip kills the streak. */
 export const SKIPS_PER_TURN = 3;
-/** Every Nth consecutive correct card is worth double. */
+/** From this streak length onward, every correct card is worth double. */
 export const HEAT_EVERY = 3;
 /** The opposing team's window after time runs out mid-card. */
 export const STEAL_MS = 10_000;
@@ -164,9 +164,10 @@ export interface Resolution {
 /**
  * What one card outcome does to the round.
  *
- * `ok` grows the streak and every third card is worth 2. Anything else
- * resets it — that's the whole tension of the skip button: it's free in
- * points and expensive in momentum.
+ * `ok` grows the streak. The 3rd correct and every one after it are
+ * worth 2 — heat stays on until a skip or buzz kills it. That's the
+ * whole tension of the skip button: free in points, expensive in
+ * momentum.
  */
 export function resolveCard(
   res: Outcome,
@@ -175,7 +176,7 @@ export function resolveCard(
 ): Resolution {
   if (res === "ok") {
     const next = streak + 1;
-    return { streak: next, pts: next % HEAT_EVERY === 0 ? 2 : 1, skipsLeft };
+    return { streak: next, pts: next >= HEAT_EVERY ? 2 : 1, skipsLeft };
   }
   if (res === "skip") {
     return { streak: 0, pts: 0, skipsLeft: Math.max(0, skipsLeft - 1) };
@@ -222,7 +223,8 @@ export function liveStartPad(
 }
 
 /** Filled pips under the card: 0, 1 or 2. Three would have already scored. */
-export const heatPips = (streak: number) => streak % HEAT_EVERY;
+/** Lit heat slots — grows with the streak; UI keeps at least three. */
+export const heatPips = (streak: number) => Math.max(0, streak);
 
 /** Team totals can go negative — a buzz at 0 is −1, not a free pass. */
 export const applyPoints = (score: number, pts: number) => score + pts;
@@ -287,11 +289,12 @@ export function computeStats(rounds: RoundRecord[]): Stats {
         talked[rd.clueGiverUid] = (talked[rd.clueGiverUid] ?? 0) + 1;
         run += 1;
         if (!streak || run > streak.n) streak = { uid: rd.clueGiverUid, n: run };
-      } else {
+      } else if (e.res !== "host") {
         run = 0;
       }
       if (e.res === "buzz") buzzed[rd.judgeUid] = (buzzed[rd.judgeUid] ?? 0) + 1;
-      if (e.res !== "steal") {
+      // Steal/host have no card on the table — skip time-on-table.
+      if (e.res !== "steal" && e.res !== "host") {
         const ms = e.t - prevT;
         // Under a second is a double-tap, not a struggle.
         if (ms >= 1000 && (!longest || ms > longest.ms)) longest = { word: e.w, ms };
