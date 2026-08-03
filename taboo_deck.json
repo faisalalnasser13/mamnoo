@@ -8555,7 +8555,7 @@
  },
  {
   "id": 612,
-  "word": "فأر",
+  "word": "فأر (حيوان)",
   "category": "طبيعة وحيوانات",
   "style": "msa",
   "difficulty": "easy",
@@ -9255,7 +9255,7 @@
  },
  {
   "id": 662,
-  "word": "هلال",
+  "word": "هلال (قمر)",
   "category": "طبيعة وحيوانات",
   "style": "msa",
   "difficulty": "easy",
@@ -11046,7 +11046,7 @@
   "id": 789
  },
  {
-  "word": "الهلال",
+  "word": "الهلال (نادي)",
   "category": "رياضة وألعاب",
   "style": "saudi",
   "difficulty": "easy",
@@ -13412,7 +13412,7 @@
   "id": 958
  },
  {
-  "word": "فار",
+  "word": "فار (VAR)",
   "category": "رياضة وألعاب",
   "style": "saudi",
   "difficulty": "easy",
