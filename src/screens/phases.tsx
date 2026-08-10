@@ -93,11 +93,11 @@ export function LivePhase({ room, uid, card }: Ctx) {
             صح ✓
           </Btn>
           <Btn variant="ghost"
-            disabled={buzzed || cardId === null || !canSkip(room.round.skipsLeft, remaining)}
+            disabled={buzzed || cardId === null || !canSkip(remaining)}
             onClick={() => cardId !== null && call(api.resolve({ roomId: room.id, res: "skip", fromCardId: cardId }))}>
             {locked
               ? `🔒 ما في تبديل في آخر ${SKIP_LOCKOUT_MS / 1000} ثوانٍ`
-              : `تخطي · بقي ${room.round.skipsLeft}`}
+              : <>تخطي <span className="text-chili">−0.5</span></>}
           </Btn>
         </div>
       </div>

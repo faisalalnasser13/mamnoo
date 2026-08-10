@@ -434,9 +434,6 @@ async function resolve({
       throw new GameError("permission-denied", "الشارح فقط يحسم البطاقة.");
     }
     if (res === "skip") {
-      if (room.round.skipsLeft <= 0) {
-        throw new GameError("failed-precondition", "ما بقي تخطي.");
-      }
       // The button is disabled during the lockout, but a stale render or
       // a queued tap must not slip through — this is the rule that keeps
       // the steal winnable, so it's enforced here too.

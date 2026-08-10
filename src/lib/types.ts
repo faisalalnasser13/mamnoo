@@ -41,8 +41,9 @@ export interface RoundState {
   cardId: number | null;
   /** When the current card was dealt — the steal eligibility clock. */
   cardAt: number | null;
+  /** Legacy seed; skips are unlimited — kept so old rooms normalize cleanly. */
   skipsLeft: number;
-  /** Consecutive correct. Every third is worth 2. Reset by skip or buzz. */
+  /** Consecutive correct. From the 3rd onward worth 2. Reset by skip or buzz. */
   streak: number;
   points: number;
   /** Set by the judge; the clue-giver's device turns it into a resolution. */

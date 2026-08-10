@@ -130,7 +130,7 @@ async function playOneGame(n) {
         invariant("a double-buzz scored twice",
           before[room.turn.team] - after.scores[room.turn.team] <= 1,
           `turn ${room.turnIndex}`);
-      } else if (roll < 0.24 && room.round.skipsLeft > 0) {
+      } else if (roll < 0.24) {
         const left = (room.phaseEndsAt ?? 0) - Date.now();
         as(giver);
         let refused = false;

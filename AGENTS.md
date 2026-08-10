@@ -252,7 +252,7 @@ once, at turn start. A 60-second round costs one write, not sixty.
 |---|---|
 | The judge is on the *other* team | That's the design. It's what keeps the non-active team listening instead of checking their phone |
 | The same judge decides the steal | They're the one already holding the card. Giving it to a third role adds a screen and saves nothing |
-| A skip costs no points | Correct. It costs the streak, which is the real currency |
+| A skip costs −0.5 and is unlimited | Correct. It also kills the streak; only the last 10s lock it |
 | The third correct and every one after are worth 2 | Heat stays on until skip/buzz. A 6-streak scores 1,1,2,2,2,2 — pips keep growing past three |
 | The idle team's screen leads with the steal, not the score | Those players have no button for a whole minute. Framing the wait as preparation is the only thing that makes listening rational rather than polite |
 | Guessers get a full-screen "ممنوع!" | The judge and describer both get a stamped card. Without this branch the rest of the table saw *nothing* for 900ms, then a quiet line in a list — the loudest moment in the game, invisible to most of the room |

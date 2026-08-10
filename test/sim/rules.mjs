@@ -48,9 +48,8 @@ for (const c of DECK) {
 }
 
 eq("a skip kills the streak", R.resolveCard("skip", 2, 3).streak, 0);
-eq("a skip spends a skip", R.resolveCard("skip", 2, 3).skipsLeft, 2);
-eq("a skip never scores", R.resolveCard("skip", 2, 3).pts, 0);
-eq("skips floor at zero", R.resolveCard("skip", 0, 0).skipsLeft, 0);
+eq("a skip does not spend a limited skip", R.resolveCard("skip", 2, 3).skipsLeft, 3);
+eq("a skip costs half a point", R.resolveCard("skip", 2, 3).pts, -0.5);
 eq("a buzz costs a point", R.resolveCard("buzz", 2, 3).pts, -1);
 eq("a buzz kills the streak", R.resolveCard("buzz", 2, 3).streak, 0);
 
@@ -148,11 +147,10 @@ eq("a level score is a draw", R.winnerOf({ mint: 4, chili: 4 }), "draw");
 
 /* ---------------- skip lockout & steal eligibility ---------------- */
 
-ok("skip is available early in a turn", R.canSkip(3, 40000));
-ok("skip is locked in the final stretch", !R.canSkip(3, 9000));
-ok("skip is locked exactly at the boundary", !R.canSkip(3, R.SKIP_LOCKOUT_MS));
-ok("no skips left means no skip, lockout or not", !R.canSkip(0, 40000));
-ok("a null clock (paused) does not lock skip", R.canSkip(3, null));
+ok("skip is available early in a turn", R.canSkip(40000));
+ok("skip is locked in the final stretch", !R.canSkip(9000));
+ok("skip is locked exactly at the boundary", !R.canSkip(R.SKIP_LOCKOUT_MS));
+ok("a null clock (paused) does not lock skip", R.canSkip(null));
 
 ok("lockout is off early", !R.inLockout(40000));
 ok("lockout is on late", R.inLockout(4000));

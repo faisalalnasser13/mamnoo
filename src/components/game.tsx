@@ -147,7 +147,7 @@ export function RunLine({ children, red }: { children: React.ReactNode; red?: bo
 const OUTCOME: Record<LogEntry["res"], { sym: string; cls: string; label: (p: number) => string }> = {
   ok:    { sym: "✓", cls: "bg-mint text-[#10322D]", label: (p) => (p === 2 ? "+2 🔥" : "+1") },
   buzz:  { sym: "✕", cls: "bg-chili text-white",    label: () => "ممنوع −1" },
-  skip:  { sym: "↷", cls: "bg-white/15 text-muted", label: () => "تخطي" },
+  skip:  { sym: "↷", cls: "bg-white/15 text-muted", label: () => "تخطي −0.5" },
   steal: { sym: "⚡", cls: "bg-chili text-white",    label: () => "سرقة +1" },
   // Word is already "host +1" / "host −1"; no trailing label.
   host:  { sym: "★", cls: "bg-tang text-[#241638]", label: () => "" },

@@ -14,8 +14,13 @@ export const OTHER: Record<TeamId, TeamId> = { mint: "chili", chili: "mint" };
 
 /** First team to this ends the game, whatever the round count says. */
 export const TARGET_SCORE = 21;
-/** Skips per turn. Free — the cost is that a skip kills the streak. */
+/**
+ * Seed for the unused `skipsLeft` field on old rooms. Skips are unlimited;
+ * the cost is −0.5 and the streak.
+ */
 export const SKIPS_PER_TURN = 3;
+/** Points deducted for skipping a card. */
+export const SKIP_COST = -0.5;
 /** From this streak length onward, every correct card is worth double. */
 export const HEAT_EVERY = 3;
 /** The opposing team's window after time runs out mid-card. */
@@ -165,9 +170,8 @@ export interface Resolution {
  * What one card outcome does to the round.
  *
  * `ok` grows the streak. The 3rd correct and every one after it are
- * worth 2 — heat stays on until a skip or buzz kills it. That's the
- * whole tension of the skip button: free in points, expensive in
- * momentum.
+ * worth 2 — heat stays on until a skip or buzz kills it. Skip costs
+ * half a point and the streak; you can skip as often as you like.
  */
 export function resolveCard(
   res: Outcome,
@@ -179,15 +183,14 @@ export function resolveCard(
     return { streak: next, pts: next >= HEAT_EVERY ? 2 : 1, skipsLeft };
   }
   if (res === "skip") {
-    return { streak: 0, pts: 0, skipsLeft: Math.max(0, skipsLeft - 1) };
+    return { streak: 0, pts: SKIP_COST, skipsLeft };
   }
   if (res === "buzz") return { streak: 0, pts: -1, skipsLeft };
   return { streak: 0, pts: 1, skipsLeft }; // steal — credited to the other team
 }
 
-/** Skip is available until the lockout window opens. */
-export function canSkip(skipsLeft: number, remainingMs: number | null): boolean {
-  if (skipsLeft <= 0) return false;
+/** Skip is available until the lockout window opens. Unlimited otherwise. */
+export function canSkip(remainingMs: number | null): boolean {
   if (remainingMs === null) return true;
   return remainingMs > SKIP_LOCKOUT_MS;
 }
