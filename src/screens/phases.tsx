@@ -7,7 +7,7 @@ import {
 } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
 import { S, type Strings } from "../lib/strings";
-import { Avatar, Btn, Flash, Label, TEAM, Waiting, YouChip } from "../components/ui";
+import { Btn, Flash, Label, TEAM, Waiting, YouChip } from "../components/ui";
 import { HostControls, PausedBanner, ScoreBoard } from "../components/host";
 import { Card, CardSkeleton, Feed, Heat, Hud, RunLine } from "../components/game";
 
@@ -424,14 +424,20 @@ function Wheel({
     );
   };
 
+  /**
+   * One name, one role, one team emoji. The initial-in-a-circle avatar
+   * and the spelled-out team name were both saying what the emoji and
+   * the colour already say, on the one screen where the only question is
+   * who is up against whom.
+   */
   const Side = ({ t, role, who }: { t: TeamId; role: string; who: string }) => (
-    <div className="flex-1 rounded-[18px] bg-black/25 px-2 py-3 text-center">
-      <div className="mb-2 text-[10.5px] font-black tracking-[.16em]" style={{ color: TEAM[t].hex }}>
+    <div className="min-w-0 flex-1 text-center">
+      <div className="text-[10px] font-black tracking-[.16em]" style={{ color: TEAM[t].hex }}>
         {role}
       </div>
-      <div className="mx-auto mb-1.5 w-fit"><Avatar name={who} team={t} big /></div>
-      <div className="text-[16.5px] font-black">{who}</div>
-      <div className="mt-0.5 text-[11.5px] text-muted">{TEAM[t].emoji} {s.team[t]}</div>
+      <div className="mt-1.5 truncate font-display text-[21px] leading-tight">
+        <span className="me-1 text-[15px]">{TEAM[t].emoji}</span>{who}
+      </div>
     </div>
   );
 
@@ -442,12 +448,14 @@ function Wheel({
         <Ghost k={i - 1} />
       </div>
 
+      {/* One panel, not two: the duel is a single fact, and two boxes with
+          a word between them read as two separate cards to compare. */}
       <div
-        className="my-1.5 flex items-center gap-2.5 rounded-[22px] p-1.5"
+        className="my-2 flex items-center gap-2 rounded-[20px] bg-black/25 px-3 py-3.5"
         style={{ boxShadow: "0 0 0 2px rgba(255,216,77,.16)" }}
       >
         <Side t={turn.team} role={s.roleExplain} who={nameOf(room, turn.clueGiverUid)} />
-        <span className="font-display text-[21px] text-lemon">{s.vs}</span>
+        <span className="shrink-0 text-[22px] leading-none" role="img" aria-label={s.vs}>⚔️</span>
         <Side t={OTHER[turn.team]} role={s.roleJudge} who={nameOf(room, turn.judgeUid)} />
       </div>
 
