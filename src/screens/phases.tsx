@@ -80,8 +80,8 @@ export function LivePhase({ room, uid, card }: Ctx) {
 
     return (
       <div className="shell">
-        {team && <YouChip team={team} extra={s.chipExplain} />}
-        <div className="h-2.5" />
+        {team && <YouChip team={team} />}
+        <div className="h-1.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
         <div className="h-3.5" />
 
@@ -124,8 +124,8 @@ export function LivePhase({ room, uid, card }: Ctx) {
   if (role === "judge") {
     return (
       <div className="shell">
-        {team && <YouChip team={team} extra={s.chipJudge} />}
-        <div className="h-2.5" />
+        {team && <YouChip team={team} />}
+        <div className="h-1.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
         <div className="h-3.5" />
         {card
@@ -163,7 +163,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
     return (
       <div className="shell">
         {team && <YouChip team={team} />}
-        <div className="h-2.5" />
+        <div className="h-1.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
         <div className="flex-1" />
         <p className="text-center font-display text-[64px] leading-none text-chili">{s.floorBuzz}</p>
@@ -184,8 +184,8 @@ export function LivePhase({ room, uid, card }: Ctx) {
   if (mine) {
     return (
       <div className="shell">
-        {team && <YouChip team={team} extra={s.chipGuess} />}
-        <div className="h-2.5" />
+        {team && <YouChip team={team} />}
+        <div className="h-1.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
         <div className="h-5" />
         <Label>{s.explainingNow}</Label>
@@ -214,8 +214,8 @@ export function LivePhase({ room, uid, card }: Ctx) {
      stand to take, not with what the opponents are scoring. */
   return (
     <div className="shell">
-      {team && <YouChip team={team} extra={s.chipListen} />}
-      <div className="h-2.5" />
+      {team && <YouChip team={team} />}
+      <div className="h-1.5" />
       <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
       <div className="h-5" />
       <Label>{s.theirTurn}</Label>
@@ -276,8 +276,8 @@ export function StealPhase({ room, uid }: Ctx) {
 
   return (
     <div className="shell">
-      {team && <YouChip team={team} extra={mine ? s.chipSteal : s.chipTurnOver} />}
-      <div className="h-2.5" />
+      {team && <YouChip team={team} />}
+      <div className="h-1.5" />
       <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
       <div className="h-5" />
       <Label>{s.timeUpOn(s.team[room.turn.team])}</Label>
@@ -321,8 +321,8 @@ export function RecapPhase({ room, uid, rounds }: Ctx) {
 
   return (
     <div className="shell">
-      {team && <YouChip team={team} extra={mine ? s.chipYourTurn : s.chipTheirTurn} />}
-      <div className="h-3" />
+      {team && <YouChip team={team} />}
+      <div className="h-1.5" />
       <Label>{s.recapExplained(nameOf(room, room.turn.clueGiverUid))}</Label>
       {/* Team colour regardless of sign — mint-for-plus / chili-for-minus
           made a chili +5 look like mint had scored, and a mint −1 like
@@ -493,12 +493,10 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
     : mineAt === room.turnIndex ? s.yourTurnNow
     : s.yourTurnAt(mineAt + 1);
 
-  const oursNext = team === room.turn.team;
-
   return (
     <div className="shell">
-      {team && <YouChip team={team} extra={oursNext ? s.ourTurn : s.theirTurnChip} />}
-      <div className="h-3" />
+      {team && <YouChip team={team} />}
+      <div className="h-1.5" />
       <Label>
         {overtime
           ? s.overtimeRound(room.turnIndex + 1)

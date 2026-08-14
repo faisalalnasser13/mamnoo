@@ -301,8 +301,8 @@ export function Lobby({ room, uid }: { room: Room; uid: string }) {
 
   return (
     <div className="shell">
-      {me?.team && <YouChip team={me.team} extra={s.team[me.team]} />}
-      <div className="h-3" />
+      {me?.team && <YouChip team={me.team} />}
+      <div className="h-2" />
 
       <div className="rotate-[1deg] rounded-[20px] bg-tang px-3.5 py-3 text-center text-[#3A1D00] shadow-[0_6px_0_#CC6F1B]">
         <small className="text-[11px] font-black tracking-[.18em] opacity-75">{s.roomName}</small>

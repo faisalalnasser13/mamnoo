@@ -59,20 +59,16 @@ export function Btn({
 }
 
 /**
- * Which team am I on. The emoji carries it — spelling out "أنت في
- * النعناع" on every screen is a sentence nobody re-reads after the first
- * round, and the glow behind the whole screen already says it in colour.
- * `extra` is the only thing that actually changes turn to turn.
+ * Which team am I on: the emoji alone, no pill and no caption.
+ *
+ * The glow already paints the screen in that colour, and the extra line
+ * ("اشرح!", "دوركم") was a second heading competing with the one the
+ * phase actually needs. A 16px mark is enough to glance at.
  */
-export function YouChip({ team, extra }: { team: TeamId; extra?: string }) {
-  const t = TEAM[team];
+export function YouChip({ team }: { team: TeamId }) {
   return (
-    <div
-      className="mx-auto flex w-fit items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-black"
-      style={{ background: `${t.hex}29`, color: t.hex }}
-    >
-      <span className="text-[15px] leading-none">{t.emoji}</span>
-      {extra}
+    <div className="mx-auto leading-none" aria-hidden>
+      <span className="text-[16px] leading-none">{TEAM[team].emoji}</span>
     </div>
   );
 }
