@@ -495,9 +495,7 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
   return (
     <div className="shell">
       {team && <YouChip team={team} extra={oursNext ? s.ourTurn : s.theirTurnChip} />}
-      <div className="h-4" />
-      <Title>{s.nextRoundTitle}</Title>
-      <div className="h-2.5" />
+      <div className="h-3" />
       <Label>
         {overtime
           ? s.overtimeRound(room.turnIndex + 1)
@@ -514,6 +512,8 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
         ))}
       </div>
 
+      <div className="mt-4" />
+      <Title>{s.nextRoundTitle}</Title>
       <Wheel room={room} s={s} turn={room.turn} rounds={rounds} />
 
       <div className="mt-4" />
