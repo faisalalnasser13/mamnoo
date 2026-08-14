@@ -7,6 +7,16 @@ import { Tally } from "./ui";
 /* ------------------------------------------------------------------ */
 
 /**
+ * Step the word down instead of letting it wrap to three lines. The
+ * English deck has entries twice the length of a typical Arabic one.
+ */
+function wordSize(word: string, small?: boolean): number {
+  const n = word.length;
+  if (small) return n > 18 ? 22 : n > 12 ? 25 : 28;
+  return n > 18 ? 29 : n > 12 ? 35 : 42;
+}
+
+/**
  * The card. Everything else on screen is quiet so this can be loud.
  * `small` is the judge's variant — they need to read it, not perform it.
  */
@@ -30,7 +40,10 @@ export function Card({
           {kicker}
         </span>
       )}
-      <div className="card-word" style={{ fontSize: small ? 28 : 42, margin: small ? "6px 0 11px" : "9px 0 13px" }}>
+      <div
+        className="card-word"
+        style={{ fontSize: wordSize(word, small), margin: small ? "6px 0 11px" : "9px 0 13px" }}
+      >
         {word}
       </div>
       <div className="card-rule mb-3" />
@@ -45,10 +58,10 @@ export function Card({
 }
 
 /** Placeholder while the describer's device is dealing. */
-export function CardSkeleton({ note }: { note: string }) {
+export function CardSkeleton({ note, unknown }: { note: string; unknown?: string }) {
   return (
     <div className="card">
-      <div className="card-word" style={{ fontSize: 38, margin: "18px 0" }}>؟ ؟ ؟</div>
+      <div className="card-word" style={{ fontSize: 38, margin: "18px 0" }}>{unknown ?? "؟ ؟ ؟"}</div>
       <p className="text-[13px] font-bold text-[#8a7f6a]">{note}</p>
     </div>
   );

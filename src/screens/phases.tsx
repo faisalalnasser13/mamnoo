@@ -3,10 +3,10 @@ import { api, errText } from "../lib/firebase";
 import { useBuzzHaptic, useCountdown, useFlash, type LiveCard } from "../lib/hooks";
 import {
   canSkip, computeStats, inLockout, membersOf, nextTurnFor, OTHER,
-  SKIP_LOCKOUT_MS, totalTurns,
+  rolesForTurn, SKIP_LOCKOUT_MS, totalTurns,
 } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
-import { S } from "../lib/strings";
+import { S, type Strings } from "../lib/strings";
 import { Avatar, Btn, Flash, Label, TEAM, Waiting, YouChip } from "../components/ui";
 import { HostControls, PausedBanner, ScoreBoard } from "../components/host";
 import { Card, CardSkeleton, Feed, Heat, Hud, RunLine } from "../components/game";
@@ -56,10 +56,23 @@ export function LivePhase({ room, uid, card }: Ctx) {
 
   const call = (p: Promise<unknown>) => p.catch((e) => flash(errText(e, room.lang)));
 
+  /* A live phase with no turn on it can only come from a document an
+     older deploy wrote. Every branch below needs the team at minimum,
+     and reading it off null is exactly the white-screen the render
+     smoke test exists to stop. */
+  const turn = room.turn;
+  if (!turn) {
+    return (
+      <div className="shell justify-center">
+        <Label>{s.waitingCard}</Label>
+      </div>
+    );
+  }
+
   /* ---- describer ---- */
-  if (role === "giver" && room.turn) {
-    const own = room.scores[room.turn.team];
-    const opp = room.scores[OTHER[room.turn.team]];
+  if (role === "giver") {
+    const own = room.scores[turn.team];
+    const opp = room.scores[OTHER[turn.team]];
     const gap = own - opp;
     // No tatweel (ـ) anywhere in the UI — it renders as a gap in Tajawal.
     const gapText = gap > 0 ? s.aheadBy(gap)
@@ -75,7 +88,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
         {card
           ? <Card word={card.word} taboo={card.taboo} stamp={s.stamp}
               kicker={buzzed ? "…" : rush ? s.hurry : s.explainIt} buzzed={buzzed} />
-          : <CardSkeleton note={s.drawing} />}
+          : <CardSkeleton note={s.drawing} unknown={s.unknownCard} />}
 
         <Heat streak={room.round.streak}
           note={buzzed ? s.heatOff
@@ -117,13 +130,13 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <div className="h-3.5" />
         {card
           ? <Card word={card.word} taboo={card.taboo} buzzed={buzzed} small stamp={s.stamp} />
-          : <CardSkeleton note={s.waitingCard} />}
+          : <CardSkeleton note={s.waitingCard} unknown={s.unknownCard} />}
         {/* Only the describer's device deals. If theirs is asleep or its
             tab crashed, no card ever arrives and the clock can't rescue
             the turn — so say so instead of showing a silent spinner. */}
         {!card && stalled && (
           <p className="mt-3 text-center text-[12.5px] leading-relaxed text-muted">
-            {s.stalled(nameOf(room, room.turn?.clueGiverUid ?? ""))}
+            {s.stalled(nameOf(room, turn.clueGiverUid))}
           </p>
         )}
         {room.paused && <PausedBanner lang={room.lang} />}
@@ -155,7 +168,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <div className="flex-1" />
         <p className="text-center font-display text-[64px] leading-none text-chili">{s.floorBuzz}</p>
         <p className="mt-3 text-center text-[15px] font-bold text-muted">
-          {s.saidTaboo(nameOf(room, room.turn?.clueGiverUid ?? ""))}
+          {s.saidTaboo(nameOf(room, turn.clueGiverUid))}
         </p>
         <p className="mt-1 text-center text-[13px] text-muted">
           {mineTurn(room, uid) ? s.burnedUs : s.burnedThem}
@@ -166,7 +179,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
   }
 
   /* ---- my team is guessing ---- */
-  const mine = team === room.turn?.team;
+  const mine = team === turn.team;
 
   if (mine) {
     return (
@@ -177,10 +190,14 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <div className="h-5" />
         <Label>{s.explainingNow}</Label>
         <p className="mt-1 text-center font-display text-[32px]">
-          {nameOf(room, room.turn?.clueGiverUid ?? "")} 🎤
+          {nameOf(room, turn.clueGiverUid)} 🎤
         </p>
         <Heat streak={room.round.streak} />
-        <Feed log={room.round.log} newestFirst lang={room.lang} />
+        {/* A long turn banks a dozen cards; without a cap the list pushes
+            the rest of the screen off the bottom. */}
+        <div className="max-h-[34vh] overflow-y-auto">
+          <Feed log={room.round.log} newestFirst lang={room.lang} />
+        </div>
         {room.paused && <PausedBanner lang={room.lang} />}
         <div className="flex-1" />
         {room.hostUid === uid && <HostControls room={room} />}
@@ -203,7 +220,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
       <div className="h-5" />
       <Label>{s.theirTurn}</Label>
       <p className="mt-1 text-center font-display text-[28px]">
-        {s.explaining(nameOf(room, room.turn?.clueGiverUid ?? ""))}
+        {s.explaining(nameOf(room, turn.clueGiverUid))}
       </p>
 
       {/* Once skip locks, the card on the table is the one that will be
@@ -222,7 +239,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
 
       <div className="mt-4 rounded-[16px] bg-black/25 px-4 py-3 text-center">
         <span className="text-[13px] font-bold text-muted">{s.theyScored}</span>
-        <p className="font-display text-[30px]" style={{ color: TEAM[room.turn!.team].hex }}>
+        <p className="font-display text-[30px]" style={{ color: TEAM[turn.team].hex }}>
           +{room.round.points}
         </p>
       </div>
@@ -230,7 +247,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
       {room.paused && <PausedBanner lang={room.lang} />}
       <div className="flex-1" />
       {room.hostUid === uid && <HostControls room={room} />}
-      <Label>{s.judgingForYou(nameOf(room, room.turn?.judgeUid ?? ""))}</Label>
+      <Label>{s.judgingForYou(nameOf(room, turn.judgeUid))}</Label>
     </div>
   );
 }
@@ -271,7 +288,7 @@ export function StealPhase({ room, uid }: Ctx) {
 
       <div className="flex-1" />
       <div className="card" style={{ rotate: "1.5deg", padding: "24px 18px" }}>
-        <div className="card-word" style={{ fontSize: 38, margin: 0 }}>؟ ؟ ؟</div>
+        <div className="card-word" style={{ fontSize: 38, margin: 0 }}>{s.unknownCard}</div>
       </div>
       {room.paused && <PausedBanner lang={room.lang} />}
       <Flash msg={msg} />
@@ -312,7 +329,9 @@ export function RecapPhase({ room, uid, rounds }: Ctx) {
         {pts >= 0 ? "+" : ""}{pts}
       </p>
       <ScoreBoard room={room} uid={uid} rounds={rounds} />
-      <Feed log={room.round.log} lang={room.lang} />
+      <div className="max-h-[36vh] overflow-y-auto">
+        <Feed log={room.round.log} lang={room.lang} />
+      </div>
       <Flash msg={msg} />
       <div className="flex-1" />
       {room.hostUid === uid && <HostControls room={room} />}
@@ -334,6 +353,113 @@ export function RecapPhase({ room, uid, rounds }: Ctx) {
 /* ------------------------------------------------------------------ */
 
 /**
+ * The turn order as a drum, with this turn in the window.
+ *
+ * A flat «X ضد Y» answered who's up but not *where in the game* that is:
+ * it looked the same on turn 2 and turn 7, and it never showed anyone
+ * their own turn coming. Tilting the neighbours onto a receding surface
+ * and fading them says the order is a wheel that keeps moving — the row
+ * below is who follows, and a player who sees themselves there has a
+ * reason to pay attention to this turn.
+ *
+ * Past rows come from the round records where they exist, because a
+ * roster that changed mid-game makes a recomputed past a lie. Below the
+ * schedule nothing is drawn: overtime turns are dealt one at a time, so
+ * the next describer genuinely isn't known yet.
+ *
+ * Empty slots still take their height. Otherwise the matchup jumps up
+ * and down the screen between turns as neighbours appear and vanish.
+ */
+function Wheel({
+  room, s, turn, rounds,
+}: { room: Room; s: Strings; turn: NonNullable<Room["turn"]>; rounds: RoundRecord[] }) {
+  const i = room.turnIndex;
+  const horizon = Math.max(totalTurns(room.settings), i + 1);
+  const played = new Map(rounds.map((r) => [r.index, r]));
+
+  const at = (k: number) => {
+    if (k < 0 || k >= horizon) return null;
+    const rec = played.get(k);
+    if (rec) return { team: rec.team, clueGiverUid: rec.clueGiverUid, judgeUid: rec.judgeUid };
+    return rolesForTurn(room.players, k);
+  };
+
+  /**
+   * Depth is carried by the row's own opacity, not by a mask over the
+   * stack: the two compounded, and the far row came out at a couple of
+   * percent — indistinguishable from a rendering artefact.
+   */
+  const Ghost = ({ k, far }: { k: number; far?: boolean }) => {
+    const row = at(k);
+    const height = far ? 24 : 30;
+    // An empty slot keeps its height so the matchup doesn't walk up and
+    // down the screen between turns, and carries a hairline so the gap
+    // on the first turn reads as the end of the wheel, not as a hole.
+    if (!row) {
+      return (
+        <div className="flex items-center justify-center" style={{ height }} aria-hidden>
+          <i className="h-[2px] w-5 rounded-full bg-white/[.06]" />
+        </div>
+      );
+    }
+    const above = k < i;
+    return (
+      <div
+        aria-hidden
+        className="flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap font-bold"
+        style={{
+          height,
+          fontSize: far ? 11.5 : 13,
+          opacity: far ? 0.28 : 0.55,
+          // rotateX only: translate and skew are physical, so anything
+          // horizontal here would lean the wrong way under LTR.
+          transform: `perspective(340px) rotateX(${above ? "" : "-"}${far ? 54 : 32}deg) scale(${far ? 0.88 : 0.95})`,
+          transformOrigin: above ? "bottom center" : "top center",
+        }}
+      >
+        <span className="tabular-nums text-muted/70" dir="ltr">{k + 1}</span>
+        <span style={{ color: TEAM[row.team].hex }}>🎤 {nameOf(room, row.clueGiverUid)}</span>
+        <span style={{ color: TEAM[OTHER[row.team]].hex }}>👀 {nameOf(room, row.judgeUid)}</span>
+      </div>
+    );
+  };
+
+  const Side = ({ t, role, who }: { t: TeamId; role: string; who: string }) => (
+    <div className="flex-1 rounded-[18px] bg-black/25 px-2 py-3 text-center">
+      <div className="mb-2 text-[10.5px] font-black tracking-[.16em]" style={{ color: TEAM[t].hex }}>
+        {role}
+      </div>
+      <div className="mx-auto mb-1.5 w-fit"><Avatar name={who} team={t} big /></div>
+      <div className="text-[16.5px] font-black">{who}</div>
+      <div className="mt-0.5 text-[11.5px] text-muted">{TEAM[t].emoji} {s.team[t]}</div>
+    </div>
+  );
+
+  return (
+    <div className="mt-3">
+      <div>
+        <Ghost k={i - 2} far />
+        <Ghost k={i - 1} />
+      </div>
+
+      <div
+        className="my-1.5 flex items-center gap-2.5 rounded-[22px] p-1.5"
+        style={{ boxShadow: "0 0 0 2px rgba(255,216,77,.16)" }}
+      >
+        <Side t={turn.team} role={s.roleExplain} who={nameOf(room, turn.clueGiverUid)} />
+        <span className="font-display text-[21px] text-lemon">{s.vs}</span>
+        <Side t={OTHER[turn.team]} role={s.roleJudge} who={nameOf(room, turn.judgeUid)} />
+      </div>
+
+      <div>
+        <Ghost k={i + 1} />
+        <Ghost k={i + 2} far />
+      </div>
+    </div>
+  );
+}
+
+/**
  * The one deliberate pause. It answers four questions at once: who's
  * describing, who's judging, how many rounds are left, and what the
  * score is — then waits for the host, so nobody starts talking into a
@@ -347,7 +473,6 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
   const total = totalTurns(room.settings);
   const overtime = room.turnIndex >= total;
   const team = myTeam(room, uid);
-  const oppTeam = OTHER[room.turn.team];
   const horizon = Math.max(total, room.turnIndex + total);
   const mineAt = nextTurnFor(room.players, room.turnIndex, horizon, uid);
   const pipCount = Math.max(total, room.turnIndex + 1);
@@ -356,17 +481,6 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
     mineAt === null ? null
     : mineAt === room.turnIndex ? s.yourTurnNow
     : s.yourTurnAt(mineAt + 1);
-
-  const Side = ({ t, role, who }: { t: TeamId; role: string; who: string }) => (
-    <div className="flex-1 rounded-[20px] bg-black/25 px-2 py-3.5 text-center">
-      <div className="mb-2 text-[10.5px] font-black tracking-[.16em]" style={{ color: TEAM[t].hex }}>
-        {role}
-      </div>
-      <div className="mx-auto mb-1.5 w-fit"><Avatar name={who} team={t} big /></div>
-      <div className="text-[16.5px] font-black">{who}</div>
-      <div className="mt-0.5 text-[11.5px] text-muted">{TEAM[t].emoji} {s.team[t]}</div>
-    </div>
-  );
 
   const oursNext = team === room.turn.team;
 
@@ -390,11 +504,7 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
         ))}
       </div>
 
-      <div className="mt-4 flex items-center gap-2.5">
-        <Side t={room.turn.team} role={s.roleExplain} who={nameOf(room, room.turn.clueGiverUid)} />
-        <span className="font-display text-[21px] text-lemon">{s.vs}</span>
-        <Side t={oppTeam} role={s.roleJudge} who={nameOf(room, room.turn.judgeUid)} />
-      </div>
+      <Wheel room={room} s={s} turn={room.turn} rounds={rounds} />
 
       <ScoreBoard room={room} uid={uid} rounds={rounds} />
       {yourTurnNote && (

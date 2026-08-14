@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { api, errText } from "../lib/firebase";
 import { useFlash, useLocal } from "../lib/hooks";
-import { membersOf, NAME_MAX, ROUND_SECS_OPTIONS, ROUNDS_PER_TEAM_OPTIONS, totalTurns } from "../lib/rules";
+import {
+  membersOf, NAME_MAX, OTHER, ROUND_SECS_OPTIONS, ROUNDS_PER_TEAM_OPTIONS, totalTurns,
+} from "../lib/rules";
 import type { Lang, Room, TeamId } from "../lib/types";
-import { Avatar, Btn, Flash, Label, TEAM, Waiting, YouChip } from "../components/ui";
+import { Avatar, Btn, Flash, Label, TEAM, Waiting, Wordmark, YouChip } from "../components/ui";
 import { QR } from "../components/QR";
 import { S } from "../lib/strings";
 
@@ -50,10 +52,12 @@ export function Home({
     return (
       <div className="shell">
         <div className="h-7" />
-        <h1 className="text-center font-display text-[42px] leading-none">ممنوع</h1>
-        <p className="mt-1 text-center font-display text-[28px] leading-none text-muted">Banned</p>
-        <p className="mt-4 text-center text-[14.5px] leading-relaxed text-muted">
+        <Wordmark size={44} />
+        <p className="mt-5 text-center text-[14.5px] leading-relaxed text-muted">
           اختر لغة الغرفة · Pick the room language
+        </p>
+        <p className="mt-1 text-center text-[12px] leading-relaxed text-muted/70">
+          البطاقات والشاشات كلها بهذه اللغة · Cards and screens both follow it
         </p>
         <div className="h-7" />
         <Btn variant="chili" disabled={busy}
@@ -74,47 +78,63 @@ export function Home({
     );
   }
 
+  /* ---- opened someone's link ----
+
+     This screen used to lead with the title alone at 62px, which in an
+     English room is one huge white word and nothing else — people read
+     that as a page that failed to load, not as an invitation. So it
+     leads with the room they were invited to, in the same orange card
+     they'll see in the lobby a second later, and the wordmark shrinks to
+     a mark. */
   if (joining) {
     const s = S(joinLang);
+    const enter = () => run(async () => {
+      await api.joinRoom({ roomId: code.trim(), name });
+      return code.trim();
+    }, flashLang);
+
     return (
       <div className="shell">
-        <div className="h-7" />
-        <h1 className="text-center font-display text-[62px] leading-none">{s.title}</h1>
-        <p className="mt-2.5 text-center text-[14.5px] leading-relaxed text-muted">
-          {joinLang === "en"
-            ? "Describe the word… without the five forbidden ones"
-            : "اشرح الكلمة… بدون الكلمات الخمس"}
-        </p>
-        <div className="h-7" />
+        <div className="h-6" />
+        <Wordmark size={30} lang={joinLang} />
+
+        <div className="mt-6 rotate-[1deg] rounded-[20px] bg-tang px-3.5 py-3 text-center text-[#3A1D00] shadow-[0_6px_0_#CC6F1B]">
+          <small className="text-[11px] font-black tracking-[.18em] opacity-75">{s.invitedTo}</small>
+          <div className="font-display text-[34px] leading-tight">{code}</div>
+        </div>
+
+        <p className="mt-4 text-center text-[13.5px] leading-relaxed text-muted">{s.tagline}</p>
+
+        <div className="h-5" />
         <input
-          className="field" maxLength={NAME_MAX}
-          placeholder={joinLang === "en" ? "Your name" : "سعد بن صالح"}
+          className="field" maxLength={NAME_MAX} autoFocus
+          autoComplete="off" spellCheck={false} enterKeyHint="go"
+          placeholder={s.yourNamePh}
           value={name} onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") enter(); }}
         />
-        <div className="h-3.5" />
-        <input
-          className="field font-display text-[26px] tracking-[.1em] text-lemon"
-          maxLength={12} value={code} readOnly
-        />
-        <div className="h-2.5" />
-        <Btn variant="ghost" disabled={busy}
-          onClick={() => run(async () => {
-            await api.joinRoom({ roomId: code.trim(), name });
-            return code.trim();
-          }, flashLang)}>
-          {joinLang === "en" ? "Join" : "ادخل"}
-        </Btn>
+        <div className="h-3" />
+        <Btn variant="lemon" disabled={busy} onClick={enter}>{s.joinCta}</Btn>
         <Flash msg={msg} />
+
+        <div className="flex-1" />
+        <Btn variant="ghost" onClick={() => { location.hash = ""; }}>{s.otherRoom}</Btn>
       </div>
     );
   }
 
+  const joinByName = () => run(async () => {
+    const id = code.trim();
+    if (!id) throw new Error(S("ar").err.writeRoom);
+    await api.joinRoom({ roomId: id, name });
+    return id;
+  }, "ar");
+
   return (
     <div className="shell">
       <div className="h-7" />
-      <h1 className="text-center font-display text-[62px] leading-none">ممنوع</h1>
-      <p className="mt-1 text-center font-display text-[32px] leading-none text-lemon">Banned</p>
-      <p className="mt-3 text-center text-[14.5px] leading-relaxed text-muted">
+      <Wordmark size={58} />
+      <p className="mt-4 text-center text-[14.5px] leading-relaxed text-muted">
         اشرح الكلمة… بدون الكلمات الخمس
         <br />
         Describe the word… without the five forbidden ones
@@ -123,6 +143,7 @@ export function Home({
       <div className="h-7" />
       <input
         className="field" maxLength={NAME_MAX} placeholder="سعد بن صالح · your name"
+        autoComplete="off" spellCheck={false} enterKeyHint="next"
         value={name} onChange={(e) => setName(e.target.value)}
       />
       <div className="h-3.5" />
@@ -139,16 +160,12 @@ export function Home({
       <input
         className="field font-display text-[26px] tracking-[.1em] text-lemon"
         maxLength={12} placeholder="قهوة · coffee"
+        autoComplete="off" spellCheck={false} enterKeyHint="go"
         value={code} onChange={(e) => setCode(e.target.value)}
+        onKeyDown={(e) => { if (e.key === "Enter") joinByName(); }}
       />
       <div className="h-2.5" />
-      <Btn variant="ghost" disabled={busy}
-        onClick={() => run(async () => {
-          const id = code.trim();
-          if (!id) throw new Error(S("ar").err.writeRoom);
-          await api.joinRoom({ roomId: id, name });
-          return id;
-        }, "ar")}>
+      <Btn variant="ghost" disabled={busy} onClick={joinByName}>
         ادخل · Join
       </Btn>
 
@@ -184,34 +201,80 @@ function Chips({
   );
 }
 
-function TeamColumn({
-  team, room, isHost, me, onKick, onMove,
+/**
+ * One side of the lobby, and the switch for it.
+ *
+ * The whole panel is the target: tapping the side you're not on moves
+ * you there. Before this the only way to switch was a tap on your own
+ * name — a target the width of the text, on a panel that gave no sign of
+ * which side you were already on, so a tap that did nothing (your own
+ * panel) and a tap that moved you looked identical. The side you're on
+ * is now lit in its own colour and says so, and the other side says what
+ * a tap will do.
+ *
+ * The host's per-player ⇄ and ✕ stop propagation, or moving someone else
+ * would also move the host.
+ */
+function TeamPanel({
+  team, room, isHost, me, mine, onKick, onMove,
 }: {
-  team: TeamId; room: Room; isHost: boolean; me: string;
+  team: TeamId; room: Room; isHost: boolean; me: string; mine: boolean;
   onKick: (uid: string) => void; onMove: (uid: string, t: TeamId) => void;
 }) {
   const t = TEAM[team];
   const s = S(room.lang);
+  const members = membersOf(room.players, team);
+  const join = () => onMove(me, team);
+
   return (
-    <div className="min-h-[96px] flex-1 rounded-[18px] bg-black/25 p-3">
-      <h4 className="mb-2.5 text-[12.5px] font-black" style={{ color: t.hex }}>
-        {t.emoji} {s.team[team]}
-      </h4>
-      {membersOf(room.players, team).map((uid) => (
+    <div
+      role={mine ? undefined : "button"}
+      tabIndex={mine ? undefined : 0}
+      aria-label={mine ? undefined : `${s.team[team]} — ${s.tapToSwitch}`}
+      onClick={mine ? undefined : join}
+      onKeyDown={mine ? undefined : (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); join(); }
+      }}
+      className={`min-h-[104px] flex-1 rounded-[18px] border-2 p-3 transition ${
+        mine ? "" : "border-dashed border-white/10 bg-black/25"
+      }`}
+      style={mine ? { borderColor: t.hex, background: `${t.hex}1F` } : undefined}
+    >
+      <div className="mb-2.5 flex items-baseline gap-1.5">
+        <h4 className="text-[12.5px] font-black" style={{ color: t.hex }}>
+          {t.emoji} {s.team[team]}
+        </h4>
+        <span
+          className="ms-auto shrink-0 text-[9.5px] font-black tracking-[.1em]"
+          style={{ color: mine ? t.hex : "#A99BC4" }}
+        >
+          {mine ? s.youAreHere : s.tapToSwitch}
+        </span>
+      </div>
+
+      {members.length === 0 && (
+        <p className="text-[12px] font-bold text-muted/70">{s.nobodyYet}</p>
+      )}
+
+      {members.map((uid) => (
         <div key={uid} className="mb-2 flex items-center gap-2 text-[14px]">
           <Avatar name={room.players[uid].name} team={team} />
-          <button
-            className="truncate text-start"
-            onClick={() => (isHost || uid === me) && onMove(uid, team === "mint" ? "chili" : "mint")}
-          >
-            {room.players[uid].name}
-          </button>
+          <span className="min-w-0 truncate text-start">
+            {room.players[uid].name}{uid === me ? s.you : ""}
+          </span>
           {isHost && uid !== me && (
-            <button
-              className="ms-auto px-1 text-[15px] font-black text-chili"
-              onClick={() => onKick(uid)}
-              aria-label={s.kickAria}
-            >✕</button>
+            <span className="ms-auto flex shrink-0 items-center gap-0.5">
+              <button
+                className="px-1 text-[13px] font-black text-muted"
+                onClick={(e) => { e.stopPropagation(); onMove(uid, OTHER[team]); }}
+                aria-label={s.moveAria}
+              >⇄</button>
+              <button
+                className="px-1 text-[15px] font-black text-chili"
+                onClick={(e) => { e.stopPropagation(); onKick(uid); }}
+                aria-label={s.kickAria}
+              >✕</button>
+            </span>
           )}
         </div>
       ))}
@@ -232,13 +295,13 @@ export function Lobby({ room, uid }: { room: Room; uid: string }) {
   const share = async () => {
     const text = s.shareText(room.id, url);
     if (navigator.share) { try { await navigator.share({ text }); return; } catch { /* cancelled */ } }
-    try { await navigator.clipboard.writeText(text); flash(s.copied); }
+    try { await navigator.clipboard.writeText(text); flash(s.copied, true); }
     catch { flash(url); }
   };
 
   return (
     <div className="shell">
-      {me?.team && <YouChip team={me.team} />}
+      {me?.team && <YouChip team={me.team} extra={s.team[me.team]} />}
       <div className="h-3" />
 
       <div className="rotate-[1deg] rounded-[20px] bg-tang px-3.5 py-3 text-center text-[#3A1D00] shadow-[0_6px_0_#CC6F1B]">
@@ -250,19 +313,21 @@ export function Lobby({ room, uid }: { room: Room; uid: string }) {
         {showQr ? s.hideQr : s.showQr}
       </Btn>
       {showQr && (
-        <div className="mt-2.5 flex justify-center">
+        <div className="mt-2.5 flex flex-col items-center gap-1.5">
           <QR url={url} />
+          <span className="text-[11px] font-bold text-muted">{s.scanToJoin}</span>
         </div>
       )}
 
       <div className="mt-3.5 flex gap-2.5">
-        <TeamColumn team="mint" room={room} isHost={isHost} me={uid}
-          onKick={(u) => call(api.kickPlayer({ roomId: room.id, uid: u }))}
-          onMove={(u, t) => call(api.setTeam({ roomId: room.id, uid: u, team: t }))} />
-        <TeamColumn team="chili" room={room} isHost={isHost} me={uid}
-          onKick={(u) => call(api.kickPlayer({ roomId: room.id, uid: u }))}
-          onMove={(u, t) => call(api.setTeam({ roomId: room.id, uid: u, team: t }))} />
+        {(["mint", "chili"] as const).map((t) => (
+          <TeamPanel key={t} team={t} room={room} isHost={isHost} me={uid}
+            mine={me?.team === t}
+            onKick={(u) => call(api.kickPlayer({ roomId: room.id, uid: u }))}
+            onMove={(u, to) => call(api.setTeam({ roomId: room.id, uid: u, team: to }))} />
+        ))}
       </div>
+      <p className="mt-1.5 text-center text-[11px] text-muted/70">{s.teamsHint}</p>
 
       {isHost && (
         <Btn variant="ghost" className="mt-2.5"

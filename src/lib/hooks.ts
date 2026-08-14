@@ -363,13 +363,20 @@ export function useLocal<T>(key: string, initial: T) {
   return [v, setV] as const;
 }
 
-/** Short-lived error line under the buttons. */
+export interface FlashMsg { text: string; ok?: boolean }
+
+/**
+ * Short-lived line under the buttons.
+ *
+ * `ok` exists because the confirmations went out in the same red as the
+ * failures — «انتسخ الرابط ✅» in error red reads as a problem.
+ */
 export function useFlash() {
-  const [msg, setMsg] = useState<string | null>(null);
+  const [msg, setMsg] = useState<FlashMsg | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
   const flash = useMemo(
-    () => (m: string) => {
-      setMsg(m);
+    () => (m: string, ok?: boolean) => {
+      setMsg({ text: m, ok });
       clearTimeout(timer.current);
       timer.current = setTimeout(() => setMsg(null), 2600);
     },

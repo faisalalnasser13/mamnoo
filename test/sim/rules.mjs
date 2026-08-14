@@ -30,7 +30,8 @@ ok("room words outnumber a realistic concurrent load", ROOM_WORDS.length >= 30);
 eq("room words are unique", new Set(ROOM_WORDS).size, ROOM_WORDS.length);
 eq("card answers are unique", new Set(DECK.map((c) => c.w)).size, DECK.length);
 
-ok("english starter deck is present", DECK_EN.length >= 10);
+ok("english deck is non-trivial", DECK_EN.length >= 600);
+ok("english room words outnumber a realistic concurrent load", ROOM_WORDS_EN.length >= 30);
 ok("english room words are unique", new Set(ROOM_WORDS_EN).size === ROOM_WORDS_EN.length);
 eq("english card answers are unique", new Set(DECK_EN.map((c) => c.w)).size, DECK_EN.length);
 for (const c of DECK_EN) {

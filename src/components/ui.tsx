@@ -1,10 +1,53 @@
 import React from "react";
-import type { TeamId } from "../lib/types";
+import type { FlashMsg } from "../lib/hooks";
+import type { Lang, TeamId } from "../lib/types";
 
 export const TEAM: Record<TeamId, { emoji: string; hex: string }> = {
   mint:  { emoji: "🌿", hex: "#2FD6BC" },
   chili: { emoji: "🌶️", hex: "#FF4D79" },
 };
+
+/**
+ * The two names of the game, as one lockup.
+ *
+ * Both words are the same family, weight and colour, and the Latin one
+ * is uppercased and tracked: Baloo's lowercase next to ممنوع reads as a
+ * caption in a different voice, which is what made the pair look like
+ * two unrelated bits of text. Caps at .58 of the Arabic size land on the
+ * same optical weight, and the lemon rule between them says "same word,
+ * two scripts" rather than "title and subtitle".
+ *
+ * `lang` leads with that language; unset shows the Arabic first, which
+ * is the home screen where no room language has been chosen yet.
+ */
+export function Wordmark({ size = 58, lang }: { size?: number; lang?: Lang }) {
+  const en = lang === "en";
+  const lead = en ? { text: "BANNED", latin: true, size: size * 0.72 } : { text: "ممنوع", latin: false, size };
+  const echo = en ? { text: "ممنوع", latin: false, size: size * 0.62 } : { text: "BANNED", latin: true, size: size * 0.52 };
+
+  const Line = ({ text, latin, size: fs }: { text: string; latin: boolean; size: number }) => (
+    <div
+      className="font-display leading-none"
+      style={{
+        fontSize: fs,
+        // Tracking is added on the trailing side only, so a centred
+        // caps word doesn't sit visibly off-centre.
+        letterSpacing: latin ? ".14em" : undefined,
+        marginInlineStart: latin ? ".14em" : undefined,
+      }}
+    >
+      {text}
+    </div>
+  );
+
+  return (
+    <div className="flex flex-col items-center gap-2 text-cream">
+      <Line {...lead} />
+      <i className="block h-[2px] w-8 rounded-full bg-lemon/40" />
+      <Line {...echo} />
+    </div>
+  );
+}
 
 export function Btn({
   variant = "lemon", huge, className = "", ...rest
@@ -79,7 +122,11 @@ export function Tally({ scores }: { scores: Record<TeamId, number> }) {
   );
 }
 
-export function Flash({ msg }: { msg: string | null }) {
+export function Flash({ msg }: { msg: FlashMsg | null }) {
   if (!msg) return null;
-  return <p className="mt-2 text-center text-[13px] font-bold text-chili">{msg}</p>;
+  return (
+    <p className={`mt-2 text-center text-[13px] font-bold ${msg.ok ? "text-mint" : "text-chili"}`}>
+      {msg.text}
+    </p>
+  );
 }

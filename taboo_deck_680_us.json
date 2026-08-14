@@ -1,0 +1,8194 @@
+{
+ "meta": {
+  "title": "Taboo deck for fluent non-native English speakers (American English)",
+  "cards": 680,
+  "taboo_per_card": 5,
+  "rules": [
+   "The guess word itself and all its inflections/compounds are automatically forbidden and are not listed.",
+   "Each card lists five extra forbidden words: the one-word definition, the category, the main function or collocation, a strong synonym, and (where one exists) the obvious opposite.",
+   "Vocabulary is deliberately culture-neutral: no national sports, brands, holidays, celebrities, idioms or region-specific foods.",
+   "Spelling and vocabulary are American (COLOR, THEATER, TIRE, PANTS, FAUCET); British variants are equally forbidden."
+  ],
+  "categories": {
+   "Food & Drink": 80,
+   "Animals": 63,
+   "Clothes & Accessories": 40,
+   "Geography & Nature": 54,
+   "Weather & Time": 33,
+   "Body & Health": 48,
+   "House & Furniture": 45,
+   "Transport & Travel": 39,
+   "Sports & Games": 48,
+   "Jobs & People": 40,
+   "Buildings & Places": 25,
+   "Technology & Tools": 36,
+   "School & Office": 27,
+   "Music & Arts": 25,
+   "Feelings & Ideas": 25,
+   "American & Global Icons": 40,
+   "People & Characters": 12
+  }
+ },
+ "cards": [
+  {
+   "id": 1,
+   "category": "Food & Drink",
+   "word": "PIZZA",
+   "taboo": [
+    "ITALY",
+    "CHEESE",
+    "SLICE",
+    "DOUGH",
+    "OVEN"
+   ]
+  },
+  {
+   "id": 2,
+   "category": "Food & Drink",
+   "word": "RICE",
+   "taboo": [
+    "GRAIN",
+    "WHITE",
+    "ASIA",
+    "BOWL",
+    "COOK"
+   ]
+  },
+  {
+   "id": 3,
+   "category": "Food & Drink",
+   "word": "BREAD",
+   "taboo": [
+    "BAKE",
+    "FLOUR",
+    "LOAF",
+    "SLICE",
+    "TOAST"
+   ]
+  },
+  {
+   "id": 4,
+   "category": "Food & Drink",
+   "word": "COFFEE",
+   "taboo": [
+    "TEA",
+    "BEAN",
+    "MORNING",
+    "CUP",
+    "BLACK"
+   ]
+  },
+  {
+   "id": 5,
+   "category": "Food & Drink",
+   "word": "TEA",
+   "taboo": [
+    "COFFEE",
+    "LEAF",
+    "CUP",
+    "HOT",
+    "GREEN"
+   ]
+  },
+  {
+   "id": 6,
+   "category": "Food & Drink",
+   "word": "SUGAR",
+   "taboo": [
+    "SWEET",
+    "SALT",
+    "WHITE",
+    "SPOON",
+    "SOUR"
+   ]
+  },
+  {
+   "id": 7,
+   "category": "Food & Drink",
+   "word": "SALT",
+   "taboo": [
+    "SUGAR",
+    "SEA",
+    "PEPPER",
+    "WHITE",
+    "TASTE"
+   ]
+  },
+  {
+   "id": 8,
+   "category": "Food & Drink",
+   "word": "PEPPER",
+   "taboo": [
+    "SALT",
+    "SPICY",
+    "BLACK",
+    "GRIND",
+    "SEASON"
+   ]
+  },
+  {
+   "id": 9,
+   "category": "Food & Drink",
+   "word": "MILK",
+   "taboo": [
+    "COW",
+    "WHITE",
+    "CHEESE",
+    "BABY",
+    "DRINK"
+   ]
+  },
+  {
+   "id": 10,
+   "category": "Food & Drink",
+   "word": "CHEESE",
+   "taboo": [
+    "MILK",
+    "YELLOW",
+    "PIZZA",
+    "MOUSE",
+    "DAIRY"
+   ]
+  },
+  {
+   "id": 11,
+   "category": "Food & Drink",
+   "word": "BUTTER",
+   "taboo": [
+    "BREAD",
+    "MILK",
+    "YELLOW",
+    "SPREAD",
+    "FAT"
+   ]
+  },
+  {
+   "id": 12,
+   "category": "Food & Drink",
+   "word": "EGG",
+   "taboo": [
+    "CHICKEN",
+    "SHELL",
+    "YOLK",
+    "FRY",
+    "BOIL"
+   ]
+  },
+  {
+   "id": 13,
+   "category": "Food & Drink",
+   "word": "CHICKEN",
+   "taboo": [
+    "EGG",
+    "BIRD",
+    "MEAT",
+    "WING",
+    "FARM"
+   ]
+  },
+  {
+   "id": 14,
+   "category": "Food & Drink",
+   "word": "FISH",
+   "taboo": [
+    "SEA",
+    "SWIM",
+    "WATER",
+    "SCALE",
+    "CATCH"
+   ]
+  },
+  {
+   "id": 15,
+   "category": "Food & Drink",
+   "word": "MEAT",
+   "taboo": [
+    "ANIMAL",
+    "VEGETARIAN",
+    "BEEF",
+    "PROTEIN",
+    "COOK"
+   ]
+  },
+  {
+   "id": 16,
+   "category": "Food & Drink",
+   "word": "SOUP",
+   "taboo": [
+    "BOWL",
+    "SPOON",
+    "LIQUID",
+    "HOT",
+    "VEGETABLE"
+   ]
+  },
+  {
+   "id": 17,
+   "category": "Food & Drink",
+   "word": "SALAD",
+   "taboo": [
+    "VEGETABLE",
+    "GREEN",
+    "LETTUCE",
+    "BOWL",
+    "FRESH"
+   ]
+  },
+  {
+   "id": 18,
+   "category": "Food & Drink",
+   "word": "APPLE",
+   "taboo": [
+    "FRUIT",
+    "RED",
+    "TREE",
+    "GREEN",
+    "JUICE"
+   ]
+  },
+  {
+   "id": 19,
+   "category": "Food & Drink",
+   "word": "BANANA",
+   "taboo": [
+    "YELLOW",
+    "FRUIT",
+    "PEEL",
+    "MONKEY",
+    "CURVE"
+   ]
+  },
+  {
+   "id": 20,
+   "category": "Food & Drink",
+   "word": "ORANGE",
+   "taboo": [
+    "FRUIT",
+    "COLOR",
+    "JUICE",
+    "PEEL",
+    "ROUND"
+   ]
+  },
+  {
+   "id": 21,
+   "category": "Food & Drink",
+   "word": "GRAPE",
+   "taboo": [
+    "WINE",
+    "FRUIT",
+    "BUNCH",
+    "PURPLE",
+    "VINE"
+   ]
+  },
+  {
+   "id": 22,
+   "category": "Food & Drink",
+   "word": "LEMON",
+   "taboo": [
+    "SOUR",
+    "YELLOW",
+    "FRUIT",
+    "SWEET",
+    "JUICE"
+   ]
+  },
+  {
+   "id": 23,
+   "category": "Food & Drink",
+   "word": "STRAWBERRY",
+   "taboo": [
+    "RED",
+    "FRUIT",
+    "SMALL",
+    "SWEET",
+    "CREAM"
+   ]
+  },
+  {
+   "id": 24,
+   "category": "Food & Drink",
+   "word": "WATERMELON",
+   "taboo": [
+    "GREEN",
+    "RED",
+    "SUMMER",
+    "SEED",
+    "FRUIT"
+   ]
+  },
+  {
+   "id": 25,
+   "category": "Food & Drink",
+   "word": "POTATO",
+   "taboo": [
+    "FRIES",
+    "VEGETABLE",
+    "GROUND",
+    "CHIPS",
+    "MASH"
+   ]
+  },
+  {
+   "id": 26,
+   "category": "Food & Drink",
+   "word": "TOMATO",
+   "taboo": [
+    "RED",
+    "SAUCE",
+    "VEGETABLE",
+    "SALAD",
+    "KETCHUP"
+   ]
+  },
+  {
+   "id": 27,
+   "category": "Food & Drink",
+   "word": "ONION",
+   "taboo": [
+    "CRY",
+    "LAYER",
+    "VEGETABLE",
+    "SMELL",
+    "COOK"
+   ]
+  },
+  {
+   "id": 28,
+   "category": "Food & Drink",
+   "word": "GARLIC",
+   "taboo": [
+    "SMELL",
+    "VAMPIRE",
+    "CLOVE",
+    "BREATH",
+    "COOK"
+   ]
+  },
+  {
+   "id": 29,
+   "category": "Food & Drink",
+   "word": "CARROT",
+   "taboo": [
+    "ORANGE",
+    "RABBIT",
+    "VEGETABLE",
+    "ROOT",
+    "EYES"
+   ]
+  },
+  {
+   "id": 30,
+   "category": "Food & Drink",
+   "word": "MUSHROOM",
+   "taboo": [
+    "FUNGUS",
+    "FOREST",
+    "PIZZA",
+    "GROW",
+    "POISON"
+   ]
+  },
+  {
+   "id": 31,
+   "category": "Food & Drink",
+   "word": "CHOCOLATE",
+   "taboo": [
+    "SWEET",
+    "BROWN",
+    "COCOA",
+    "BAR",
+    "DESSERT"
+   ]
+  },
+  {
+   "id": 32,
+   "category": "Food & Drink",
+   "word": "ICE CREAM",
+   "taboo": [
+    "COLD",
+    "SUMMER",
+    "SWEET",
+    "CONE",
+    "MELT"
+   ]
+  },
+  {
+   "id": 33,
+   "category": "Food & Drink",
+   "word": "CAKE",
+   "taboo": [
+    "BIRTHDAY",
+    "SWEET",
+    "CANDLE",
+    "BAKE",
+    "SLICE"
+   ]
+  },
+  {
+   "id": 34,
+   "category": "Food & Drink",
+   "word": "HONEY",
+   "taboo": [
+    "BEE",
+    "SWEET",
+    "GOLDEN",
+    "STICKY",
+    "JAR"
+   ]
+  },
+  {
+   "id": 35,
+   "category": "Food & Drink",
+   "word": "NOODLE",
+   "taboo": [
+    "PASTA",
+    "LONG",
+    "SOUP",
+    "ASIA",
+    "BOIL"
+   ]
+  },
+  {
+   "id": 36,
+   "category": "Food & Drink",
+   "word": "PASTA",
+   "taboo": [
+    "ITALY",
+    "NOODLE",
+    "SAUCE",
+    "BOIL",
+    "FORK"
+   ]
+  },
+  {
+   "id": 37,
+   "category": "Food & Drink",
+   "word": "SANDWICH",
+   "taboo": [
+    "BREAD",
+    "LUNCH",
+    "FILL",
+    "TWO",
+    "BITE"
+   ]
+  },
+  {
+   "id": 38,
+   "category": "Food & Drink",
+   "word": "BREAKFAST",
+   "taboo": [
+    "MORNING",
+    "DINNER",
+    "MEAL",
+    "FIRST",
+    "EAT"
+   ]
+  },
+  {
+   "id": 39,
+   "category": "Food & Drink",
+   "word": "DINNER",
+   "taboo": [
+    "EVENING",
+    "BREAKFAST",
+    "MEAL",
+    "TABLE",
+    "EAT"
+   ]
+  },
+  {
+   "id": 40,
+   "category": "Food & Drink",
+   "word": "RESTAURANT",
+   "taboo": [
+    "EAT",
+    "MENU",
+    "WAITER",
+    "FOOD",
+    "TABLE"
+   ]
+  },
+  {
+   "id": 41,
+   "category": "Food & Drink",
+   "word": "MENU",
+   "taboo": [
+    "RESTAURANT",
+    "LIST",
+    "ORDER",
+    "FOOD",
+    "CHOOSE"
+   ]
+  },
+  {
+   "id": 42,
+   "category": "Food & Drink",
+   "word": "RECIPE",
+   "taboo": [
+    "COOK",
+    "INSTRUCTION",
+    "INGREDIENT",
+    "BOOK",
+    "FOLLOW"
+   ]
+  },
+  {
+   "id": 43,
+   "category": "Food & Drink",
+   "word": "KITCHEN",
+   "taboo": [
+    "COOK",
+    "ROOM",
+    "FOOD",
+    "STOVE",
+    "HOME"
+   ]
+  },
+  {
+   "id": 44,
+   "category": "Food & Drink",
+   "word": "SPOON",
+   "taboo": [
+    "FORK",
+    "SOUP",
+    "EAT",
+    "METAL",
+    "ROUND"
+   ]
+  },
+  {
+   "id": 45,
+   "category": "Food & Drink",
+   "word": "FORK",
+   "taboo": [
+    "SPOON",
+    "KNIFE",
+    "EAT",
+    "POINT",
+    "FOOD"
+   ]
+  },
+  {
+   "id": 46,
+   "category": "Food & Drink",
+   "word": "KNIFE",
+   "taboo": [
+    "CUT",
+    "FORK",
+    "SHARP",
+    "BLADE",
+    "KITCHEN"
+   ]
+  },
+  {
+   "id": 47,
+   "category": "Food & Drink",
+   "word": "PLATE",
+   "taboo": [
+    "DISH",
+    "FOOD",
+    "ROUND",
+    "EAT",
+    "TABLE"
+   ]
+  },
+  {
+   "id": 48,
+   "category": "Food & Drink",
+   "word": "CUP",
+   "taboo": [
+    "DRINK",
+    "COFFEE",
+    "HANDLE",
+    "GLASS",
+    "HOLD"
+   ]
+  },
+  {
+   "id": 49,
+   "category": "Food & Drink",
+   "word": "BOTTLE",
+   "taboo": [
+    "WATER",
+    "GLASS",
+    "PLASTIC",
+    "CAP",
+    "LIQUID"
+   ]
+  },
+  {
+   "id": 50,
+   "category": "Food & Drink",
+   "word": "WATER",
+   "taboo": [
+    "DRINK",
+    "LIQUID",
+    "WET",
+    "SEA",
+    "THIRST"
+   ]
+  },
+  {
+   "id": 51,
+   "category": "Food & Drink",
+   "word": "JUICE",
+   "taboo": [
+    "FRUIT",
+    "DRINK",
+    "ORANGE",
+    "SQUEEZE",
+    "GLASS"
+   ]
+  },
+  {
+   "id": 52,
+   "category": "Food & Drink",
+   "word": "WINE",
+   "taboo": [
+    "GRAPE",
+    "RED",
+    "ALCOHOL",
+    "BOTTLE",
+    "GLASS"
+   ]
+  },
+  {
+   "id": 53,
+   "category": "Food & Drink",
+   "word": "BEER",
+   "taboo": [
+    "ALCOHOL",
+    "DRINK",
+    "GOLD",
+    "BOTTLE",
+    "BAR"
+   ]
+  },
+  {
+   "id": 54,
+   "category": "Food & Drink",
+   "word": "FLOUR",
+   "taboo": [
+    "BREAD",
+    "WHITE",
+    "BAKE",
+    "WHEAT",
+    "POWDER"
+   ]
+  },
+  {
+   "id": 55,
+   "category": "Food & Drink",
+   "word": "OIL",
+   "taboo": [
+    "COOK",
+    "LIQUID",
+    "FRY",
+    "OLIVE",
+    "CAR"
+   ]
+  },
+  {
+   "id": 56,
+   "category": "Food & Drink",
+   "word": "SPICE",
+   "taboo": [
+    "HOT",
+    "FLAVOR",
+    "COOK",
+    "PEPPER",
+    "BLAND"
+   ]
+  },
+  {
+   "id": 57,
+   "category": "Food & Drink",
+   "word": "DESSERT",
+   "taboo": [
+    "SWEET",
+    "LAST",
+    "MEAL",
+    "CAKE",
+    "AFTER"
+   ]
+  },
+  {
+   "id": 58,
+   "category": "Food & Drink",
+   "word": "SNACK",
+   "taboo": [
+    "SMALL",
+    "EAT",
+    "BETWEEN",
+    "MEAL",
+    "QUICK"
+   ]
+  },
+  {
+   "id": 59,
+   "category": "Food & Drink",
+   "word": "FRUIT",
+   "taboo": [
+    "VEGETABLE",
+    "TREE",
+    "SWEET",
+    "APPLE",
+    "EAT"
+   ]
+  },
+  {
+   "id": 60,
+   "category": "Food & Drink",
+   "word": "VEGETABLE",
+   "taboo": [
+    "FRUIT",
+    "GREEN",
+    "GROW",
+    "SALAD",
+    "HEALTHY"
+   ]
+  },
+  {
+   "id": 61,
+   "category": "Food & Drink",
+   "word": "NUT",
+   "taboo": [
+    "SHELL",
+    "TREE",
+    "CRACK",
+    "SQUIRREL",
+    "SNACK"
+   ]
+  },
+  {
+   "id": 62,
+   "category": "Food & Drink",
+   "word": "BEAN",
+   "taboo": [
+    "GREEN",
+    "SEED",
+    "COOK",
+    "PROTEIN",
+    "COFFEE"
+   ]
+  },
+  {
+   "id": 63,
+   "category": "Food & Drink",
+   "word": "CORN",
+   "taboo": [
+    "YELLOW",
+    "FIELD",
+    "POP",
+    "COB",
+    "GRAIN"
+   ]
+  },
+  {
+   "id": 64,
+   "category": "Food & Drink",
+   "word": "YOGURT",
+   "taboo": [
+    "MILK",
+    "WHITE",
+    "SPOON",
+    "SOUR",
+    "CUP"
+   ]
+  },
+  {
+   "id": 65,
+   "category": "Food & Drink",
+   "word": "CREAM",
+   "taboo": [
+    "MILK",
+    "WHITE",
+    "THICK",
+    "COFFEE",
+    "DESSERT"
+   ]
+  },
+  {
+   "id": 66,
+   "category": "Food & Drink",
+   "word": "TOAST",
+   "taboo": [
+    "BREAD",
+    "BROWN",
+    "BREAKFAST",
+    "HEAT",
+    "BUTTER"
+   ]
+  },
+  {
+   "id": 67,
+   "category": "Food & Drink",
+   "word": "BARBECUE",
+   "taboo": [
+    "GRILL",
+    "MEAT",
+    "FIRE",
+    "OUTSIDE",
+    "SMOKE"
+   ]
+  },
+  {
+   "id": 68,
+   "category": "Food & Drink",
+   "word": "HUNGER",
+   "taboo": [
+    "EAT",
+    "FOOD",
+    "STOMACH",
+    "FULL",
+    "EMPTY"
+   ]
+  },
+  {
+   "id": 69,
+   "category": "Animals",
+   "word": "DOG",
+   "taboo": [
+    "CAT",
+    "BARK",
+    "PET",
+    "TAIL",
+    "LOYAL"
+   ]
+  },
+  {
+   "id": 70,
+   "category": "Animals",
+   "word": "CAT",
+   "taboo": [
+    "DOG",
+    "MOUSE",
+    "PET",
+    "MEOW",
+    "WHISKER"
+   ]
+  },
+  {
+   "id": 71,
+   "category": "Animals",
+   "word": "HORSE",
+   "taboo": [
+    "RIDE",
+    "GALLOP",
+    "FARM",
+    "SADDLE",
+    "RACE"
+   ]
+  },
+  {
+   "id": 72,
+   "category": "Animals",
+   "word": "COW",
+   "taboo": [
+    "MILK",
+    "FARM",
+    "GRASS",
+    "BEEF",
+    "FIELD"
+   ]
+  },
+  {
+   "id": 73,
+   "category": "Animals",
+   "word": "SHEEP",
+   "taboo": [
+    "WOOL",
+    "FARM",
+    "FLOCK",
+    "LAMB",
+    "GRASS"
+   ]
+  },
+  {
+   "id": 74,
+   "category": "Animals",
+   "word": "PIG",
+   "taboo": [
+    "FARM",
+    "MUD",
+    "PINK",
+    "PORK",
+    "SNOUT"
+   ]
+  },
+  {
+   "id": 75,
+   "category": "Animals",
+   "word": "GOAT",
+   "taboo": [
+    "MILK",
+    "HORN",
+    "MOUNTAIN",
+    "FARM",
+    "BEARD"
+   ]
+  },
+  {
+   "id": 76,
+   "category": "Animals",
+   "word": "DUCK",
+   "taboo": [
+    "WATER",
+    "BIRD",
+    "SWIM",
+    "POND",
+    "BEAK"
+   ]
+  },
+  {
+   "id": 77,
+   "category": "Animals",
+   "word": "ELEPHANT",
+   "taboo": [
+    "BIG",
+    "TRUNK",
+    "GRAY",
+    "AFRICA",
+    "EAR"
+   ]
+  },
+  {
+   "id": 78,
+   "category": "Animals",
+   "word": "LION",
+   "taboo": [
+    "KING",
+    "MANE",
+    "ROAR",
+    "AFRICA",
+    "CAT"
+   ]
+  },
+  {
+   "id": 79,
+   "category": "Animals",
+   "word": "TIGER",
+   "taboo": [
+    "STRIPE",
+    "ORANGE",
+    "ASIA",
+    "CAT",
+    "WILD"
+   ]
+  },
+  {
+   "id": 80,
+   "category": "Animals",
+   "word": "BEAR",
+   "taboo": [
+    "FOREST",
+    "HONEY",
+    "BIG",
+    "BROWN",
+    "SLEEP"
+   ]
+  },
+  {
+   "id": 81,
+   "category": "Animals",
+   "word": "WOLF",
+   "taboo": [
+    "DOG",
+    "HOWL",
+    "PACK",
+    "FOREST",
+    "MOON"
+   ]
+  },
+  {
+   "id": 82,
+   "category": "Animals",
+   "word": "FOX",
+   "taboo": [
+    "RED",
+    "CLEVER",
+    "TAIL",
+    "FOREST",
+    "HUNT"
+   ]
+  },
+  {
+   "id": 83,
+   "category": "Animals",
+   "word": "RABBIT",
+   "taboo": [
+    "CARROT",
+    "JUMP",
+    "EAR",
+    "FAST",
+    "HOLE"
+   ]
+  },
+  {
+   "id": 84,
+   "category": "Animals",
+   "word": "MOUSE",
+   "taboo": [
+    "SMALL",
+    "CHEESE",
+    "CAT",
+    "COMPUTER",
+    "TAIL"
+   ]
+  },
+  {
+   "id": 85,
+   "category": "Animals",
+   "word": "SNAKE",
+   "taboo": [
+    "LONG",
+    "POISON",
+    "LEG",
+    "HISS",
+    "SKIN"
+   ]
+  },
+  {
+   "id": 86,
+   "category": "Animals",
+   "word": "FROG",
+   "taboo": [
+    "JUMP",
+    "GREEN",
+    "POND",
+    "PRINCE",
+    "WATER"
+   ]
+  },
+  {
+   "id": 87,
+   "category": "Animals",
+   "word": "TURTLE",
+   "taboo": [
+    "SHELL",
+    "SLOW",
+    "SEA",
+    "HARD",
+    "HIDE"
+   ]
+  },
+  {
+   "id": 88,
+   "category": "Animals",
+   "word": "SHARK",
+   "taboo": [
+    "TEETH",
+    "SEA",
+    "DANGER",
+    "FIN",
+    "HUNT"
+   ]
+  },
+  {
+   "id": 89,
+   "category": "Animals",
+   "word": "WHALE",
+   "taboo": [
+    "BIG",
+    "SEA",
+    "MAMMAL",
+    "BLUE",
+    "WATER"
+   ]
+  },
+  {
+   "id": 90,
+   "category": "Animals",
+   "word": "DOLPHIN",
+   "taboo": [
+    "SMART",
+    "SEA",
+    "JUMP",
+    "SWIM",
+    "GRAY"
+   ]
+  },
+  {
+   "id": 91,
+   "category": "Animals",
+   "word": "OCTOPUS",
+   "taboo": [
+    "EIGHT",
+    "ARM",
+    "SEA",
+    "INK",
+    "SUCKER"
+   ]
+  },
+  {
+   "id": 92,
+   "category": "Animals",
+   "word": "CRAB",
+   "taboo": [
+    "CLAW",
+    "BEACH",
+    "SIDE",
+    "SHELL",
+    "SEA"
+   ]
+  },
+  {
+   "id": 93,
+   "category": "Animals",
+   "word": "BUTTERFLY",
+   "taboo": [
+    "WING",
+    "COLOR",
+    "FLOWER",
+    "CATERPILLAR",
+    "INSECT"
+   ]
+  },
+  {
+   "id": 94,
+   "category": "Animals",
+   "word": "BEE",
+   "taboo": [
+    "HONEY",
+    "STING",
+    "FLOWER",
+    "BUZZ",
+    "YELLOW"
+   ]
+  },
+  {
+   "id": 95,
+   "category": "Animals",
+   "word": "ANT",
+   "taboo": [
+    "SMALL",
+    "WORK",
+    "COLONY",
+    "INSECT",
+    "CARRY"
+   ]
+  },
+  {
+   "id": 96,
+   "category": "Animals",
+   "word": "SPIDER",
+   "taboo": [
+    "WEB",
+    "EIGHT",
+    "LEG",
+    "INSECT",
+    "FEAR"
+   ]
+  },
+  {
+   "id": 97,
+   "category": "Animals",
+   "word": "MOSQUITO",
+   "taboo": [
+    "BITE",
+    "BLOOD",
+    "BUZZ",
+    "ITCH",
+    "SUMMER"
+   ]
+  },
+  {
+   "id": 98,
+   "category": "Animals",
+   "word": "FLY",
+   "taboo": [
+    "INSECT",
+    "WING",
+    "BUZZ",
+    "DIRT",
+    "HIT"
+   ]
+  },
+  {
+   "id": 99,
+   "category": "Animals",
+   "word": "BIRD",
+   "taboo": [
+    "WING",
+    "NEST",
+    "FEATHER",
+    "SING",
+    "SKY"
+   ]
+  },
+  {
+   "id": 100,
+   "category": "Animals",
+   "word": "EAGLE",
+   "taboo": [
+    "BIRD",
+    "SHARP",
+    "MOUNTAIN",
+    "HUNT",
+    "SKY"
+   ]
+  },
+  {
+   "id": 101,
+   "category": "Animals",
+   "word": "OWL",
+   "taboo": [
+    "NIGHT",
+    "WISE",
+    "BIRD",
+    "EYE",
+    "TREE"
+   ]
+  },
+  {
+   "id": 102,
+   "category": "Animals",
+   "word": "PENGUIN",
+   "taboo": [
+    "COLD",
+    "BLACK",
+    "ICE",
+    "SWIM",
+    "BIRD"
+   ]
+  },
+  {
+   "id": 103,
+   "category": "Animals",
+   "word": "PARROT",
+   "taboo": [
+    "TALK",
+    "COLOR",
+    "BIRD",
+    "REPEAT",
+    "TROPICAL"
+   ]
+  },
+  {
+   "id": 104,
+   "category": "Animals",
+   "word": "MONKEY",
+   "taboo": [
+    "BANANA",
+    "TREE",
+    "CLIMB",
+    "TAIL",
+    "JUNGLE"
+   ]
+  },
+  {
+   "id": 105,
+   "category": "Animals",
+   "word": "GIRAFFE",
+   "taboo": [
+    "NECK",
+    "TALL",
+    "AFRICA",
+    "SPOT",
+    "LEAF"
+   ]
+  },
+  {
+   "id": 106,
+   "category": "Animals",
+   "word": "ZEBRA",
+   "taboo": [
+    "STRIPE",
+    "HORSE",
+    "BLACK",
+    "AFRICA",
+    "WHITE"
+   ]
+  },
+  {
+   "id": 107,
+   "category": "Animals",
+   "word": "CAMEL",
+   "taboo": [
+    "DESERT",
+    "HUMP",
+    "WATER",
+    "RIDE",
+    "SAND"
+   ]
+  },
+  {
+   "id": 108,
+   "category": "Animals",
+   "word": "KANGAROO",
+   "taboo": [
+    "JUMP",
+    "POUCH",
+    "AUSTRALIA",
+    "TAIL",
+    "BABY"
+   ]
+  },
+  {
+   "id": 109,
+   "category": "Animals",
+   "word": "CROCODILE",
+   "taboo": [
+    "TEETH",
+    "RIVER",
+    "GREEN",
+    "BITE",
+    "JAW"
+   ]
+  },
+  {
+   "id": 110,
+   "category": "Animals",
+   "word": "HIPPO",
+   "taboo": [
+    "WATER",
+    "BIG",
+    "AFRICA",
+    "RIVER",
+    "MOUTH"
+   ]
+  },
+  {
+   "id": 111,
+   "category": "Animals",
+   "word": "RHINO",
+   "taboo": [
+    "HORN",
+    "AFRICA",
+    "BIG",
+    "GRAY",
+    "CHARGE"
+   ]
+  },
+  {
+   "id": 112,
+   "category": "Animals",
+   "word": "DEER",
+   "taboo": [
+    "FOREST",
+    "ANTLER",
+    "RUN",
+    "HUNT",
+    "WILD"
+   ]
+  },
+  {
+   "id": 113,
+   "category": "Animals",
+   "word": "SQUIRREL",
+   "taboo": [
+    "NUT",
+    "TREE",
+    "TAIL",
+    "CLIMB",
+    "SMALL"
+   ]
+  },
+  {
+   "id": 114,
+   "category": "Animals",
+   "word": "BAT",
+   "taboo": [
+    "NIGHT",
+    "CAVE",
+    "WING",
+    "BLIND",
+    "HANG"
+   ]
+  },
+  {
+   "id": 115,
+   "category": "Animals",
+   "word": "WORM",
+   "taboo": [
+    "GROUND",
+    "LONG",
+    "SOIL",
+    "WIGGLE",
+    "BIRD"
+   ]
+  },
+  {
+   "id": 116,
+   "category": "Animals",
+   "word": "SNAIL",
+   "taboo": [
+    "SLOW",
+    "SHELL",
+    "SLIME",
+    "GARDEN",
+    "FAST"
+   ]
+  },
+  {
+   "id": 117,
+   "category": "Animals",
+   "word": "LIZARD",
+   "taboo": [
+    "REPTILE",
+    "TAIL",
+    "SUN",
+    "ROCK",
+    "SMALL"
+   ]
+  },
+  {
+   "id": 118,
+   "category": "Animals",
+   "word": "INSECT",
+   "taboo": [
+    "SMALL",
+    "LEG",
+    "BUG",
+    "WING",
+    "CRAWL"
+   ]
+  },
+  {
+   "id": 119,
+   "category": "Animals",
+   "word": "NEST",
+   "taboo": [
+    "BIRD",
+    "EGG",
+    "TREE",
+    "BUILD",
+    "HOME"
+   ]
+  },
+  {
+   "id": 120,
+   "category": "Animals",
+   "word": "FEATHER",
+   "taboo": [
+    "BIRD",
+    "LIGHT",
+    "WING",
+    "SOFT",
+    "HEAVY"
+   ]
+  },
+  {
+   "id": 121,
+   "category": "Animals",
+   "word": "TAIL",
+   "taboo": [
+    "HEAD",
+    "ANIMAL",
+    "WAG",
+    "BEHIND",
+    "DOG"
+   ]
+  },
+  {
+   "id": 122,
+   "category": "Animals",
+   "word": "WING",
+   "taboo": [
+    "FLY",
+    "BIRD",
+    "PLANE",
+    "FEATHER",
+    "AIR"
+   ]
+  },
+  {
+   "id": 123,
+   "category": "Animals",
+   "word": "HORN",
+   "taboo": [
+    "ANIMAL",
+    "HEAD",
+    "SHARP",
+    "BULL",
+    "POINT"
+   ]
+  },
+  {
+   "id": 124,
+   "category": "Animals",
+   "word": "FUR",
+   "taboo": [
+    "HAIR",
+    "ANIMAL",
+    "WARM",
+    "SOFT",
+    "COAT"
+   ]
+  },
+  {
+   "id": 125,
+   "category": "Animals",
+   "word": "ZOO",
+   "taboo": [
+    "ANIMAL",
+    "CAGE",
+    "VISIT",
+    "LION",
+    "WILD"
+   ]
+  },
+  {
+   "id": 126,
+   "category": "Animals",
+   "word": "PET",
+   "taboo": [
+    "ANIMAL",
+    "HOME",
+    "DOG",
+    "WILD",
+    "CARE"
+   ]
+  },
+  {
+   "id": 127,
+   "category": "Clothes & Accessories",
+   "word": "SHIRT",
+   "taboo": [
+    "WEAR",
+    "BUTTON",
+    "COLLAR",
+    "SLEEVE",
+    "TOP"
+   ]
+  },
+  {
+   "id": 128,
+   "category": "Clothes & Accessories",
+   "word": "PANTS",
+   "taboo": [
+    "LEG",
+    "WEAR",
+    "PAIR",
+    "SHORTS",
+    "BELT"
+   ]
+  },
+  {
+   "id": 129,
+   "category": "Clothes & Accessories",
+   "word": "SHORTS",
+   "taboo": [
+    "SUMMER",
+    "LEG",
+    "PANTS",
+    "KNEE",
+    "LONG"
+   ]
+  },
+  {
+   "id": 130,
+   "category": "Clothes & Accessories",
+   "word": "DRESS",
+   "taboo": [
+    "WOMAN",
+    "WEAR",
+    "SKIRT",
+    "LONG",
+    "PARTY"
+   ]
+  },
+  {
+   "id": 131,
+   "category": "Clothes & Accessories",
+   "word": "SKIRT",
+   "taboo": [
+    "WOMAN",
+    "LEG",
+    "DRESS",
+    "SHORT",
+    "WEAR"
+   ]
+  },
+  {
+   "id": 132,
+   "category": "Clothes & Accessories",
+   "word": "JACKET",
+   "taboo": [
+    "COAT",
+    "WEAR",
+    "COLD",
+    "ZIP",
+    "ARM"
+   ]
+  },
+  {
+   "id": 133,
+   "category": "Clothes & Accessories",
+   "word": "COAT",
+   "taboo": [
+    "JACKET",
+    "WINTER",
+    "WEAR",
+    "LONG",
+    "WARM"
+   ]
+  },
+  {
+   "id": 134,
+   "category": "Clothes & Accessories",
+   "word": "SWEATER",
+   "taboo": [
+    "WOOL",
+    "WARM",
+    "WINTER",
+    "WEAR",
+    "KNIT"
+   ]
+  },
+  {
+   "id": 135,
+   "category": "Clothes & Accessories",
+   "word": "SOCK",
+   "taboo": [
+    "FOOT",
+    "SHOE",
+    "PAIR",
+    "WEAR",
+    "COTTON"
+   ]
+  },
+  {
+   "id": 136,
+   "category": "Clothes & Accessories",
+   "word": "SHOE",
+   "taboo": [
+    "FOOT",
+    "WEAR",
+    "LACE",
+    "PAIR",
+    "WALK"
+   ]
+  },
+  {
+   "id": 137,
+   "category": "Clothes & Accessories",
+   "word": "BOOT",
+   "taboo": [
+    "SHOE",
+    "FOOT",
+    "HIGH",
+    "RAIN",
+    "LEATHER"
+   ]
+  },
+  {
+   "id": 138,
+   "category": "Clothes & Accessories",
+   "word": "SANDAL",
+   "taboo": [
+    "SUMMER",
+    "FOOT",
+    "OPEN",
+    "BEACH",
+    "SHOE"
+   ]
+  },
+  {
+   "id": 139,
+   "category": "Clothes & Accessories",
+   "word": "HAT",
+   "taboo": [
+    "HEAD",
+    "WEAR",
+    "SUN",
+    "CAP",
+    "COVER"
+   ]
+  },
+  {
+   "id": 140,
+   "category": "Clothes & Accessories",
+   "word": "SCARF",
+   "taboo": [
+    "NECK",
+    "WINTER",
+    "WARM",
+    "WEAR",
+    "WRAP"
+   ]
+  },
+  {
+   "id": 141,
+   "category": "Clothes & Accessories",
+   "word": "GLOVE",
+   "taboo": [
+    "HAND",
+    "WINTER",
+    "FINGER",
+    "WEAR",
+    "PAIR"
+   ]
+  },
+  {
+   "id": 142,
+   "category": "Clothes & Accessories",
+   "word": "BELT",
+   "taboo": [
+    "WAIST",
+    "PANTS",
+    "LEATHER",
+    "BUCKLE",
+    "HOLD"
+   ]
+  },
+  {
+   "id": 143,
+   "category": "Clothes & Accessories",
+   "word": "TIE",
+   "taboo": [
+    "NECK",
+    "SHIRT",
+    "FORMAL",
+    "KNOT",
+    "MAN"
+   ]
+  },
+  {
+   "id": 144,
+   "category": "Clothes & Accessories",
+   "word": "POCKET",
+   "taboo": [
+    "PANTS",
+    "HAND",
+    "KEEP",
+    "SMALL",
+    "INSIDE"
+   ]
+  },
+  {
+   "id": 145,
+   "category": "Clothes & Accessories",
+   "word": "BUTTON",
+   "taboo": [
+    "SHIRT",
+    "CLOSE",
+    "ROUND",
+    "PRESS",
+    "HOLE"
+   ]
+  },
+  {
+   "id": 146,
+   "category": "Clothes & Accessories",
+   "word": "ZIP",
+   "taboo": [
+    "CLOSE",
+    "JACKET",
+    "TEETH",
+    "OPEN",
+    "PULL"
+   ]
+  },
+  {
+   "id": 147,
+   "category": "Clothes & Accessories",
+   "word": "UNIFORM",
+   "taboo": [
+    "SAME",
+    "SCHOOL",
+    "WEAR",
+    "WORK",
+    "RULE"
+   ]
+  },
+  {
+   "id": 148,
+   "category": "Clothes & Accessories",
+   "word": "PAJAMAS",
+   "taboo": [
+    "SLEEP",
+    "NIGHT",
+    "BED",
+    "WEAR",
+    "SOFT"
+   ]
+  },
+  {
+   "id": 149,
+   "category": "Clothes & Accessories",
+   "word": "SWIMSUIT",
+   "taboo": [
+    "BEACH",
+    "POOL",
+    "WEAR",
+    "WATER",
+    "BODY"
+   ]
+  },
+  {
+   "id": 150,
+   "category": "Clothes & Accessories",
+   "word": "RING",
+   "taboo": [
+    "FINGER",
+    "GOLD",
+    "MARRY",
+    "ROUND",
+    "JEWEL"
+   ]
+  },
+  {
+   "id": 151,
+   "category": "Clothes & Accessories",
+   "word": "NECKLACE",
+   "taboo": [
+    "SILVER",
+    "JEWEL",
+    "GOLD",
+    "WEAR",
+    "CHAIN"
+   ]
+  },
+  {
+   "id": 152,
+   "category": "Clothes & Accessories",
+   "word": "WATCH",
+   "taboo": [
+    "TIME",
+    "WRIST",
+    "CLOCK",
+    "WEAR",
+    "HAND"
+   ]
+  },
+  {
+   "id": 153,
+   "category": "Clothes & Accessories",
+   "word": "GLASSES",
+   "taboo": [
+    "EYE",
+    "SEE",
+    "LENS",
+    "WEAR",
+    "NOSE"
+   ]
+  },
+  {
+   "id": 154,
+   "category": "Clothes & Accessories",
+   "word": "BAG",
+   "taboo": [
+    "CARRY",
+    "HOLD",
+    "HAND",
+    "SHOP",
+    "INSIDE"
+   ]
+  },
+  {
+   "id": 155,
+   "category": "Clothes & Accessories",
+   "word": "UMBRELLA",
+   "taboo": [
+    "RAIN",
+    "OPEN",
+    "HOLD",
+    "WET",
+    "COVER"
+   ]
+  },
+  {
+   "id": 156,
+   "category": "Clothes & Accessories",
+   "word": "WOOL",
+   "taboo": [
+    "SHEEP",
+    "WARM",
+    "SWEATER",
+    "KNIT",
+    "SOFT"
+   ]
+  },
+  {
+   "id": 157,
+   "category": "Clothes & Accessories",
+   "word": "COTTON",
+   "taboo": [
+    "PLANT",
+    "SOFT",
+    "SHIRT",
+    "WHITE",
+    "NATURAL"
+   ]
+  },
+  {
+   "id": 158,
+   "category": "Clothes & Accessories",
+   "word": "LEATHER",
+   "taboo": [
+    "ANIMAL",
+    "SKIN",
+    "SHOE",
+    "BAG",
+    "TOUGH"
+   ]
+  },
+  {
+   "id": 159,
+   "category": "Clothes & Accessories",
+   "word": "SILK",
+   "taboo": [
+    "SMOOTH",
+    "WORM",
+    "EXPENSIVE",
+    "SOFT",
+    "CLOTH"
+   ]
+  },
+  {
+   "id": 160,
+   "category": "Clothes & Accessories",
+   "word": "FASHION",
+   "taboo": [
+    "STYLE",
+    "CLOTHES",
+    "TREND",
+    "MODEL",
+    "NEW"
+   ]
+  },
+  {
+   "id": 161,
+   "category": "Clothes & Accessories",
+   "word": "SIZE",
+   "taboo": [
+    "BIG",
+    "SMALL",
+    "FIT",
+    "MEASURE",
+    "NUMBER"
+   ]
+  },
+  {
+   "id": 162,
+   "category": "Clothes & Accessories",
+   "word": "LAUNDRY",
+   "taboo": [
+    "WASH",
+    "CLOTHES",
+    "MACHINE",
+    "DIRTY",
+    "CLEAN"
+   ]
+  },
+  {
+   "id": 163,
+   "category": "Clothes & Accessories",
+   "word": "IRON",
+   "taboo": [
+    "METAL",
+    "FLAT",
+    "HOT",
+    "CLOTHES",
+    "PRESS"
+   ]
+  },
+  {
+   "id": 164,
+   "category": "Clothes & Accessories",
+   "word": "MIRROR",
+   "taboo": [
+    "SEE",
+    "REFLECT",
+    "GLASS",
+    "FACE",
+    "WALL"
+   ]
+  },
+  {
+   "id": 165,
+   "category": "Geography & Nature",
+   "word": "MOUNTAIN",
+   "taboo": [
+    "HIGH",
+    "CLIMB",
+    "VALLEY",
+    "PEAK",
+    "ROCK"
+   ]
+  },
+  {
+   "id": 166,
+   "category": "Geography & Nature",
+   "word": "VALLEY",
+   "taboo": [
+    "MOUNTAIN",
+    "LOW",
+    "BETWEEN",
+    "RIVER",
+    "GREEN"
+   ]
+  },
+  {
+   "id": 167,
+   "category": "Geography & Nature",
+   "word": "RIVER",
+   "taboo": [
+    "WATER",
+    "FLOW",
+    "SEA",
+    "BANK",
+    "LONG"
+   ]
+  },
+  {
+   "id": 168,
+   "category": "Geography & Nature",
+   "word": "LAKE",
+   "taboo": [
+    "WATER",
+    "STILL",
+    "SEA",
+    "SWIM",
+    "SHORE"
+   ]
+  },
+  {
+   "id": 169,
+   "category": "Geography & Nature",
+   "word": "SEA",
+   "taboo": [
+    "OCEAN",
+    "SALT",
+    "WATER",
+    "WAVE",
+    "LAND"
+   ]
+  },
+  {
+   "id": 170,
+   "category": "Geography & Nature",
+   "word": "OCEAN",
+   "taboo": [
+    "SEA",
+    "BIG",
+    "WATER",
+    "DEEP",
+    "BLUE"
+   ]
+  },
+  {
+   "id": 171,
+   "category": "Geography & Nature",
+   "word": "ISLAND",
+   "taboo": [
+    "WATER",
+    "BEACH",
+    "AROUND",
+    "SEA",
+    "SMALL"
+   ]
+  },
+  {
+   "id": 172,
+   "category": "Geography & Nature",
+   "word": "BEACH",
+   "taboo": [
+    "SAND",
+    "SEA",
+    "SUN",
+    "SWIM",
+    "SHORE"
+   ]
+  },
+  {
+   "id": 173,
+   "category": "Geography & Nature",
+   "word": "DESERT",
+   "taboo": [
+    "SAND",
+    "DRY",
+    "HOT",
+    "WATER",
+    "CAMEL"
+   ]
+  },
+  {
+   "id": 174,
+   "category": "Geography & Nature",
+   "word": "FOREST",
+   "taboo": [
+    "TREE",
+    "GREEN",
+    "WOOD",
+    "WILD",
+    "MANY"
+   ]
+  },
+  {
+   "id": 175,
+   "category": "Geography & Nature",
+   "word": "JUNGLE",
+   "taboo": [
+    "TREE",
+    "HOT",
+    "WET",
+    "WILD",
+    "MONKEY"
+   ]
+  },
+  {
+   "id": 176,
+   "category": "Geography & Nature",
+   "word": "FIELD",
+   "taboo": [
+    "GRASS",
+    "FARM",
+    "FLAT",
+    "OPEN",
+    "CROP"
+   ]
+  },
+  {
+   "id": 177,
+   "category": "Geography & Nature",
+   "word": "HILL",
+   "taboo": [
+    "SMALL",
+    "MOUNTAIN",
+    "UP",
+    "SLOPE",
+    "CLIMB"
+   ]
+  },
+  {
+   "id": 178,
+   "category": "Geography & Nature",
+   "word": "CAVE",
+   "taboo": [
+    "DARK",
+    "ROCK",
+    "HOLE",
+    "BAT",
+    "UNDER"
+   ]
+  },
+  {
+   "id": 179,
+   "category": "Geography & Nature",
+   "word": "WATERFALL",
+   "taboo": [
+    "RIVER",
+    "ROCK",
+    "LOUD",
+    "DROP",
+    "HEIGHT"
+   ]
+  },
+  {
+   "id": 180,
+   "category": "Geography & Nature",
+   "word": "VOLCANO",
+   "taboo": [
+    "LAVA",
+    "MOUNTAIN",
+    "ERUPT",
+    "FIRE",
+    "ASH"
+   ]
+  },
+  {
+   "id": 181,
+   "category": "Geography & Nature",
+   "word": "EARTHQUAKE",
+   "taboo": [
+    "SHAKE",
+    "GROUND",
+    "DAMAGE",
+    "MOVE",
+    "SCALE"
+   ]
+  },
+  {
+   "id": 182,
+   "category": "Geography & Nature",
+   "word": "CLIFF",
+   "taboo": [
+    "HIGH",
+    "EDGE",
+    "ROCK",
+    "FALL",
+    "SEA"
+   ]
+  },
+  {
+   "id": 183,
+   "category": "Geography & Nature",
+   "word": "SAND",
+   "taboo": [
+    "BEACH",
+    "DESERT",
+    "SMALL",
+    "GRAIN",
+    "YELLOW"
+   ]
+  },
+  {
+   "id": 184,
+   "category": "Geography & Nature",
+   "word": "ROCK",
+   "taboo": [
+    "HARD",
+    "STONE",
+    "MOUNTAIN",
+    "HEAVY",
+    "GROUND"
+   ]
+  },
+  {
+   "id": 185,
+   "category": "Geography & Nature",
+   "word": "TREE",
+   "taboo": [
+    "LEAF",
+    "WOOD",
+    "TALL",
+    "BRANCH",
+    "FOREST"
+   ]
+  },
+  {
+   "id": 186,
+   "category": "Geography & Nature",
+   "word": "LEAF",
+   "taboo": [
+    "TREE",
+    "GREEN",
+    "FALL",
+    "BRANCH",
+    "AUTUMN"
+   ]
+  },
+  {
+   "id": 187,
+   "category": "Geography & Nature",
+   "word": "FLOWER",
+   "taboo": [
+    "PETAL",
+    "SMELL",
+    "GARDEN",
+    "COLOR",
+    "BLOOM"
+   ]
+  },
+  {
+   "id": 188,
+   "category": "Geography & Nature",
+   "word": "GRASS",
+   "taboo": [
+    "GREEN",
+    "GROUND",
+    "CUT",
+    "LAWN",
+    "GROW"
+   ]
+  },
+  {
+   "id": 189,
+   "category": "Geography & Nature",
+   "word": "ROOT",
+   "taboo": [
+    "TREE",
+    "GROUND",
+    "UNDER",
+    "PLANT",
+    "DEEP"
+   ]
+  },
+  {
+   "id": 190,
+   "category": "Geography & Nature",
+   "word": "BRANCH",
+   "taboo": [
+    "TREE",
+    "ARM",
+    "WOOD",
+    "LEAF",
+    "BREAK"
+   ]
+  },
+  {
+   "id": 191,
+   "category": "Geography & Nature",
+   "word": "SEED",
+   "taboo": [
+    "PLANT",
+    "GROW",
+    "SMALL",
+    "SOIL",
+    "START"
+   ]
+  },
+  {
+   "id": 192,
+   "category": "Geography & Nature",
+   "word": "GARDEN",
+   "taboo": [
+    "PLANT",
+    "FLOWER",
+    "HOUSE",
+    "GROW",
+    "GREEN"
+   ]
+  },
+  {
+   "id": 193,
+   "category": "Geography & Nature",
+   "word": "MAP",
+   "taboo": [
+    "PLACE",
+    "SHOW",
+    "PAPER",
+    "ROAD",
+    "DIRECTION"
+   ]
+  },
+  {
+   "id": 194,
+   "category": "Geography & Nature",
+   "word": "NORTH",
+   "taboo": [
+    "SOUTH",
+    "DIRECTION",
+    "COMPASS",
+    "POLE",
+    "MAP"
+   ]
+  },
+  {
+   "id": 195,
+   "category": "Geography & Nature",
+   "word": "SOUTH",
+   "taboo": [
+    "NORTH",
+    "DIRECTION",
+    "COMPASS",
+    "MAP",
+    "WARM"
+   ]
+  },
+  {
+   "id": 196,
+   "category": "Geography & Nature",
+   "word": "EAST",
+   "taboo": [
+    "WEST",
+    "DIRECTION",
+    "SUN",
+    "RISE",
+    "COMPASS"
+   ]
+  },
+  {
+   "id": 197,
+   "category": "Geography & Nature",
+   "word": "WEST",
+   "taboo": [
+    "EAST",
+    "DIRECTION",
+    "SUN",
+    "SET",
+    "COMPASS"
+   ]
+  },
+  {
+   "id": 198,
+   "category": "Geography & Nature",
+   "word": "COUNTRY",
+   "taboo": [
+    "NATION",
+    "BORDER",
+    "CITY",
+    "FLAG",
+    "MAP"
+   ]
+  },
+  {
+   "id": 199,
+   "category": "Geography & Nature",
+   "word": "CITY",
+   "taboo": [
+    "TOWN",
+    "BIG",
+    "VILLAGE",
+    "BUILDING",
+    "PEOPLE"
+   ]
+  },
+  {
+   "id": 200,
+   "category": "Geography & Nature",
+   "word": "VILLAGE",
+   "taboo": [
+    "SMALL",
+    "CITY",
+    "COUNTRY",
+    "HOUSE",
+    "QUIET"
+   ]
+  },
+  {
+   "id": 201,
+   "category": "Geography & Nature",
+   "word": "CAPITAL",
+   "taboo": [
+    "CITY",
+    "COUNTRY",
+    "GOVERNMENT",
+    "MAIN",
+    "LETTER"
+   ]
+  },
+  {
+   "id": 202,
+   "category": "Geography & Nature",
+   "word": "BORDER",
+   "taboo": [
+    "LINE",
+    "COUNTRY",
+    "CROSS",
+    "EDGE",
+    "PASSPORT"
+   ]
+  },
+  {
+   "id": 203,
+   "category": "Geography & Nature",
+   "word": "CONTINENT",
+   "taboo": [
+    "LAND",
+    "BIG",
+    "AFRICA",
+    "SEVEN",
+    "MAP"
+   ]
+  },
+  {
+   "id": 204,
+   "category": "Geography & Nature",
+   "word": "PLANET",
+   "taboo": [
+    "EARTH",
+    "SPACE",
+    "ROUND",
+    "ORBIT",
+    "SUN"
+   ]
+  },
+  {
+   "id": 205,
+   "category": "Geography & Nature",
+   "word": "EARTH",
+   "taboo": [
+    "PLANET",
+    "WORLD",
+    "GROUND",
+    "BLUE",
+    "SOIL"
+   ]
+  },
+  {
+   "id": 206,
+   "category": "Geography & Nature",
+   "word": "MOON",
+   "taboo": [
+    "NIGHT",
+    "SKY",
+    "ROUND",
+    "EARTH",
+    "SUN"
+   ]
+  },
+  {
+   "id": 207,
+   "category": "Geography & Nature",
+   "word": "SUN",
+   "taboo": [
+    "MOON",
+    "HOT",
+    "LIGHT",
+    "SKY",
+    "DAY"
+   ]
+  },
+  {
+   "id": 208,
+   "category": "Geography & Nature",
+   "word": "STAR",
+   "taboo": [
+    "NIGHT",
+    "SKY",
+    "SHINE",
+    "FAR",
+    "SPACE"
+   ]
+  },
+  {
+   "id": 209,
+   "category": "Geography & Nature",
+   "word": "SKY",
+   "taboo": [
+    "BLUE",
+    "ABOVE",
+    "CLOUD",
+    "GROUND",
+    "LOOK"
+   ]
+  },
+  {
+   "id": 210,
+   "category": "Geography & Nature",
+   "word": "CLOUD",
+   "taboo": [
+    "SKY",
+    "WHITE",
+    "RAIN",
+    "SOFT",
+    "FLOAT"
+   ]
+  },
+  {
+   "id": 211,
+   "category": "Geography & Nature",
+   "word": "LAND",
+   "taboo": [
+    "SEA",
+    "GROUND",
+    "EARTH",
+    "OWN",
+    "FARM"
+   ]
+  },
+  {
+   "id": 212,
+   "category": "Geography & Nature",
+   "word": "STONE",
+   "taboo": [
+    "ROCK",
+    "HARD",
+    "SMALL",
+    "THROW",
+    "GROUND"
+   ]
+  },
+  {
+   "id": 213,
+   "category": "Geography & Nature",
+   "word": "HOLE",
+   "taboo": [
+    "GROUND",
+    "DIG",
+    "EMPTY",
+    "ROUND",
+    "DEEP"
+   ]
+  },
+  {
+   "id": 214,
+   "category": "Geography & Nature",
+   "word": "WOOD",
+   "taboo": [
+    "TREE",
+    "BURN",
+    "HARD",
+    "FOREST",
+    "BUILD"
+   ]
+  },
+  {
+   "id": 215,
+   "category": "Geography & Nature",
+   "word": "ICE",
+   "taboo": [
+    "COLD",
+    "WATER",
+    "FREEZE",
+    "HOT",
+    "SLIP"
+   ]
+  },
+  {
+   "id": 216,
+   "category": "Geography & Nature",
+   "word": "FIRE",
+   "taboo": [
+    "HOT",
+    "BURN",
+    "WATER",
+    "FLAME",
+    "SMOKE"
+   ]
+  },
+  {
+   "id": 217,
+   "category": "Geography & Nature",
+   "word": "SMOKE",
+   "taboo": [
+    "FIRE",
+    "GRAY",
+    "AIR",
+    "RISE",
+    "BURN"
+   ]
+  },
+  {
+   "id": 218,
+   "category": "Geography & Nature",
+   "word": "SHADOW",
+   "taboo": [
+    "LIGHT",
+    "DARK",
+    "SUN",
+    "FOLLOW",
+    "SHAPE"
+   ]
+  },
+  {
+   "id": 219,
+   "category": "Weather & Time",
+   "word": "RAIN",
+   "taboo": [
+    "WATER",
+    "CLOUD",
+    "WET",
+    "UMBRELLA",
+    "SKY"
+   ]
+  },
+  {
+   "id": 220,
+   "category": "Weather & Time",
+   "word": "SNOW",
+   "taboo": [
+    "WHITE",
+    "COLD",
+    "WINTER",
+    "FALL",
+    "ICE"
+   ]
+  },
+  {
+   "id": 221,
+   "category": "Weather & Time",
+   "word": "WIND",
+   "taboo": [
+    "BLOW",
+    "AIR",
+    "STRONG",
+    "MOVE",
+    "STORM"
+   ]
+  },
+  {
+   "id": 222,
+   "category": "Weather & Time",
+   "word": "STORM",
+   "taboo": [
+    "RAIN",
+    "WIND",
+    "LOUD",
+    "DANGER",
+    "CLOUD"
+   ]
+  },
+  {
+   "id": 223,
+   "category": "Weather & Time",
+   "word": "THUNDER",
+   "taboo": [
+    "LOUD",
+    "LIGHTNING",
+    "STORM",
+    "SOUND",
+    "SKY"
+   ]
+  },
+  {
+   "id": 224,
+   "category": "Weather & Time",
+   "word": "LIGHTNING",
+   "taboo": [
+    "FLASH",
+    "THUNDER",
+    "STORM",
+    "SKY",
+    "STRIKE"
+   ]
+  },
+  {
+   "id": 225,
+   "category": "Weather & Time",
+   "word": "FOG",
+   "taboo": [
+    "THICK",
+    "SEE",
+    "GRAY",
+    "MORNING",
+    "CLOUD"
+   ]
+  },
+  {
+   "id": 226,
+   "category": "Weather & Time",
+   "word": "RAINBOW",
+   "taboo": [
+    "COLOR",
+    "SKY",
+    "ARC",
+    "SEVEN",
+    "LIGHT"
+   ]
+  },
+  {
+   "id": 227,
+   "category": "Weather & Time",
+   "word": "HEAT",
+   "taboo": [
+    "HOT",
+    "COLD",
+    "SUN",
+    "TEMPERATURE",
+    "SUMMER"
+   ]
+  },
+  {
+   "id": 228,
+   "category": "Weather & Time",
+   "word": "COLD",
+   "taboo": [
+    "HOT",
+    "WINTER",
+    "ICE",
+    "SHIVER",
+    "TEMPERATURE"
+   ]
+  },
+  {
+   "id": 229,
+   "category": "Weather & Time",
+   "word": "SUMMER",
+   "taboo": [
+    "WINTER",
+    "HOT",
+    "SEASON",
+    "BEACH",
+    "SUN"
+   ]
+  },
+  {
+   "id": 230,
+   "category": "Weather & Time",
+   "word": "WINTER",
+   "taboo": [
+    "SUMMER",
+    "COLD",
+    "SNOW",
+    "SEASON",
+    "DARK"
+   ]
+  },
+  {
+   "id": 231,
+   "category": "Weather & Time",
+   "word": "SPRING",
+   "taboo": [
+    "SEASON",
+    "FLOWER",
+    "AUTUMN",
+    "NEW",
+    "GROW"
+   ]
+  },
+  {
+   "id": 232,
+   "category": "Weather & Time",
+   "word": "AUTUMN",
+   "taboo": [
+    "SEASON",
+    "LEAF",
+    "SPRING",
+    "ORANGE",
+    "FALL"
+   ]
+  },
+  {
+   "id": 233,
+   "category": "Weather & Time",
+   "word": "SEASON",
+   "taboo": [
+    "YEAR",
+    "FOUR",
+    "WEATHER",
+    "CHANGE",
+    "SUMMER"
+   ]
+  },
+  {
+   "id": 234,
+   "category": "Weather & Time",
+   "word": "MORNING",
+   "taboo": [
+    "EVENING",
+    "WAKE",
+    "SUN",
+    "EARLY",
+    "BREAKFAST"
+   ]
+  },
+  {
+   "id": 235,
+   "category": "Weather & Time",
+   "word": "EVENING",
+   "taboo": [
+    "MORNING",
+    "DARK",
+    "NIGHT",
+    "LATE",
+    "DINNER"
+   ]
+  },
+  {
+   "id": 236,
+   "category": "Weather & Time",
+   "word": "NIGHT",
+   "taboo": [
+    "DAY",
+    "DARK",
+    "SLEEP",
+    "MOON",
+    "STAR"
+   ]
+  },
+  {
+   "id": 237,
+   "category": "Weather & Time",
+   "word": "DAY",
+   "taboo": [
+    "NIGHT",
+    "LIGHT",
+    "WEEK",
+    "SUN",
+    "TWENTY"
+   ]
+  },
+  {
+   "id": 238,
+   "category": "Weather & Time",
+   "word": "WEEK",
+   "taboo": [
+    "SEVEN",
+    "DAY",
+    "MONTH",
+    "CALENDAR",
+    "END"
+   ]
+  },
+  {
+   "id": 239,
+   "category": "Weather & Time",
+   "word": "MONTH",
+   "taboo": [
+    "YEAR",
+    "THIRTY",
+    "CALENDAR",
+    "WEEK",
+    "TWELVE"
+   ]
+  },
+  {
+   "id": 240,
+   "category": "Weather & Time",
+   "word": "YEAR",
+   "taboo": [
+    "MONTH",
+    "TWELVE",
+    "CALENDAR",
+    "AGE",
+    "NEW"
+   ]
+  },
+  {
+   "id": 241,
+   "category": "Weather & Time",
+   "word": "HOUR",
+   "taboo": [
+    "MINUTE",
+    "SIXTY",
+    "TIME",
+    "CLOCK",
+    "DAY"
+   ]
+  },
+  {
+   "id": 242,
+   "category": "Weather & Time",
+   "word": "MINUTE",
+   "taboo": [
+    "SECOND",
+    "HOUR",
+    "SIXTY",
+    "TIME",
+    "SHORT"
+   ]
+  },
+  {
+   "id": 243,
+   "category": "Weather & Time",
+   "word": "CLOCK",
+   "taboo": [
+    "TIME",
+    "HAND",
+    "WALL",
+    "TICK",
+    "HOUR"
+   ]
+  },
+  {
+   "id": 244,
+   "category": "Weather & Time",
+   "word": "CALENDAR",
+   "taboo": [
+    "DATE",
+    "MONTH",
+    "WALL",
+    "YEAR",
+    "DAY"
+   ]
+  },
+  {
+   "id": 245,
+   "category": "Weather & Time",
+   "word": "YESTERDAY",
+   "taboo": [
+    "TOMORROW",
+    "PAST",
+    "AGO",
+    "BEFORE",
+    "TODAY"
+   ]
+  },
+  {
+   "id": 246,
+   "category": "Weather & Time",
+   "word": "TOMORROW",
+   "taboo": [
+    "YESTERDAY",
+    "FUTURE",
+    "DAY",
+    "NEXT",
+    "TODAY"
+   ]
+  },
+  {
+   "id": 247,
+   "category": "Weather & Time",
+   "word": "FUTURE",
+   "taboo": [
+    "PAST",
+    "TIME",
+    "COME",
+    "AHEAD",
+    "PREDICT"
+   ]
+  },
+  {
+   "id": 248,
+   "category": "Weather & Time",
+   "word": "PAST",
+   "taboo": [
+    "FUTURE",
+    "HISTORY",
+    "BEFORE",
+    "TIME",
+    "MEMORY"
+   ]
+  },
+  {
+   "id": 249,
+   "category": "Body & Health",
+   "word": "HEAD",
+   "taboo": [
+    "BODY",
+    "TOP",
+    "HAIR",
+    "BRAIN",
+    "NECK"
+   ]
+  },
+  {
+   "id": 250,
+   "category": "Body & Health",
+   "word": "HAIR",
+   "taboo": [
+    "HEAD",
+    "CUT",
+    "LONG",
+    "BRUSH",
+    "COLOR"
+   ]
+  },
+  {
+   "id": 251,
+   "category": "Body & Health",
+   "word": "EYE",
+   "taboo": [
+    "SEE",
+    "FACE",
+    "BLUE",
+    "LOOK",
+    "TWO"
+   ]
+  },
+  {
+   "id": 252,
+   "category": "Body & Health",
+   "word": "EAR",
+   "taboo": [
+    "HEAR",
+    "HEAD",
+    "SOUND",
+    "LISTEN",
+    "SIDE"
+   ]
+  },
+  {
+   "id": 253,
+   "category": "Body & Health",
+   "word": "NOSE",
+   "taboo": [
+    "SMELL",
+    "FACE",
+    "BREATHE",
+    "MIDDLE",
+    "RUN"
+   ]
+  },
+  {
+   "id": 254,
+   "category": "Body & Health",
+   "word": "MOUTH",
+   "taboo": [
+    "EAT",
+    "SPEAK",
+    "LIP",
+    "FACE",
+    "TEETH"
+   ]
+  },
+  {
+   "id": 255,
+   "category": "Body & Health",
+   "word": "TOOTH",
+   "taboo": [
+    "MOUTH",
+    "BITE",
+    "WHITE",
+    "DENTIST",
+    "BRUSH"
+   ]
+  },
+  {
+   "id": 256,
+   "category": "Body & Health",
+   "word": "TONGUE",
+   "taboo": [
+    "MOUTH",
+    "TASTE",
+    "LICK",
+    "PINK",
+    "SPEAK"
+   ]
+  },
+  {
+   "id": 257,
+   "category": "Body & Health",
+   "word": "NECK",
+   "taboo": [
+    "HEAD",
+    "BODY",
+    "LONG",
+    "SCARF",
+    "SHOULDER"
+   ]
+  },
+  {
+   "id": 258,
+   "category": "Body & Health",
+   "word": "SHOULDER",
+   "taboo": [
+    "ARM",
+    "BODY",
+    "CARRY",
+    "NECK",
+    "BONE"
+   ]
+  },
+  {
+   "id": 259,
+   "category": "Body & Health",
+   "word": "ARM",
+   "taboo": [
+    "HAND",
+    "BODY",
+    "LONG",
+    "LIFT",
+    "SHOULDER"
+   ]
+  },
+  {
+   "id": 260,
+   "category": "Body & Health",
+   "word": "HAND",
+   "taboo": [
+    "FINGER",
+    "ARM",
+    "HOLD",
+    "FIVE",
+    "SHAKE"
+   ]
+  },
+  {
+   "id": 261,
+   "category": "Body & Health",
+   "word": "FINGER",
+   "taboo": [
+    "HAND",
+    "TEN",
+    "POINT",
+    "RING",
+    "NAIL"
+   ]
+  },
+  {
+   "id": 262,
+   "category": "Body & Health",
+   "word": "LEG",
+   "taboo": [
+    "WALK",
+    "BODY",
+    "KNEE",
+    "FOOT",
+    "LONG"
+   ]
+  },
+  {
+   "id": 263,
+   "category": "Body & Health",
+   "word": "KNEE",
+   "taboo": [
+    "LEG",
+    "BEND",
+    "JOINT",
+    "BONE",
+    "MIDDLE"
+   ]
+  },
+  {
+   "id": 264,
+   "category": "Body & Health",
+   "word": "FOOT",
+   "taboo": [
+    "LEG",
+    "WALK",
+    "SHOE",
+    "TOE",
+    "GROUND"
+   ]
+  },
+  {
+   "id": 265,
+   "category": "Body & Health",
+   "word": "HEART",
+   "taboo": [
+    "BEAT",
+    "LOVE",
+    "BLOOD",
+    "CHEST",
+    "ORGAN"
+   ]
+  },
+  {
+   "id": 266,
+   "category": "Body & Health",
+   "word": "BLOOD",
+   "taboo": [
+    "RED",
+    "BODY",
+    "HEART",
+    "CUT",
+    "VEIN"
+   ]
+  },
+  {
+   "id": 267,
+   "category": "Body & Health",
+   "word": "BONE",
+   "taboo": [
+    "BODY",
+    "HARD",
+    "WHITE",
+    "BREAK",
+    "SKELETON"
+   ]
+  },
+  {
+   "id": 268,
+   "category": "Body & Health",
+   "word": "SKIN",
+   "taboo": [
+    "BODY",
+    "COVER",
+    "COLOR",
+    "SOFT",
+    "TOUCH"
+   ]
+  },
+  {
+   "id": 269,
+   "category": "Body & Health",
+   "word": "BRAIN",
+   "taboo": [
+    "HEAD",
+    "THINK",
+    "SMART",
+    "ORGAN",
+    "MIND"
+   ]
+  },
+  {
+   "id": 270,
+   "category": "Body & Health",
+   "word": "STOMACH",
+   "taboo": [
+    "FOOD",
+    "BELLY",
+    "DIGEST",
+    "HUNGRY",
+    "ACHE"
+   ]
+  },
+  {
+   "id": 271,
+   "category": "Body & Health",
+   "word": "MUSCLE",
+   "taboo": [
+    "STRONG",
+    "BODY",
+    "ARM",
+    "GYM",
+    "PULL"
+   ]
+  },
+  {
+   "id": 272,
+   "category": "Body & Health",
+   "word": "VOICE",
+   "taboo": [
+    "SPEAK",
+    "SOUND",
+    "THROAT",
+    "LOUD",
+    "SING"
+   ]
+  },
+  {
+   "id": 273,
+   "category": "Body & Health",
+   "word": "BREATH",
+   "taboo": [
+    "AIR",
+    "LUNG",
+    "DEEP",
+    "HOLD",
+    "NOSE"
+   ]
+  },
+  {
+   "id": 274,
+   "category": "Body & Health",
+   "word": "SLEEP",
+   "taboo": [
+    "BED",
+    "NIGHT",
+    "WAKE",
+    "DREAM",
+    "TIRED"
+   ]
+  },
+  {
+   "id": 275,
+   "category": "Body & Health",
+   "word": "DREAM",
+   "taboo": [
+    "SLEEP",
+    "NIGHT",
+    "WISH",
+    "MIND",
+    "WAKE"
+   ]
+  },
+  {
+   "id": 276,
+   "category": "Body & Health",
+   "word": "TIRED",
+   "taboo": [
+    "SLEEP",
+    "ENERGY",
+    "REST",
+    "FRESH",
+    "EYE"
+   ]
+  },
+  {
+   "id": 277,
+   "category": "Body & Health",
+   "word": "PAIN",
+   "taboo": [
+    "HURT",
+    "ACHE",
+    "FEEL",
+    "BAD",
+    "MEDICINE"
+   ]
+  },
+  {
+   "id": 278,
+   "category": "Body & Health",
+   "word": "MEDICINE",
+   "taboo": [
+    "DOCTOR",
+    "ILL",
+    "PILL",
+    "TAKE",
+    "CURE"
+   ]
+  },
+  {
+   "id": 279,
+   "category": "Body & Health",
+   "word": "DOCTOR",
+   "taboo": [
+    "ILL",
+    "HOSPITAL",
+    "PATIENT",
+    "MEDICINE",
+    "HELP"
+   ]
+  },
+  {
+   "id": 280,
+   "category": "Body & Health",
+   "word": "HOSPITAL",
+   "taboo": [
+    "DOCTOR",
+    "ILL",
+    "BED",
+    "NURSE",
+    "EMERGENCY"
+   ]
+  },
+  {
+   "id": 281,
+   "category": "Body & Health",
+   "word": "NURSE",
+   "taboo": [
+    "DOCTOR",
+    "HOSPITAL",
+    "CARE",
+    "PATIENT",
+    "HELP"
+   ]
+  },
+  {
+   "id": 282,
+   "category": "Body & Health",
+   "word": "DENTIST",
+   "taboo": [
+    "TOOTH",
+    "DRILL",
+    "MOUTH",
+    "DOCTOR",
+    "CHAIR"
+   ]
+  },
+  {
+   "id": 283,
+   "category": "Body & Health",
+   "word": "FEVER",
+   "taboo": [
+    "HOT",
+    "ILL",
+    "TEMPERATURE",
+    "BODY",
+    "SICK"
+   ]
+  },
+  {
+   "id": 284,
+   "category": "Body & Health",
+   "word": "COUGH",
+   "taboo": [
+    "THROAT",
+    "ILL",
+    "SOUND",
+    "CHEST",
+    "MEDICINE"
+   ]
+  },
+  {
+   "id": 285,
+   "category": "Body & Health",
+   "word": "INJURY",
+   "taboo": [
+    "HURT",
+    "ACCIDENT",
+    "BODY",
+    "HEAL",
+    "PAIN"
+   ]
+  },
+  {
+   "id": 286,
+   "category": "Body & Health",
+   "word": "EXERCISE",
+   "taboo": [
+    "GYM",
+    "BODY",
+    "FIT",
+    "RUN",
+    "HEALTH"
+   ]
+  },
+  {
+   "id": 287,
+   "category": "Body & Health",
+   "word": "HEALTH",
+   "taboo": [
+    "BODY",
+    "ILL",
+    "GOOD",
+    "DOCTOR",
+    "FIT"
+   ]
+  },
+  {
+   "id": 288,
+   "category": "Body & Health",
+   "word": "SMILE",
+   "taboo": [
+    "HAPPY",
+    "MOUTH",
+    "FACE",
+    "TEETH",
+    "FROWN"
+   ]
+  },
+  {
+   "id": 289,
+   "category": "House & Furniture",
+   "word": "HOUSE",
+   "taboo": [
+    "HOME",
+    "LIVE",
+    "ROOF",
+    "BUILD",
+    "ROOM"
+   ]
+  },
+  {
+   "id": 290,
+   "category": "House & Furniture",
+   "word": "ROOM",
+   "taboo": [
+    "HOUSE",
+    "WALL",
+    "DOOR",
+    "SPACE",
+    "INSIDE"
+   ]
+  },
+  {
+   "id": 291,
+   "category": "House & Furniture",
+   "word": "DOOR",
+   "taboo": [
+    "OPEN",
+    "CLOSE",
+    "HANDLE",
+    "ROOM",
+    "ENTER"
+   ]
+  },
+  {
+   "id": 292,
+   "category": "House & Furniture",
+   "word": "WINDOW",
+   "taboo": [
+    "GLASS",
+    "LOOK",
+    "WALL",
+    "OPEN",
+    "LIGHT"
+   ]
+  },
+  {
+   "id": 293,
+   "category": "House & Furniture",
+   "word": "WALL",
+   "taboo": [
+    "ROOM",
+    "BUILD",
+    "PAINT",
+    "SIDE",
+    "BRICK"
+   ]
+  },
+  {
+   "id": 294,
+   "category": "House & Furniture",
+   "word": "FLOOR",
+   "taboo": [
+    "GROUND",
+    "WALK",
+    "ROOM",
+    "CEILING",
+    "DOWN"
+   ]
+  },
+  {
+   "id": 295,
+   "category": "House & Furniture",
+   "word": "CEILING",
+   "taboo": [
+    "FLOOR",
+    "ABOVE",
+    "ROOM",
+    "HIGH",
+    "LIGHT"
+   ]
+  },
+  {
+   "id": 296,
+   "category": "House & Furniture",
+   "word": "ROOF",
+   "taboo": [
+    "HOUSE",
+    "TOP",
+    "RAIN",
+    "TILE",
+    "ABOVE"
+   ]
+  },
+  {
+   "id": 297,
+   "category": "House & Furniture",
+   "word": "STAIRS",
+   "taboo": [
+    "UP",
+    "DOWN",
+    "STEP",
+    "FLOOR",
+    "CLIMB"
+   ]
+  },
+  {
+   "id": 298,
+   "category": "House & Furniture",
+   "word": "KEY",
+   "taboo": [
+    "DOOR",
+    "LOCK",
+    "OPEN",
+    "METAL",
+    "POCKET"
+   ]
+  },
+  {
+   "id": 299,
+   "category": "House & Furniture",
+   "word": "LOCK",
+   "taboo": [
+    "KEY",
+    "DOOR",
+    "CLOSE",
+    "SAFE",
+    "OPEN"
+   ]
+  },
+  {
+   "id": 300,
+   "category": "House & Furniture",
+   "word": "TABLE",
+   "taboo": [
+    "CHAIR",
+    "EAT",
+    "FLAT",
+    "LEG",
+    "WOOD"
+   ]
+  },
+  {
+   "id": 301,
+   "category": "House & Furniture",
+   "word": "CHAIR",
+   "taboo": [
+    "SIT",
+    "TABLE",
+    "LEG",
+    "BACK",
+    "WOOD"
+   ]
+  },
+  {
+   "id": 302,
+   "category": "House & Furniture",
+   "word": "BED",
+   "taboo": [
+    "SLEEP",
+    "ROOM",
+    "PILLOW",
+    "LIE",
+    "NIGHT"
+   ]
+  },
+  {
+   "id": 303,
+   "category": "House & Furniture",
+   "word": "PILLOW",
+   "taboo": [
+    "HEAD",
+    "BED",
+    "SOFT",
+    "SLEEP",
+    "CASE"
+   ]
+  },
+  {
+   "id": 304,
+   "category": "House & Furniture",
+   "word": "BLANKET",
+   "taboo": [
+    "BED",
+    "WARM",
+    "COVER",
+    "SLEEP",
+    "SOFT"
+   ]
+  },
+  {
+   "id": 305,
+   "category": "House & Furniture",
+   "word": "SOFA",
+   "taboo": [
+    "SIT",
+    "LIVING",
+    "SOFT",
+    "COUCH",
+    "ROOM"
+   ]
+  },
+  {
+   "id": 306,
+   "category": "House & Furniture",
+   "word": "SHELF",
+   "taboo": [
+    "BOOK",
+    "WALL",
+    "PUT",
+    "FLAT",
+    "HOLD"
+   ]
+  },
+  {
+   "id": 307,
+   "category": "House & Furniture",
+   "word": "CABINET",
+   "taboo": [
+    "DOOR",
+    "STORE",
+    "KITCHEN",
+    "SHELF",
+    "CLOSE"
+   ]
+  },
+  {
+   "id": 308,
+   "category": "House & Furniture",
+   "word": "LAMP",
+   "taboo": [
+    "LIGHT",
+    "TABLE",
+    "BULB",
+    "DARK",
+    "SWITCH"
+   ]
+  },
+  {
+   "id": 309,
+   "category": "House & Furniture",
+   "word": "CANDLE",
+   "taboo": [
+    "WAX",
+    "FIRE",
+    "LIGHT",
+    "BURN",
+    "BIRTHDAY"
+   ]
+  },
+  {
+   "id": 310,
+   "category": "House & Furniture",
+   "word": "CARPET",
+   "taboo": [
+    "FLOOR",
+    "SOFT",
+    "RUG",
+    "WALK",
+    "COVER"
+   ]
+  },
+  {
+   "id": 311,
+   "category": "House & Furniture",
+   "word": "CURTAIN",
+   "taboo": [
+    "WINDOW",
+    "CLOSE",
+    "CLOTH",
+    "LIGHT",
+    "HANG"
+   ]
+  },
+  {
+   "id": 312,
+   "category": "House & Furniture",
+   "word": "STOVE",
+   "taboo": [
+    "COOK",
+    "HEAT",
+    "KITCHEN",
+    "FIRE",
+    "POT"
+   ]
+  },
+  {
+   "id": 313,
+   "category": "House & Furniture",
+   "word": "FRIDGE",
+   "taboo": [
+    "COLD",
+    "FOOD",
+    "KITCHEN",
+    "DOOR",
+    "KEEP"
+   ]
+  },
+  {
+   "id": 314,
+   "category": "House & Furniture",
+   "word": "OVEN",
+   "taboo": [
+    "BAKE",
+    "HOT",
+    "KITCHEN",
+    "COOK",
+    "CAKE"
+   ]
+  },
+  {
+   "id": 315,
+   "category": "House & Furniture",
+   "word": "SINK",
+   "taboo": [
+    "WATER",
+    "WASH",
+    "KITCHEN",
+    "FAUCET",
+    "DRAIN"
+   ]
+  },
+  {
+   "id": 316,
+   "category": "House & Furniture",
+   "word": "FAUCET",
+   "taboo": [
+    "WATER",
+    "TURN",
+    "SINK",
+    "FLOW",
+    "PIPE"
+   ]
+  },
+  {
+   "id": 317,
+   "category": "House & Furniture",
+   "word": "TOILET",
+   "taboo": [
+    "BATHROOM",
+    "FLUSH",
+    "SIT",
+    "WATER",
+    "SEAT"
+   ]
+  },
+  {
+   "id": 318,
+   "category": "House & Furniture",
+   "word": "BATHROOM",
+   "taboo": [
+    "WASH",
+    "TOILET",
+    "SHOWER",
+    "CLEAN",
+    "WATER"
+   ]
+  },
+  {
+   "id": 319,
+   "category": "House & Furniture",
+   "word": "SHOWER",
+   "taboo": [
+    "WATER",
+    "WASH",
+    "BATHROOM",
+    "HOT",
+    "STAND"
+   ]
+  },
+  {
+   "id": 320,
+   "category": "House & Furniture",
+   "word": "SOAP",
+   "taboo": [
+    "WASH",
+    "CLEAN",
+    "HAND",
+    "BUBBLE",
+    "DIRTY"
+   ]
+  },
+  {
+   "id": 321,
+   "category": "House & Furniture",
+   "word": "TOWEL",
+   "taboo": [
+    "DRY",
+    "WET",
+    "BATHROOM",
+    "WASH",
+    "CLOTH"
+   ]
+  },
+  {
+   "id": 322,
+   "category": "House & Furniture",
+   "word": "BRUSH",
+   "taboo": [
+    "HAIR",
+    "CLEAN",
+    "TOOTH",
+    "HAND",
+    "PAINT"
+   ]
+  },
+  {
+   "id": 323,
+   "category": "House & Furniture",
+   "word": "DUST",
+   "taboo": [
+    "DIRT",
+    "CLEAN",
+    "SURFACE",
+    "SMALL",
+    "WIPE"
+   ]
+  },
+  {
+   "id": 324,
+   "category": "House & Furniture",
+   "word": "TRASH",
+   "taboo": [
+    "THROW",
+    "CAN",
+    "WASTE",
+    "DIRTY",
+    "COLLECT"
+   ]
+  },
+  {
+   "id": 325,
+   "category": "House & Furniture",
+   "word": "GARAGE",
+   "taboo": [
+    "CAR",
+    "HOUSE",
+    "PARK",
+    "DOOR",
+    "STORE"
+   ]
+  },
+  {
+   "id": 326,
+   "category": "House & Furniture",
+   "word": "BALCONY",
+   "taboo": [
+    "OUTSIDE",
+    "APARTMENT",
+    "VIEW",
+    "RAIL",
+    "STAND"
+   ]
+  },
+  {
+   "id": 327,
+   "category": "House & Furniture",
+   "word": "FENCE",
+   "taboo": [
+    "GARDEN",
+    "WOOD",
+    "BORDER",
+    "AROUND",
+    "JUMP"
+   ]
+  },
+  {
+   "id": 328,
+   "category": "House & Furniture",
+   "word": "GATE",
+   "taboo": [
+    "FENCE",
+    "OPEN",
+    "GARDEN",
+    "ENTER",
+    "CLOSE"
+   ]
+  },
+  {
+   "id": 329,
+   "category": "House & Furniture",
+   "word": "NEIGHBOR",
+   "taboo": [
+    "NEXT",
+    "HOUSE",
+    "LIVE",
+    "CLOSE",
+    "KNOW"
+   ]
+  },
+  {
+   "id": 330,
+   "category": "House & Furniture",
+   "word": "RENT",
+   "taboo": [
+    "PAY",
+    "HOUSE",
+    "MONTH",
+    "LANDLORD",
+    "OWN"
+   ]
+  },
+  {
+   "id": 331,
+   "category": "House & Furniture",
+   "word": "FURNITURE",
+   "taboo": [
+    "TABLE",
+    "CHAIR",
+    "HOUSE",
+    "WOOD",
+    "MOVE"
+   ]
+  },
+  {
+   "id": 332,
+   "category": "Transport & Travel",
+   "word": "CAR",
+   "taboo": [
+    "DRIVE",
+    "WHEEL",
+    "ROAD",
+    "ENGINE",
+    "PARK"
+   ]
+  },
+  {
+   "id": 333,
+   "category": "Transport & Travel",
+   "word": "BUS",
+   "taboo": [
+    "PUBLIC",
+    "STOP",
+    "PASSENGER",
+    "DRIVE",
+    "TICKET"
+   ]
+  },
+  {
+   "id": 334,
+   "category": "Transport & Travel",
+   "word": "TRAIN",
+   "taboo": [
+    "RAIL",
+    "STATION",
+    "TRACK",
+    "PLATFORM",
+    "TICKET"
+   ]
+  },
+  {
+   "id": 335,
+   "category": "Transport & Travel",
+   "word": "BICYCLE",
+   "taboo": [
+    "PEDAL",
+    "TWO",
+    "WHEEL",
+    "RIDE",
+    "CHAIN"
+   ]
+  },
+  {
+   "id": 336,
+   "category": "Transport & Travel",
+   "word": "MOTORCYCLE",
+   "taboo": [
+    "TWO",
+    "ENGINE",
+    "FAST",
+    "HELMET",
+    "RIDE"
+   ]
+  },
+  {
+   "id": 337,
+   "category": "Transport & Travel",
+   "word": "AIRPLANE",
+   "taboo": [
+    "FLY",
+    "SKY",
+    "WING",
+    "PILOT",
+    "TICKET"
+   ]
+  },
+  {
+   "id": 338,
+   "category": "Transport & Travel",
+   "word": "SHIP",
+   "taboo": [
+    "SEA",
+    "BIG",
+    "SAIL",
+    "PORT",
+    "CARGO"
+   ]
+  },
+  {
+   "id": 339,
+   "category": "Transport & Travel",
+   "word": "BOAT",
+   "taboo": [
+    "WATER",
+    "SMALL",
+    "ROW",
+    "SAIL",
+    "FLOAT"
+   ]
+  },
+  {
+   "id": 340,
+   "category": "Transport & Travel",
+   "word": "TAXI",
+   "taboo": [
+    "DRIVE",
+    "PAY",
+    "YELLOW",
+    "CITY",
+    "PASSENGER"
+   ]
+  },
+  {
+   "id": 341,
+   "category": "Transport & Travel",
+   "word": "TRUCK",
+   "taboo": [
+    "BIG",
+    "CARRY",
+    "ROAD",
+    "GOODS",
+    "DRIVE"
+   ]
+  },
+  {
+   "id": 342,
+   "category": "Transport & Travel",
+   "word": "WHEEL",
+   "taboo": [
+    "ROUND",
+    "CAR",
+    "TURN",
+    "RUBBER",
+    "ROLL"
+   ]
+  },
+  {
+   "id": 343,
+   "category": "Transport & Travel",
+   "word": "ENGINE",
+   "taboo": [
+    "CAR",
+    "POWER",
+    "MOTOR",
+    "START",
+    "MACHINE"
+   ]
+  },
+  {
+   "id": 344,
+   "category": "Transport & Travel",
+   "word": "FUEL",
+   "taboo": [
+    "CAR",
+    "GASOLINE",
+    "BURN",
+    "ENERGY",
+    "TANK"
+   ]
+  },
+  {
+   "id": 345,
+   "category": "Transport & Travel",
+   "word": "ROAD",
+   "taboo": [
+    "CAR",
+    "DRIVE",
+    "LONG",
+    "STREET",
+    "TRAVEL"
+   ]
+  },
+  {
+   "id": 346,
+   "category": "Transport & Travel",
+   "word": "STREET",
+   "taboo": [
+    "ROAD",
+    "CITY",
+    "WALK",
+    "HOUSE",
+    "SIGN"
+   ]
+  },
+  {
+   "id": 347,
+   "category": "Transport & Travel",
+   "word": "BRIDGE",
+   "taboo": [
+    "CROSS",
+    "RIVER",
+    "OVER",
+    "BUILD",
+    "CONNECT"
+   ]
+  },
+  {
+   "id": 348,
+   "category": "Transport & Travel",
+   "word": "TUNNEL",
+   "taboo": [
+    "UNDER",
+    "THROUGH",
+    "DARK",
+    "MOUNTAIN",
+    "ROAD"
+   ]
+  },
+  {
+   "id": 349,
+   "category": "Transport & Travel",
+   "word": "TRAFFIC",
+   "taboo": [
+    "CAR",
+    "JAM",
+    "SLOW",
+    "ROAD",
+    "LIGHT"
+   ]
+  },
+  {
+   "id": 350,
+   "category": "Transport & Travel",
+   "word": "STATION",
+   "taboo": [
+    "TRAIN",
+    "WAIT",
+    "PLATFORM",
+    "TICKET",
+    "ARRIVE"
+   ]
+  },
+  {
+   "id": 351,
+   "category": "Transport & Travel",
+   "word": "AIRPORT",
+   "taboo": [
+    "PLANE",
+    "FLY",
+    "TERMINAL",
+    "LUGGAGE",
+    "GATE"
+   ]
+  },
+  {
+   "id": 352,
+   "category": "Transport & Travel",
+   "word": "TICKET",
+   "taboo": [
+    "BUY",
+    "TRAVEL",
+    "PAPER",
+    "SEAT",
+    "PRICE"
+   ]
+  },
+  {
+   "id": 353,
+   "category": "Transport & Travel",
+   "word": "PASSPORT",
+   "taboo": [
+    "TRAVEL",
+    "COUNTRY",
+    "BOOK",
+    "PHOTO",
+    "BORDER"
+   ]
+  },
+  {
+   "id": 354,
+   "category": "Transport & Travel",
+   "word": "LUGGAGE",
+   "taboo": [
+    "BAG",
+    "TRAVEL",
+    "CARRY",
+    "HEAVY",
+    "AIRPORT"
+   ]
+  },
+  {
+   "id": 355,
+   "category": "Transport & Travel",
+   "word": "SUITCASE",
+   "taboo": [
+    "LUGGAGE",
+    "TRAVEL",
+    "PACK",
+    "HANDLE",
+    "CLOTHES"
+   ]
+  },
+  {
+   "id": 356,
+   "category": "Transport & Travel",
+   "word": "HOTEL",
+   "taboo": [
+    "SLEEP",
+    "ROOM",
+    "TRAVEL",
+    "BOOK",
+    "STAY"
+   ]
+  },
+  {
+   "id": 357,
+   "category": "Transport & Travel",
+   "word": "TOURIST",
+   "taboo": [
+    "TRAVEL",
+    "VISIT",
+    "CAMERA",
+    "FOREIGN",
+    "LOCAL"
+   ]
+  },
+  {
+   "id": 358,
+   "category": "Transport & Travel",
+   "word": "JOURNEY",
+   "taboo": [
+    "TRAVEL",
+    "LONG",
+    "START",
+    "TRIP",
+    "END"
+   ]
+  },
+  {
+   "id": 359,
+   "category": "Transport & Travel",
+   "word": "VACATION",
+   "taboo": [
+    "WORK",
+    "REST",
+    "TRAVEL",
+    "BEACH",
+    "SUMMER"
+   ]
+  },
+  {
+   "id": 360,
+   "category": "Transport & Travel",
+   "word": "DRIVER",
+   "taboo": [
+    "CAR",
+    "SEAT",
+    "LICENSE",
+    "PASSENGER",
+    "WHEEL"
+   ]
+  },
+  {
+   "id": 361,
+   "category": "Transport & Travel",
+   "word": "PASSENGER",
+   "taboo": [
+    "DRIVER",
+    "RIDE",
+    "SEAT",
+    "TRAVEL",
+    "TICKET"
+   ]
+  },
+  {
+   "id": 362,
+   "category": "Transport & Travel",
+   "word": "PILOT",
+   "taboo": [
+    "PLANE",
+    "FLY",
+    "COCKPIT",
+    "CAPTAIN",
+    "SKY"
+   ]
+  },
+  {
+   "id": 363,
+   "category": "Transport & Travel",
+   "word": "HELMET",
+   "taboo": [
+    "HEAD",
+    "SAFE",
+    "HARD",
+    "BIKE",
+    "WEAR"
+   ]
+  },
+  {
+   "id": 364,
+   "category": "Transport & Travel",
+   "word": "SAIL",
+   "taboo": [
+    "WIND",
+    "BOAT",
+    "CLOTH",
+    "SEA",
+    "MOVE"
+   ]
+  },
+  {
+   "id": 365,
+   "category": "Transport & Travel",
+   "word": "RAIL",
+   "taboo": [
+    "TRAIN",
+    "TRACK",
+    "METAL",
+    "LINE",
+    "STATION"
+   ]
+  },
+  {
+   "id": 366,
+   "category": "Transport & Travel",
+   "word": "TIRE",
+   "taboo": [
+    "WHEEL",
+    "RUBBER",
+    "CAR",
+    "FLAT",
+    "ROUND"
+   ]
+  },
+  {
+   "id": 367,
+   "category": "Transport & Travel",
+   "word": "COMPASS",
+   "taboo": [
+    "DIRECTION",
+    "NORTH",
+    "NEEDLE",
+    "FIND",
+    "ROUND"
+   ]
+  },
+  {
+   "id": 368,
+   "category": "Transport & Travel",
+   "word": "SPEED",
+   "taboo": [
+    "FAST",
+    "SLOW",
+    "LIMIT",
+    "CAR",
+    "MEASURE"
+   ]
+  },
+  {
+   "id": 369,
+   "category": "Transport & Travel",
+   "word": "DELAY",
+   "taboo": [
+    "LATE",
+    "WAIT",
+    "TIME",
+    "EARLY",
+    "PROBLEM"
+   ]
+  },
+  {
+   "id": 370,
+   "category": "Transport & Travel",
+   "word": "ARRIVAL",
+   "taboo": [
+    "LEAVE",
+    "COME",
+    "AIRPORT",
+    "TIME",
+    "REACH"
+   ]
+  },
+  {
+   "id": 371,
+   "category": "Sports & Games",
+   "word": "SOCCER",
+   "taboo": [
+    "GOAL",
+    "KICK",
+    "TEAM",
+    "FIELD",
+    "PLAYER"
+   ]
+  },
+  {
+   "id": 372,
+   "category": "Sports & Games",
+   "word": "BASKETBALL",
+   "taboo": [
+    "HOOP",
+    "THROW",
+    "TALL",
+    "COURT",
+    "TEAM"
+   ]
+  },
+  {
+   "id": 373,
+   "category": "Sports & Games",
+   "word": "TENNIS",
+   "taboo": [
+    "RACKET",
+    "NET",
+    "COURT",
+    "SERVE",
+    "HIT"
+   ]
+  },
+  {
+   "id": 374,
+   "category": "Sports & Games",
+   "word": "VOLLEYBALL",
+   "taboo": [
+    "NET",
+    "HAND",
+    "BEACH",
+    "TEAM",
+    "SERVE"
+   ]
+  },
+  {
+   "id": 375,
+   "category": "Sports & Games",
+   "word": "SWIMMING",
+   "taboo": [
+    "WATER",
+    "POOL",
+    "STROKE",
+    "RACE",
+    "SEA"
+   ]
+  },
+  {
+   "id": 376,
+   "category": "Sports & Games",
+   "word": "RUNNING",
+   "taboo": [
+    "FAST",
+    "LEG",
+    "RACE",
+    "TRACK",
+    "WALK"
+   ]
+  },
+  {
+   "id": 377,
+   "category": "Sports & Games",
+   "word": "SKATING",
+   "taboo": [
+    "ICE",
+    "WHEEL",
+    "GLIDE",
+    "BALANCE",
+    "RINK"
+   ]
+  },
+  {
+   "id": 378,
+   "category": "Sports & Games",
+   "word": "BOXING",
+   "taboo": [
+    "FIGHT",
+    "GLOVE",
+    "RING",
+    "PUNCH",
+    "ROUND"
+   ]
+  },
+  {
+   "id": 379,
+   "category": "Sports & Games",
+   "word": "SKIING",
+   "taboo": [
+    "SNOW",
+    "MOUNTAIN",
+    "SLOPE",
+    "WINTER",
+    "POLE"
+   ]
+  },
+  {
+   "id": 380,
+   "category": "Sports & Games",
+   "word": "SURFING",
+   "taboo": [
+    "WAVE",
+    "BOARD",
+    "SEA",
+    "BALANCE",
+    "BEACH"
+   ]
+  },
+  {
+   "id": 381,
+   "category": "Sports & Games",
+   "word": "MARATHON",
+   "taboo": [
+    "RUN",
+    "LONG",
+    "RACE",
+    "DISTANCE",
+    "FINISH"
+   ]
+  },
+  {
+   "id": 382,
+   "category": "Sports & Games",
+   "word": "CHESS",
+   "taboo": [
+    "BOARD",
+    "KING",
+    "PIECE",
+    "THINK",
+    "GAME"
+   ]
+  },
+  {
+   "id": 383,
+   "category": "Sports & Games",
+   "word": "PUZZLE",
+   "taboo": [
+    "PIECE",
+    "SOLVE",
+    "FIT",
+    "PICTURE",
+    "THINK"
+   ]
+  },
+  {
+   "id": 384,
+   "category": "Sports & Games",
+   "word": "CARD",
+   "taboo": [
+    "PLAY",
+    "DECK",
+    "GAME",
+    "SHUFFLE",
+    "HAND"
+   ]
+  },
+  {
+   "id": 385,
+   "category": "Sports & Games",
+   "word": "DICE",
+   "taboo": [
+    "ROLL",
+    "SIX",
+    "CUBE",
+    "LUCK",
+    "GAME"
+   ]
+  },
+  {
+   "id": 386,
+   "category": "Sports & Games",
+   "word": "TEAM",
+   "taboo": [
+    "GROUP",
+    "PLAY",
+    "TOGETHER",
+    "SPORT",
+    "ALONE"
+   ]
+  },
+  {
+   "id": 387,
+   "category": "Sports & Games",
+   "word": "GOAL",
+   "taboo": [
+    "SCORE",
+    "NET",
+    "SOCCER",
+    "AIM",
+    "POINT"
+   ]
+  },
+  {
+   "id": 388,
+   "category": "Sports & Games",
+   "word": "SCORE",
+   "taboo": [
+    "POINT",
+    "GAME",
+    "NUMBER",
+    "WIN",
+    "COUNT"
+   ]
+  },
+  {
+   "id": 389,
+   "category": "Sports & Games",
+   "word": "REFEREE",
+   "taboo": [
+    "RULE",
+    "GAME",
+    "WHISTLE",
+    "FAIR",
+    "DECIDE"
+   ]
+  },
+  {
+   "id": 390,
+   "category": "Sports & Games",
+   "word": "COACH",
+   "taboo": [
+    "TRAIN",
+    "TEAM",
+    "TEACH",
+    "SPORT",
+    "PLAN"
+   ]
+  },
+  {
+   "id": 391,
+   "category": "Sports & Games",
+   "word": "STADIUM",
+   "taboo": [
+    "CROWD",
+    "SPORT",
+    "BIG",
+    "SEAT",
+    "MATCH"
+   ]
+  },
+  {
+   "id": 392,
+   "category": "Sports & Games",
+   "word": "MEDAL",
+   "taboo": [
+    "WIN",
+    "GOLD",
+    "HANG",
+    "PRIZE",
+    "SPORT"
+   ]
+  },
+  {
+   "id": 393,
+   "category": "Sports & Games",
+   "word": "TROPHY",
+   "taboo": [
+    "WIN",
+    "CUP",
+    "PRIZE",
+    "HOLD",
+    "GOLD"
+   ]
+  },
+  {
+   "id": 394,
+   "category": "Sports & Games",
+   "word": "CHAMPION",
+   "taboo": [
+    "WIN",
+    "BEST",
+    "TITLE",
+    "FIRST",
+    "LOSE"
+   ]
+  },
+  {
+   "id": 395,
+   "category": "Sports & Games",
+   "word": "LOSER",
+   "taboo": [
+    "WIN",
+    "LAST",
+    "GAME",
+    "BEAT",
+    "SAD"
+   ]
+  },
+  {
+   "id": 396,
+   "category": "Sports & Games",
+   "word": "MATCH",
+   "taboo": [
+    "GAME",
+    "PLAY",
+    "TWO",
+    "TEAM",
+    "WIN"
+   ]
+  },
+  {
+   "id": 397,
+   "category": "Sports & Games",
+   "word": "PRACTICE",
+   "taboo": [
+    "REPEAT",
+    "IMPROVE",
+    "SKILL",
+    "TRAIN",
+    "DAILY"
+   ]
+  },
+  {
+   "id": 398,
+   "category": "Sports & Games",
+   "word": "RACE",
+   "taboo": [
+    "FAST",
+    "RUN",
+    "FIRST",
+    "FINISH",
+    "COMPETE"
+   ]
+  },
+  {
+   "id": 399,
+   "category": "Sports & Games",
+   "word": "WHISTLE",
+   "taboo": [
+    "BLOW",
+    "SOUND",
+    "REFEREE",
+    "MOUTH",
+    "LOUD"
+   ]
+  },
+  {
+   "id": 400,
+   "category": "Sports & Games",
+   "word": "NET",
+   "taboo": [
+    "HOLE",
+    "GOAL",
+    "CATCH",
+    "FISH",
+    "TENNIS"
+   ]
+  },
+  {
+   "id": 401,
+   "category": "Sports & Games",
+   "word": "RACKET",
+   "taboo": [
+    "TENNIS",
+    "HIT",
+    "STRING",
+    "HAND",
+    "BALL"
+   ]
+  },
+  {
+   "id": 402,
+   "category": "Sports & Games",
+   "word": "TOURNAMENT",
+   "taboo": [
+    "COMPETE",
+    "MANY",
+    "ROUND",
+    "WIN",
+    "EVENT"
+   ]
+  },
+  {
+   "id": 403,
+   "category": "Sports & Games",
+   "word": "OLYMPICS",
+   "taboo": [
+    "GAME",
+    "WORLD",
+    "MEDAL",
+    "FOUR",
+    "ATHLETE"
+   ]
+  },
+  {
+   "id": 404,
+   "category": "Sports & Games",
+   "word": "ATHLETE",
+   "taboo": [
+    "SPORT",
+    "TRAIN",
+    "BODY",
+    "COMPETE",
+    "FIT"
+   ]
+  },
+  {
+   "id": 405,
+   "category": "Sports & Games",
+   "word": "FITNESS",
+   "taboo": [
+    "BODY",
+    "GYM",
+    "STRONG",
+    "HEALTH",
+    "TRAIN"
+   ]
+  },
+  {
+   "id": 406,
+   "category": "Sports & Games",
+   "word": "YOGA",
+   "taboo": [
+    "STRETCH",
+    "MAT",
+    "CALM",
+    "BODY",
+    "BREATH"
+   ]
+  },
+  {
+   "id": 407,
+   "category": "Sports & Games",
+   "word": "DANCE",
+   "taboo": [
+    "MUSIC",
+    "MOVE",
+    "BODY",
+    "FLOOR",
+    "PARTNER"
+   ]
+  },
+  {
+   "id": 408,
+   "category": "Sports & Games",
+   "word": "HOBBY",
+   "taboo": [
+    "FREE",
+    "ENJOY",
+    "TIME",
+    "WORK",
+    "INTEREST"
+   ]
+  },
+  {
+   "id": 409,
+   "category": "Jobs & People",
+   "word": "TEACHER",
+   "taboo": [
+    "SCHOOL",
+    "STUDENT",
+    "LESSON",
+    "CLASS",
+    "LEARN"
+   ]
+  },
+  {
+   "id": 410,
+   "category": "Jobs & People",
+   "word": "STUDENT",
+   "taboo": [
+    "SCHOOL",
+    "LEARN",
+    "TEACHER",
+    "BOOK",
+    "CLASS"
+   ]
+  },
+  {
+   "id": 411,
+   "category": "Jobs & People",
+   "word": "FARMER",
+   "taboo": [
+    "FIELD",
+    "CROP",
+    "ANIMAL",
+    "LAND",
+    "GROW"
+   ]
+  },
+  {
+   "id": 412,
+   "category": "Jobs & People",
+   "word": "COOK",
+   "taboo": [
+    "FOOD",
+    "KITCHEN",
+    "HEAT",
+    "RESTAURANT",
+    "MEAL"
+   ]
+  },
+  {
+   "id": 413,
+   "category": "Jobs & People",
+   "word": "WAITER",
+   "taboo": [
+    "RESTAURANT",
+    "ORDER",
+    "TABLE",
+    "SERVE",
+    "MENU"
+   ]
+  },
+  {
+   "id": 414,
+   "category": "Jobs & People",
+   "word": "POLICE",
+   "taboo": [
+    "LAW",
+    "CRIME",
+    "UNIFORM",
+    "ARREST",
+    "SAFE"
+   ]
+  },
+  {
+   "id": 415,
+   "category": "Jobs & People",
+   "word": "SOLDIER",
+   "taboo": [
+    "ARMY",
+    "WAR",
+    "UNIFORM",
+    "FIGHT",
+    "GUN"
+   ]
+  },
+  {
+   "id": 416,
+   "category": "Jobs & People",
+   "word": "ENGINEER",
+   "taboo": [
+    "BUILD",
+    "DESIGN",
+    "MACHINE",
+    "MATH",
+    "PROBLEM"
+   ]
+  },
+  {
+   "id": 417,
+   "category": "Jobs & People",
+   "word": "SCIENTIST",
+   "taboo": [
+    "RESEARCH",
+    "LAB",
+    "EXPERIMENT",
+    "DISCOVER",
+    "STUDY"
+   ]
+  },
+  {
+   "id": 418,
+   "category": "Jobs & People",
+   "word": "ARTIST",
+   "taboo": [
+    "PAINT",
+    "CREATE",
+    "CANVAS",
+    "DRAW",
+    "STUDIO"
+   ]
+  },
+  {
+   "id": 419,
+   "category": "Jobs & People",
+   "word": "SINGER",
+   "taboo": [
+    "SONG",
+    "VOICE",
+    "MUSIC",
+    "STAGE",
+    "CONCERT"
+   ]
+  },
+  {
+   "id": 420,
+   "category": "Jobs & People",
+   "word": "WRITER",
+   "taboo": [
+    "BOOK",
+    "WORD",
+    "STORY",
+    "PEN",
+    "AUTHOR"
+   ]
+  },
+  {
+   "id": 421,
+   "category": "Jobs & People",
+   "word": "JOURNALIST",
+   "taboo": [
+    "NEWS",
+    "REPORT",
+    "PAPER",
+    "STORY",
+    "INTERVIEW"
+   ]
+  },
+  {
+   "id": 422,
+   "category": "Jobs & People",
+   "word": "LAWYER",
+   "taboo": [
+    "ADVICE",
+    "COURT",
+    "CLIENT",
+    "DEFEND",
+    "JUDGE"
+   ]
+  },
+  {
+   "id": 423,
+   "category": "Jobs & People",
+   "word": "JUDGE",
+   "taboo": [
+    "COURT",
+    "LAW",
+    "DECIDE",
+    "LAWYER",
+    "GUILTY"
+   ]
+  },
+  {
+   "id": 424,
+   "category": "Jobs & People",
+   "word": "MECHANIC",
+   "taboo": [
+    "CAR",
+    "FIX",
+    "ENGINE",
+    "TOOL",
+    "REPAIR"
+   ]
+  },
+  {
+   "id": 425,
+   "category": "Jobs & People",
+   "word": "BUILDER",
+   "taboo": [
+    "HOUSE",
+    "BRICK",
+    "CONSTRUCT",
+    "SITE",
+    "WORK"
+   ]
+  },
+  {
+   "id": 426,
+   "category": "Jobs & People",
+   "word": "BARBER",
+   "taboo": [
+    "HAIR",
+    "CUT",
+    "CHAIR",
+    "SCISSORS",
+    "SHOP"
+   ]
+  },
+  {
+   "id": 427,
+   "category": "Jobs & People",
+   "word": "MANAGER",
+   "taboo": [
+    "BOSS",
+    "TEAM",
+    "OFFICE",
+    "DECIDE",
+    "LEAD"
+   ]
+  },
+  {
+   "id": 428,
+   "category": "Jobs & People",
+   "word": "CUSTOMER",
+   "taboo": [
+    "BUY",
+    "SHOP",
+    "PAY",
+    "SERVICE",
+    "SELL"
+   ]
+  },
+  {
+   "id": 429,
+   "category": "Jobs & People",
+   "word": "BOSS",
+   "taboo": [
+    "WORK",
+    "MANAGER",
+    "ORDER",
+    "EMPLOYEE",
+    "OFFICE"
+   ]
+  },
+  {
+   "id": 430,
+   "category": "Jobs & People",
+   "word": "EMPLOYEE",
+   "taboo": [
+    "WORK",
+    "BOSS",
+    "SALARY",
+    "COMPANY",
+    "JOB"
+   ]
+  },
+  {
+   "id": 431,
+   "category": "Jobs & People",
+   "word": "SALARY",
+   "taboo": [
+    "MONEY",
+    "WORK",
+    "MONTH",
+    "PAY",
+    "JOB"
+   ]
+  },
+  {
+   "id": 432,
+   "category": "Jobs & People",
+   "word": "INTERVIEW",
+   "taboo": [
+    "JOB",
+    "QUESTION",
+    "ANSWER",
+    "MEET",
+    "HIRE"
+   ]
+  },
+  {
+   "id": 433,
+   "category": "Jobs & People",
+   "word": "MEETING",
+   "taboo": [
+    "TALK",
+    "OFFICE",
+    "TABLE",
+    "PEOPLE",
+    "DISCUSS"
+   ]
+  },
+  {
+   "id": 434,
+   "category": "Jobs & People",
+   "word": "COMPANY",
+   "taboo": [
+    "BUSINESS",
+    "WORK",
+    "EMPLOYEE",
+    "PROFIT",
+    "OFFICE"
+   ]
+  },
+  {
+   "id": 435,
+   "category": "Jobs & People",
+   "word": "FACTORY",
+   "taboo": [
+    "MACHINE",
+    "PRODUCE",
+    "WORKER",
+    "BUILD",
+    "GOODS"
+   ]
+  },
+  {
+   "id": 436,
+   "category": "Jobs & People",
+   "word": "MARKET",
+   "taboo": [
+    "BUY",
+    "SELL",
+    "STALL",
+    "PRICE",
+    "PEOPLE"
+   ]
+  },
+  {
+   "id": 437,
+   "category": "Jobs & People",
+   "word": "SHOP",
+   "taboo": [
+    "BUY",
+    "SELL",
+    "STORE",
+    "PRICE",
+    "CUSTOMER"
+   ]
+  },
+  {
+   "id": 438,
+   "category": "Jobs & People",
+   "word": "MONEY",
+   "taboo": [
+    "PAY",
+    "BUY",
+    "CASH",
+    "RICH",
+    "NOTE"
+   ]
+  },
+  {
+   "id": 439,
+   "category": "Jobs & People",
+   "word": "PRICE",
+   "taboo": [
+    "COST",
+    "MONEY",
+    "BUY",
+    "HIGH",
+    "TAG"
+   ]
+  },
+  {
+   "id": 440,
+   "category": "Jobs & People",
+   "word": "BANK",
+   "taboo": [
+    "MONEY",
+    "ACCOUNT",
+    "SAVE",
+    "CARD",
+    "RIVER"
+   ]
+  },
+  {
+   "id": 441,
+   "category": "Jobs & People",
+   "word": "CHILD",
+   "taboo": [
+    "SMALL",
+    "ADULT",
+    "PARENT",
+    "YOUNG",
+    "PLAY"
+   ]
+  },
+  {
+   "id": 442,
+   "category": "Jobs & People",
+   "word": "ADULT",
+   "taboo": [
+    "GROWN",
+    "CHILD",
+    "OLD",
+    "RESPONSIBLE",
+    "AGE"
+   ]
+  },
+  {
+   "id": 443,
+   "category": "Jobs & People",
+   "word": "FAMILY",
+   "taboo": [
+    "PARENT",
+    "CHILD",
+    "HOME",
+    "RELATIVE",
+    "TOGETHER"
+   ]
+  },
+  {
+   "id": 444,
+   "category": "Jobs & People",
+   "word": "FRIEND",
+   "taboo": [
+    "ENEMY",
+    "CLOSE",
+    "TRUST",
+    "KNOW",
+    "TOGETHER"
+   ]
+  },
+  {
+   "id": 445,
+   "category": "Jobs & People",
+   "word": "STRANGER",
+   "taboo": [
+    "KNOW",
+    "NEW",
+    "UNKNOWN",
+    "FRIEND",
+    "MEET"
+   ]
+  },
+  {
+   "id": 446,
+   "category": "Jobs & People",
+   "word": "GUEST",
+   "taboo": [
+    "HOST",
+    "VISIT",
+    "HOME",
+    "INVITE",
+    "STAY"
+   ]
+  },
+  {
+   "id": 447,
+   "category": "Jobs & People",
+   "word": "CROWD",
+   "taboo": [
+    "MANY",
+    "PEOPLE",
+    "TOGETHER",
+    "NOISE",
+    "ALONE"
+   ]
+  },
+  {
+   "id": 448,
+   "category": "Jobs & People",
+   "word": "TWIN",
+   "taboo": [
+    "TWO",
+    "SAME",
+    "BROTHER",
+    "BIRTH",
+    "LOOK"
+   ]
+  },
+  {
+   "id": 449,
+   "category": "Buildings & Places",
+   "word": "SCHOOL",
+   "taboo": [
+    "LEARN",
+    "TEACHER",
+    "CLASS",
+    "CHILD",
+    "BUILDING"
+   ]
+  },
+  {
+   "id": 450,
+   "category": "Buildings & Places",
+   "word": "LIBRARY",
+   "taboo": [
+    "BOOK",
+    "QUIET",
+    "BORROW",
+    "SHELF",
+    "READ"
+   ]
+  },
+  {
+   "id": 451,
+   "category": "Buildings & Places",
+   "word": "MUSEUM",
+   "taboo": [
+    "ART",
+    "HISTORY",
+    "VISIT",
+    "OLD",
+    "DISPLAY"
+   ]
+  },
+  {
+   "id": 452,
+   "category": "Buildings & Places",
+   "word": "THEATER",
+   "taboo": [
+    "STAGE",
+    "PLAY",
+    "ACTOR",
+    "AUDIENCE",
+    "SEAT"
+   ]
+  },
+  {
+   "id": 453,
+   "category": "Buildings & Places",
+   "word": "CINEMA",
+   "taboo": [
+    "FILM",
+    "SCREEN",
+    "DARK",
+    "SEAT",
+    "TICKET"
+   ]
+  },
+  {
+   "id": 454,
+   "category": "Buildings & Places",
+   "word": "CHURCH",
+   "taboo": [
+    "PRAY",
+    "BUILDING",
+    "BELL",
+    "RELIGION",
+    "CROSS"
+   ]
+  },
+  {
+   "id": 455,
+   "category": "Buildings & Places",
+   "word": "TOWER",
+   "taboo": [
+    "TALL",
+    "BUILDING",
+    "TOP",
+    "CLIMB",
+    "VIEW"
+   ]
+  },
+  {
+   "id": 456,
+   "category": "Buildings & Places",
+   "word": "CASTLE",
+   "taboo": [
+    "KING",
+    "OLD",
+    "STONE",
+    "WALL",
+    "DEFEND"
+   ]
+  },
+  {
+   "id": 457,
+   "category": "Buildings & Places",
+   "word": "PALACE",
+   "taboo": [
+    "KING",
+    "BIG",
+    "ROYAL",
+    "RICH",
+    "ROOM"
+   ]
+  },
+  {
+   "id": 458,
+   "category": "Buildings & Places",
+   "word": "LIGHTHOUSE",
+   "taboo": [
+    "SEA",
+    "TALL",
+    "SHIP",
+    "WARN",
+    "ROCK"
+   ]
+  },
+  {
+   "id": 459,
+   "category": "Buildings & Places",
+   "word": "PARK",
+   "taboo": [
+    "GREEN",
+    "TREE",
+    "WALK",
+    "BENCH",
+    "CITY"
+   ]
+  },
+  {
+   "id": 460,
+   "category": "Buildings & Places",
+   "word": "PHARMACY",
+   "taboo": [
+    "MEDICINE",
+    "DRUG",
+    "SHOP",
+    "DOCTOR",
+    "BUY"
+   ]
+  },
+  {
+   "id": 461,
+   "category": "Buildings & Places",
+   "word": "OFFICE",
+   "taboo": [
+    "DESK",
+    "WORK",
+    "COMPUTER",
+    "BUILDING",
+    "MEETING"
+   ]
+  },
+  {
+   "id": 462,
+   "category": "Buildings & Places",
+   "word": "PRISON",
+   "taboo": [
+    "CRIME",
+    "LOCK",
+    "BAR",
+    "GUARD",
+    "FREE"
+   ]
+  },
+  {
+   "id": 463,
+   "category": "Buildings & Places",
+   "word": "GREENHOUSE",
+   "taboo": [
+    "GLASS",
+    "PLANT",
+    "GROW",
+    "WARM",
+    "GARDEN"
+   ]
+  },
+  {
+   "id": 464,
+   "category": "Buildings & Places",
+   "word": "BAKERY",
+   "taboo": [
+    "BREAD",
+    "SHOP",
+    "OVEN",
+    "CAKE",
+    "FRESH"
+   ]
+  },
+  {
+   "id": 465,
+   "category": "Buildings & Places",
+   "word": "CAFE",
+   "taboo": [
+    "COFFEE",
+    "SIT",
+    "SMALL",
+    "DRINK",
+    "TABLE"
+   ]
+  },
+  {
+   "id": 466,
+   "category": "Buildings & Places",
+   "word": "SQUARE",
+   "taboo": [
+    "CITY",
+    "OPEN",
+    "FOUR",
+    "CENTER",
+    "MEET"
+   ]
+  },
+  {
+   "id": 467,
+   "category": "Buildings & Places",
+   "word": "STATUE",
+   "taboo": [
+    "STONE",
+    "STAND",
+    "PERSON",
+    "ART",
+    "METAL"
+   ]
+  },
+  {
+   "id": 468,
+   "category": "Buildings & Places",
+   "word": "PYRAMID",
+   "taboo": [
+    "EGYPT",
+    "TRIANGLE",
+    "STONE",
+    "OLD",
+    "TOMB"
+   ]
+  },
+  {
+   "id": 469,
+   "category": "Buildings & Places",
+   "word": "TENT",
+   "taboo": [
+    "CAMP",
+    "CLOTH",
+    "SLEEP",
+    "POLE",
+    "OUTSIDE"
+   ]
+  },
+  {
+   "id": 470,
+   "category": "Buildings & Places",
+   "word": "CAMP",
+   "taboo": [
+    "TENT",
+    "FIRE",
+    "OUTSIDE",
+    "SLEEP",
+    "NATURE"
+   ]
+  },
+  {
+   "id": 471,
+   "category": "Buildings & Places",
+   "word": "BASEMENT",
+   "taboo": [
+    "UNDER",
+    "HOUSE",
+    "DARK",
+    "STORE",
+    "FLOOR"
+   ]
+  },
+  {
+   "id": 472,
+   "category": "Buildings & Places",
+   "word": "ELEVATOR",
+   "taboo": [
+    "UP",
+    "FLOOR",
+    "BUTTON",
+    "BUILDING",
+    "LIFT"
+   ]
+  },
+  {
+   "id": 473,
+   "category": "Buildings & Places",
+   "word": "ESCALATOR",
+   "taboo": [
+    "STAIR",
+    "MOVE",
+    "STEP",
+    "SHOP",
+    "RIDE"
+   ]
+  },
+  {
+   "id": 474,
+   "category": "Technology & Tools",
+   "word": "COMPUTER",
+   "taboo": [
+    "SCREEN",
+    "KEYBOARD",
+    "MACHINE",
+    "DATA",
+    "PROGRAM"
+   ]
+  },
+  {
+   "id": 475,
+   "category": "Technology & Tools",
+   "word": "INTERNET",
+   "taboo": [
+    "ONLINE",
+    "WEB",
+    "CONNECT",
+    "NETWORK",
+    "SEARCH"
+   ]
+  },
+  {
+   "id": 476,
+   "category": "Technology & Tools",
+   "word": "PHONE",
+   "taboo": [
+    "CALL",
+    "CELL",
+    "RING",
+    "TALK",
+    "POCKET"
+   ]
+  },
+  {
+   "id": 477,
+   "category": "Technology & Tools",
+   "word": "SCREEN",
+   "taboo": [
+    "SHOW",
+    "DISPLAY",
+    "FLAT",
+    "WATCH",
+    "PIXEL"
+   ]
+  },
+  {
+   "id": 478,
+   "category": "Technology & Tools",
+   "word": "KEYBOARD",
+   "taboo": [
+    "TYPE",
+    "FINGER",
+    "LETTER",
+    "COMPUTER",
+    "PRESS"
+   ]
+  },
+  {
+   "id": 479,
+   "category": "Technology & Tools",
+   "word": "BATTERY",
+   "taboo": [
+    "POWER",
+    "CHARGE",
+    "ENERGY",
+    "DEAD",
+    "PHONE"
+   ]
+  },
+  {
+   "id": 480,
+   "category": "Technology & Tools",
+   "word": "CAMERA",
+   "taboo": [
+    "PHOTO",
+    "LENS",
+    "TAKE",
+    "PICTURE",
+    "CLICK"
+   ]
+  },
+  {
+   "id": 481,
+   "category": "Technology & Tools",
+   "word": "PHOTO",
+   "taboo": [
+    "CAMERA",
+    "PICTURE",
+    "TAKE",
+    "ALBUM",
+    "MEMORY"
+   ]
+  },
+  {
+   "id": 482,
+   "category": "Technology & Tools",
+   "word": "VIDEO",
+   "taboo": [
+    "WATCH",
+    "MOVE",
+    "RECORD",
+    "SCREEN",
+    "CLIP"
+   ]
+  },
+  {
+   "id": 483,
+   "category": "Technology & Tools",
+   "word": "EMAIL",
+   "taboo": [
+    "SEND",
+    "MESSAGE",
+    "INBOX",
+    "WRITE",
+    "ADDRESS"
+   ]
+  },
+  {
+   "id": 484,
+   "category": "Technology & Tools",
+   "word": "MESSAGE",
+   "taboo": [
+    "SEND",
+    "TEXT",
+    "PHONE",
+    "READ",
+    "WRITE"
+   ]
+  },
+  {
+   "id": 485,
+   "category": "Technology & Tools",
+   "word": "PASSWORD",
+   "taboo": [
+    "SECRET",
+    "LOGIN",
+    "TYPE",
+    "SECURE",
+    "FORGET"
+   ]
+  },
+  {
+   "id": 486,
+   "category": "Technology & Tools",
+   "word": "FILE",
+   "taboo": [
+    "SAVE",
+    "COMPUTER",
+    "FOLDER",
+    "OPEN",
+    "DOCUMENT"
+   ]
+  },
+  {
+   "id": 487,
+   "category": "Technology & Tools",
+   "word": "PRINTER",
+   "taboo": [
+    "PAPER",
+    "INK",
+    "DOCUMENT",
+    "OFFICE",
+    "MACHINE"
+   ]
+  },
+  {
+   "id": 488,
+   "category": "Technology & Tools",
+   "word": "ROBOT",
+   "taboo": [
+    "MACHINE",
+    "HUMAN",
+    "METAL",
+    "PROGRAM",
+    "ARM"
+   ]
+  },
+  {
+   "id": 489,
+   "category": "Technology & Tools",
+   "word": "SATELLITE",
+   "taboo": [
+    "SPACE",
+    "ORBIT",
+    "SIGNAL",
+    "EARTH",
+    "LAUNCH"
+   ]
+  },
+  {
+   "id": 490,
+   "category": "Technology & Tools",
+   "word": "ROCKET",
+   "taboo": [
+    "SPACE",
+    "LAUNCH",
+    "FIRE",
+    "FAST",
+    "FLY"
+   ]
+  },
+  {
+   "id": 491,
+   "category": "Technology & Tools",
+   "word": "ELECTRICITY",
+   "taboo": [
+    "POWER",
+    "WIRE",
+    "SHOCK",
+    "LIGHT",
+    "ENERGY"
+   ]
+  },
+  {
+   "id": 492,
+   "category": "Technology & Tools",
+   "word": "WIRE",
+   "taboo": [
+    "METAL",
+    "THIN",
+    "ELECTRIC",
+    "CONNECT",
+    "CABLE"
+   ]
+  },
+  {
+   "id": 493,
+   "category": "Technology & Tools",
+   "word": "SWITCH",
+   "taboo": [
+    "ON",
+    "OFF",
+    "PRESS",
+    "LIGHT",
+    "CHANGE"
+   ]
+  },
+  {
+   "id": 494,
+   "category": "Technology & Tools",
+   "word": "MACHINE",
+   "taboo": [
+    "WORK",
+    "PART",
+    "MOTOR",
+    "FACTORY",
+    "BUILD"
+   ]
+  },
+  {
+   "id": 495,
+   "category": "Technology & Tools",
+   "word": "TOOL",
+   "taboo": [
+    "USE",
+    "FIX",
+    "HAND",
+    "HAMMER",
+    "WORK"
+   ]
+  },
+  {
+   "id": 496,
+   "category": "Technology & Tools",
+   "word": "HAMMER",
+   "taboo": [
+    "HIT",
+    "NAIL",
+    "TOOL",
+    "HEAVY",
+    "HAND"
+   ]
+  },
+  {
+   "id": 497,
+   "category": "Technology & Tools",
+   "word": "NAIL",
+   "taboo": [
+    "HAMMER",
+    "METAL",
+    "SHARP",
+    "FINGER",
+    "WOOD"
+   ]
+  },
+  {
+   "id": 498,
+   "category": "Technology & Tools",
+   "word": "SCREW",
+   "taboo": [
+    "TURN",
+    "METAL",
+    "TIGHT",
+    "TOOL",
+    "HOLD"
+   ]
+  },
+  {
+   "id": 499,
+   "category": "Technology & Tools",
+   "word": "LADDER",
+   "taboo": [
+    "CLIMB",
+    "STEP",
+    "HIGH",
+    "LEAN",
+    "REACH"
+   ]
+  },
+  {
+   "id": 500,
+   "category": "Technology & Tools",
+   "word": "ROPE",
+   "taboo": [
+    "TIE",
+    "LONG",
+    "STRONG",
+    "PULL",
+    "KNOT"
+   ]
+  },
+  {
+   "id": 501,
+   "category": "Technology & Tools",
+   "word": "CHAIN",
+   "taboo": [
+    "LINK",
+    "METAL",
+    "STRONG",
+    "BIKE",
+    "LOCK"
+   ]
+  },
+  {
+   "id": 502,
+   "category": "Technology & Tools",
+   "word": "MAGNET",
+   "taboo": [
+    "ATTRACT",
+    "METAL",
+    "NORTH",
+    "FRIDGE",
+    "PULL"
+   ]
+  },
+  {
+   "id": 503,
+   "category": "Technology & Tools",
+   "word": "PLASTIC",
+   "taboo": [
+    "BOTTLE",
+    "CHEAP",
+    "WASTE",
+    "SOFT",
+    "MAKE"
+   ]
+  },
+  {
+   "id": 504,
+   "category": "Technology & Tools",
+   "word": "METAL",
+   "taboo": [
+    "HARD",
+    "IRON",
+    "SHINE",
+    "HEAVY",
+    "STRONG"
+   ]
+  },
+  {
+   "id": 505,
+   "category": "Technology & Tools",
+   "word": "PAPER",
+   "taboo": [
+    "WRITE",
+    "WHITE",
+    "TREE",
+    "SHEET",
+    "PRINT"
+   ]
+  },
+  {
+   "id": 506,
+   "category": "Technology & Tools",
+   "word": "RUBBER",
+   "taboo": [
+    "BOUNCE",
+    "TIRE",
+    "SOFT",
+    "STRETCH",
+    "WHEEL"
+   ]
+  },
+  {
+   "id": 507,
+   "category": "Technology & Tools",
+   "word": "SIGNAL",
+   "taboo": [
+    "SEND",
+    "WAVE",
+    "PHONE",
+    "WEAK",
+    "RECEIVE"
+   ]
+  },
+  {
+   "id": 508,
+   "category": "School & Office",
+   "word": "BOOK",
+   "taboo": [
+    "READ",
+    "PAGE",
+    "WRITE",
+    "COVER",
+    "STORY"
+   ]
+  },
+  {
+   "id": 509,
+   "category": "School & Office",
+   "word": "PAGE",
+   "taboo": [
+    "BOOK",
+    "TURN",
+    "PAPER",
+    "NUMBER",
+    "READ"
+   ]
+  },
+  {
+   "id": 510,
+   "category": "School & Office",
+   "word": "PEN",
+   "taboo": [
+    "WRITE",
+    "INK",
+    "PAPER",
+    "HAND",
+    "PENCIL"
+   ]
+  },
+  {
+   "id": 511,
+   "category": "School & Office",
+   "word": "PENCIL",
+   "taboo": [
+    "WRITE",
+    "WOOD",
+    "ERASE",
+    "PEN",
+    "SHARP"
+   ]
+  },
+  {
+   "id": 512,
+   "category": "School & Office",
+   "word": "RULER",
+   "taboo": [
+    "MEASURE",
+    "STRAIGHT",
+    "LINE",
+    "CENTIMETER",
+    "KING"
+   ]
+  },
+  {
+   "id": 513,
+   "category": "School & Office",
+   "word": "SCISSORS",
+   "taboo": [
+    "CUT",
+    "TWO",
+    "PAPER",
+    "SHARP",
+    "HAND"
+   ]
+  },
+  {
+   "id": 514,
+   "category": "School & Office",
+   "word": "GLUE",
+   "taboo": [
+    "STICK",
+    "PAPER",
+    "JOIN",
+    "WET",
+    "BOTTLE"
+   ]
+  },
+  {
+   "id": 515,
+   "category": "School & Office",
+   "word": "ERASER",
+   "taboo": [
+    "RUB",
+    "PENCIL",
+    "MISTAKE",
+    "RUBBER",
+    "REMOVE"
+   ]
+  },
+  {
+   "id": 516,
+   "category": "School & Office",
+   "word": "DICTIONARY",
+   "taboo": [
+    "WORD",
+    "MEAN",
+    "LOOK",
+    "BOOK",
+    "ALPHABET"
+   ]
+  },
+  {
+   "id": 517,
+   "category": "School & Office",
+   "word": "LESSON",
+   "taboo": [
+    "TEACH",
+    "CLASS",
+    "LEARN",
+    "HOUR",
+    "SUBJECT"
+   ]
+  },
+  {
+   "id": 518,
+   "category": "School & Office",
+   "word": "EXAM",
+   "taboo": [
+    "TEST",
+    "QUESTION",
+    "PASS",
+    "FAIL",
+    "STUDY"
+   ]
+  },
+  {
+   "id": 519,
+   "category": "School & Office",
+   "word": "HOMEWORK",
+   "taboo": [
+    "SCHOOL",
+    "TASK",
+    "EVENING",
+    "EXERCISE",
+    "TEACHER"
+   ]
+  },
+  {
+   "id": 520,
+   "category": "School & Office",
+   "word": "GRADE",
+   "taboo": [
+    "MARK",
+    "SCORE",
+    "SCHOOL",
+    "EXAM",
+    "LETTER"
+   ]
+  },
+  {
+   "id": 521,
+   "category": "School & Office",
+   "word": "SUBJECT",
+   "taboo": [
+    "SCHOOL",
+    "STUDY",
+    "MATH",
+    "TOPIC",
+    "CLASS"
+   ]
+  },
+  {
+   "id": 522,
+   "category": "School & Office",
+   "word": "MATHEMATICS",
+   "taboo": [
+    "NUMBER",
+    "CALCULATE",
+    "SCHOOL",
+    "EQUATION",
+    "SOLVE"
+   ]
+  },
+  {
+   "id": 523,
+   "category": "School & Office",
+   "word": "HISTORY",
+   "taboo": [
+    "PAST",
+    "EVENT",
+    "STUDY",
+    "OLD",
+    "DATE"
+   ]
+  },
+  {
+   "id": 524,
+   "category": "School & Office",
+   "word": "GEOGRAPHY",
+   "taboo": [
+    "MAP",
+    "COUNTRY",
+    "EARTH",
+    "STUDY",
+    "PLACE"
+   ]
+  },
+  {
+   "id": 525,
+   "category": "School & Office",
+   "word": "LANGUAGE",
+   "taboo": [
+    "SPEAK",
+    "WORD",
+    "LEARN",
+    "ENGLISH",
+    "GRAMMAR"
+   ]
+  },
+  {
+   "id": 526,
+   "category": "School & Office",
+   "word": "GRAMMAR",
+   "taboo": [
+    "RULE",
+    "LANGUAGE",
+    "SENTENCE",
+    "VERB",
+    "CORRECT"
+   ]
+  },
+  {
+   "id": 527,
+   "category": "School & Office",
+   "word": "ALPHABET",
+   "taboo": [
+    "LETTER",
+    "ORDER",
+    "TWENTY",
+    "LANGUAGE",
+    "START"
+   ]
+  },
+  {
+   "id": 528,
+   "category": "School & Office",
+   "word": "NUMBER",
+   "taboo": [
+    "COUNT",
+    "MATH",
+    "DIGIT",
+    "FIGURE",
+    "ADD"
+   ]
+  },
+  {
+   "id": 529,
+   "category": "School & Office",
+   "word": "QUESTION",
+   "taboo": [
+    "ANSWER",
+    "ASK",
+    "MARK",
+    "WHY",
+    "DOUBT"
+   ]
+  },
+  {
+   "id": 530,
+   "category": "School & Office",
+   "word": "ANSWER",
+   "taboo": [
+    "QUESTION",
+    "REPLY",
+    "CORRECT",
+    "GIVE",
+    "SOLUTION"
+   ]
+  },
+  {
+   "id": 531,
+   "category": "School & Office",
+   "word": "MISTAKE",
+   "taboo": [
+    "WRONG",
+    "CORRECT",
+    "ERROR",
+    "LEARN",
+    "FIX"
+   ]
+  },
+  {
+   "id": 532,
+   "category": "Music & Arts",
+   "word": "MUSIC",
+   "taboo": [
+    "SOUND",
+    "SONG",
+    "LISTEN",
+    "INSTRUMENT",
+    "NOTE"
+   ]
+  },
+  {
+   "id": 533,
+   "category": "Music & Arts",
+   "word": "SONG",
+   "taboo": [
+    "SING",
+    "MUSIC",
+    "WORD",
+    "VOICE",
+    "LISTEN"
+   ]
+  },
+  {
+   "id": 534,
+   "category": "Music & Arts",
+   "word": "GUITAR",
+   "taboo": [
+    "STRING",
+    "PLAY",
+    "MUSIC",
+    "WOOD",
+    "STRUM"
+   ]
+  },
+  {
+   "id": 535,
+   "category": "Music & Arts",
+   "word": "PIANO",
+   "taboo": [
+    "KEY",
+    "BLACK",
+    "PLAY",
+    "MUSIC",
+    "WHITE"
+   ]
+  },
+  {
+   "id": 536,
+   "category": "Music & Arts",
+   "word": "DRUM",
+   "taboo": [
+    "HIT",
+    "BEAT",
+    "ROUND",
+    "STICK",
+    "SOUND"
+   ]
+  },
+  {
+   "id": 537,
+   "category": "Music & Arts",
+   "word": "VIOLIN",
+   "taboo": [
+    "STRING",
+    "BOW",
+    "SMALL",
+    "MUSIC",
+    "CHIN"
+   ]
+  },
+  {
+   "id": 538,
+   "category": "Music & Arts",
+   "word": "FLUTE",
+   "taboo": [
+    "BLOW",
+    "HOLE",
+    "MUSIC",
+    "THIN",
+    "WIND"
+   ]
+  },
+  {
+   "id": 539,
+   "category": "Music & Arts",
+   "word": "ORCHESTRA",
+   "taboo": [
+    "MUSIC",
+    "MANY",
+    "CONDUCT",
+    "PLAY",
+    "INSTRUMENT"
+   ]
+  },
+  {
+   "id": 540,
+   "category": "Music & Arts",
+   "word": "CONCERT",
+   "taboo": [
+    "MUSIC",
+    "LIVE",
+    "STAGE",
+    "AUDIENCE",
+    "TICKET"
+   ]
+  },
+  {
+   "id": 541,
+   "category": "Music & Arts",
+   "word": "RHYTHM",
+   "taboo": [
+    "BEAT",
+    "MUSIC",
+    "TIME",
+    "DANCE",
+    "REPEAT"
+   ]
+  },
+  {
+   "id": 542,
+   "category": "Music & Arts",
+   "word": "MELODY",
+   "taboo": [
+    "TUNE",
+    "MUSIC",
+    "SING",
+    "NOTE",
+    "SOUND"
+   ]
+  },
+  {
+   "id": 543,
+   "category": "Music & Arts",
+   "word": "PAINTING",
+   "taboo": [
+    "ART",
+    "BRUSH",
+    "COLOR",
+    "CANVAS",
+    "WALL"
+   ]
+  },
+  {
+   "id": 544,
+   "category": "Music & Arts",
+   "word": "DRAWING",
+   "taboo": [
+    "PENCIL",
+    "LINE",
+    "PAPER",
+    "ART",
+    "SKETCH"
+   ]
+  },
+  {
+   "id": 545,
+   "category": "Music & Arts",
+   "word": "SCULPTURE",
+   "taboo": [
+    "STONE",
+    "ART",
+    "SHAPE",
+    "CARVE",
+    "STATUE"
+   ]
+  },
+  {
+   "id": 546,
+   "category": "Music & Arts",
+   "word": "COLOR",
+   "taboo": [
+    "RED",
+    "PAINT",
+    "SEE",
+    "MIX",
+    "BRIGHT"
+   ]
+  },
+  {
+   "id": 547,
+   "category": "Music & Arts",
+   "word": "POSTER",
+   "taboo": [
+    "WALL",
+    "PAPER",
+    "PICTURE",
+    "HANG",
+    "AD"
+   ]
+  },
+  {
+   "id": 548,
+   "category": "Music & Arts",
+   "word": "MOVIE",
+   "taboo": [
+    "WATCH",
+    "CINEMA",
+    "ACTOR",
+    "SCREEN",
+    "STORY"
+   ]
+  },
+  {
+   "id": 549,
+   "category": "Music & Arts",
+   "word": "ACTOR",
+   "taboo": [
+    "MOVIE",
+    "STAGE",
+    "PLAY",
+    "ROLE",
+    "THEATER"
+   ]
+  },
+  {
+   "id": 550,
+   "category": "Music & Arts",
+   "word": "STAGE",
+   "taboo": [
+    "THEATER",
+    "PERFORM",
+    "ACTOR",
+    "LIGHT",
+    "STAND"
+   ]
+  },
+  {
+   "id": 551,
+   "category": "Music & Arts",
+   "word": "AUDIENCE",
+   "taboo": [
+    "WATCH",
+    "PEOPLE",
+    "SEAT",
+    "CLAP",
+    "PERFORM"
+   ]
+  },
+  {
+   "id": 552,
+   "category": "Music & Arts",
+   "word": "STORY",
+   "taboo": [
+    "TELL",
+    "BOOK",
+    "BEGIN",
+    "CHARACTER",
+    "END"
+   ]
+  },
+  {
+   "id": 553,
+   "category": "Music & Arts",
+   "word": "POEM",
+   "taboo": [
+    "WORD",
+    "RHYME",
+    "WRITE",
+    "SHORT",
+    "VERSE"
+   ]
+  },
+  {
+   "id": 554,
+   "category": "Music & Arts",
+   "word": "NOVEL",
+   "taboo": [
+    "BOOK",
+    "LONG",
+    "STORY",
+    "WRITE",
+    "FICTION"
+   ]
+  },
+  {
+   "id": 555,
+   "category": "Music & Arts",
+   "word": "COMEDY",
+   "taboo": [
+    "LAUGH",
+    "FUNNY",
+    "TRAGEDY",
+    "JOKE",
+    "SHOW"
+   ]
+  },
+  {
+   "id": 556,
+   "category": "Music & Arts",
+   "word": "COSTUME",
+   "taboo": [
+    "WEAR",
+    "DRESS",
+    "ACTOR",
+    "PARTY",
+    "CHARACTER"
+   ]
+  },
+  {
+   "id": 557,
+   "category": "Feelings & Ideas",
+   "word": "HAPPY",
+   "taboo": [
+    "SAD",
+    "SMILE",
+    "JOY",
+    "FEEL",
+    "GOOD"
+   ]
+  },
+  {
+   "id": 558,
+   "category": "Feelings & Ideas",
+   "word": "SAD",
+   "taboo": [
+    "HAPPY",
+    "CRY",
+    "TEAR",
+    "FEEL",
+    "DOWN"
+   ]
+  },
+  {
+   "id": 559,
+   "category": "Feelings & Ideas",
+   "word": "ANGRY",
+   "taboo": [
+    "MAD",
+    "CALM",
+    "SHOUT",
+    "RED",
+    "FEEL"
+   ]
+  },
+  {
+   "id": 560,
+   "category": "Feelings & Ideas",
+   "word": "FEAR",
+   "taboo": [
+    "SCARE",
+    "BRAVE",
+    "AFRAID",
+    "DARK",
+    "FEEL"
+   ]
+  },
+  {
+   "id": 561,
+   "category": "Feelings & Ideas",
+   "word": "LOVE",
+   "taboo": [
+    "HATE",
+    "HEART",
+    "FEEL",
+    "ROMANCE",
+    "KISS"
+   ]
+  },
+  {
+   "id": 562,
+   "category": "Feelings & Ideas",
+   "word": "HATE",
+   "taboo": [
+    "LOVE",
+    "DISLIKE",
+    "STRONG",
+    "ENEMY",
+    "FEEL"
+   ]
+  },
+  {
+   "id": 563,
+   "category": "Feelings & Ideas",
+   "word": "SURPRISE",
+   "taboo": [
+    "SHOCK",
+    "EXPECT",
+    "SUDDEN",
+    "GIFT",
+    "FACE"
+   ]
+  },
+  {
+   "id": 564,
+   "category": "Feelings & Ideas",
+   "word": "HOPE",
+   "taboo": [
+    "WISH",
+    "FUTURE",
+    "WANT",
+    "DESPAIR",
+    "BELIEVE"
+   ]
+  },
+  {
+   "id": 565,
+   "category": "Feelings & Ideas",
+   "word": "LUCK",
+   "taboo": [
+    "CHANCE",
+    "GOOD",
+    "BAD",
+    "FORTUNE",
+    "RANDOM"
+   ]
+  },
+  {
+   "id": 566,
+   "category": "Feelings & Ideas",
+   "word": "SECRET",
+   "taboo": [
+    "HIDE",
+    "TELL",
+    "KNOW",
+    "QUIET",
+    "KEEP"
+   ]
+  },
+  {
+   "id": 567,
+   "category": "Feelings & Ideas",
+   "word": "TRUTH",
+   "taboo": [
+    "LIE",
+    "REAL",
+    "FACT",
+    "HONEST",
+    "SAY"
+   ]
+  },
+  {
+   "id": 568,
+   "category": "Feelings & Ideas",
+   "word": "LIE",
+   "taboo": [
+    "TRUTH",
+    "FALSE",
+    "SAY",
+    "HONEST",
+    "TELL"
+   ]
+  },
+  {
+   "id": 569,
+   "category": "Feelings & Ideas",
+   "word": "PROMISE",
+   "taboo": [
+    "WORD",
+    "KEEP",
+    "BREAK",
+    "SWEAR",
+    "TRUST"
+   ]
+  },
+  {
+   "id": 570,
+   "category": "Feelings & Ideas",
+   "word": "TRUST",
+   "taboo": [
+    "BELIEVE",
+    "FRIEND",
+    "DOUBT",
+    "SAFE",
+    "RELY"
+   ]
+  },
+  {
+   "id": 571,
+   "category": "Feelings & Ideas",
+   "word": "PATIENCE",
+   "taboo": [
+    "WAIT",
+    "CALM",
+    "TIME",
+    "HURRY",
+    "VIRTUE"
+   ]
+  },
+  {
+   "id": 572,
+   "category": "Feelings & Ideas",
+   "word": "COURAGE",
+   "taboo": [
+    "BRAVE",
+    "FEAR",
+    "STRONG",
+    "ACT",
+    "HERO"
+   ]
+  },
+  {
+   "id": 573,
+   "category": "Feelings & Ideas",
+   "word": "FREEDOM",
+   "taboo": [
+    "ESCAPE",
+    "PRISON",
+    "CHOOSE",
+    "RIGHT",
+    "LIBERTY"
+   ]
+  },
+  {
+   "id": 574,
+   "category": "Feelings & Ideas",
+   "word": "PEACE",
+   "taboo": [
+    "WAR",
+    "CALM",
+    "QUIET",
+    "DOVE",
+    "TREATY"
+   ]
+  },
+  {
+   "id": 575,
+   "category": "Feelings & Ideas",
+   "word": "NOISE",
+   "taboo": [
+    "LOUD",
+    "SOUND",
+    "QUIET",
+    "ANNOY",
+    "EAR"
+   ]
+  },
+  {
+   "id": 576,
+   "category": "Feelings & Ideas",
+   "word": "SILENCE",
+   "taboo": [
+    "QUIET",
+    "NOISE",
+    "SOUND",
+    "STILL",
+    "LIBRARY"
+   ]
+  },
+  {
+   "id": 577,
+   "category": "Feelings & Ideas",
+   "word": "MEMORY",
+   "taboo": [
+    "REMEMBER",
+    "FORGET",
+    "PAST",
+    "MIND",
+    "BRAIN"
+   ]
+  },
+  {
+   "id": 578,
+   "category": "Feelings & Ideas",
+   "word": "IDEA",
+   "taboo": [
+    "THINK",
+    "MIND",
+    "NEW",
+    "PLAN",
+    "BULB"
+   ]
+  },
+  {
+   "id": 579,
+   "category": "Feelings & Ideas",
+   "word": "PROBLEM",
+   "taboo": [
+    "SOLVE",
+    "SOLUTION",
+    "HARD",
+    "ISSUE",
+    "TROUBLE"
+   ]
+  },
+  {
+   "id": 580,
+   "category": "Feelings & Ideas",
+   "word": "CHANGE",
+   "taboo": [
+    "DIFFERENT",
+    "SAME",
+    "NEW",
+    "ALTER",
+    "MONEY"
+   ]
+  },
+  {
+   "id": 581,
+   "category": "Feelings & Ideas",
+   "word": "GIFT",
+   "taboo": [
+    "GIVE",
+    "PRESENT",
+    "BIRTHDAY",
+    "WRAP",
+    "RECEIVE"
+   ]
+  },
+  {
+   "id": 582,
+   "category": "American & Global Icons",
+   "word": "BASEBALL",
+   "taboo": [
+    "BAT",
+    "DIAMOND",
+    "PITCHER",
+    "INNING",
+    "GLOVE"
+   ]
+  },
+  {
+   "id": 583,
+   "category": "American & Global Icons",
+   "word": "FOOTBALL",
+   "taboo": [
+    "HELMET",
+    "TOUCHDOWN",
+    "QUARTERBACK",
+    "OVAL",
+    "TACKLE"
+   ]
+  },
+  {
+   "id": 584,
+   "category": "American & Global Icons",
+   "word": "BURGER",
+   "taboo": [
+    "BEEF",
+    "BUN",
+    "GRILL",
+    "PATTY",
+    "FAST"
+   ]
+  },
+  {
+   "id": 585,
+   "category": "American & Global Icons",
+   "word": "HOT DOG",
+   "taboo": [
+    "SAUSAGE",
+    "BUN",
+    "MUSTARD",
+    "STAND",
+    "SNACK"
+   ]
+  },
+  {
+   "id": 586,
+   "category": "American & Global Icons",
+   "word": "FRENCH FRIES",
+   "taboo": [
+    "POTATO",
+    "SALT",
+    "OIL",
+    "THIN",
+    "KETCHUP"
+   ]
+  },
+  {
+   "id": 587,
+   "category": "American & Global Icons",
+   "word": "POPCORN",
+   "taboo": [
+    "MOVIE",
+    "SALT",
+    "BUTTER",
+    "SNACK",
+    "BAG"
+   ]
+  },
+  {
+   "id": 588,
+   "category": "American & Global Icons",
+   "word": "PANCAKE",
+   "taboo": [
+    "FLAT",
+    "SYRUP",
+    "BREAKFAST",
+    "ROUND",
+    "STACK"
+   ]
+  },
+  {
+   "id": 589,
+   "category": "American & Global Icons",
+   "word": "DONUT",
+   "taboo": [
+    "HOLE",
+    "SWEET",
+    "RING",
+    "COFFEE",
+    "GLAZE"
+   ]
+  },
+  {
+   "id": 590,
+   "category": "American & Global Icons",
+   "word": "COOKIE",
+   "taboo": [
+    "SWEET",
+    "BAKE",
+    "ROUND",
+    "CHOCOLATE",
+    "JAR"
+   ]
+  },
+  {
+   "id": 591,
+   "category": "American & Global Icons",
+   "word": "PUMPKIN",
+   "taboo": [
+    "ORANGE",
+    "ROUND",
+    "HALLOWEEN",
+    "SEED",
+    "PIE"
+   ]
+  },
+  {
+   "id": 592,
+   "category": "American & Global Icons",
+   "word": "TURKEY",
+   "taboo": [
+    "BIRD",
+    "BIG",
+    "DINNER",
+    "COUNTRY",
+    "FEAST"
+   ]
+  },
+  {
+   "id": 593,
+   "category": "American & Global Icons",
+   "word": "CALIFORNIA",
+   "taboo": [
+    "STATE",
+    "WEST",
+    "COAST",
+    "BEACH",
+    "GOLD"
+   ]
+  },
+  {
+   "id": 594,
+   "category": "American & Global Icons",
+   "word": "NEW YORK",
+   "taboo": [
+    "CITY",
+    "STATUE",
+    "BIG",
+    "SUBWAY",
+    "AMERICA"
+   ]
+  },
+  {
+   "id": 595,
+   "category": "American & Global Icons",
+   "word": "HOLLYWOOD",
+   "taboo": [
+    "MOVIE",
+    "STAR",
+    "SIGN",
+    "HILL",
+    "FAME"
+   ]
+  },
+  {
+   "id": 596,
+   "category": "American & Global Icons",
+   "word": "GRAND CANYON",
+   "taboo": [
+    "DEEP",
+    "ROCK",
+    "RIVER",
+    "ARIZONA",
+    "WIDE"
+   ]
+  },
+  {
+   "id": 597,
+   "category": "American & Global Icons",
+   "word": "SKYSCRAPER",
+   "taboo": [
+    "TALL",
+    "BUILDING",
+    "CITY",
+    "GLASS",
+    "FLOOR"
+   ]
+  },
+  {
+   "id": 598,
+   "category": "American & Global Icons",
+   "word": "COWBOY",
+   "taboo": [
+    "HORSE",
+    "HAT",
+    "WEST",
+    "RANCH",
+    "ROPE"
+   ]
+  },
+  {
+   "id": 599,
+   "category": "American & Global Icons",
+   "word": "RANCH",
+   "taboo": [
+    "CATTLE",
+    "BIG",
+    "HORSE",
+    "WEST",
+    "LAND"
+   ]
+  },
+  {
+   "id": 600,
+   "category": "American & Global Icons",
+   "word": "HIGHWAY",
+   "taboo": [
+    "ROAD",
+    "FAST",
+    "LONG",
+    "CAR",
+    "LANE"
+   ]
+  },
+  {
+   "id": 601,
+   "category": "American & Global Icons",
+   "word": "SUBWAY",
+   "taboo": [
+    "UNDER",
+    "TRAIN",
+    "CITY",
+    "TUNNEL",
+    "STATION"
+   ]
+  },
+  {
+   "id": 602,
+   "category": "American & Global Icons",
+   "word": "MALL",
+   "taboo": [
+    "SHOP",
+    "BIG",
+    "INSIDE",
+    "STORE",
+    "WALK"
+   ]
+  },
+  {
+   "id": 603,
+   "category": "American & Global Icons",
+   "word": "SUPERMARKET",
+   "taboo": [
+    "FOOD",
+    "BUY",
+    "CART",
+    "AISLE",
+    "BIG"
+   ]
+  },
+  {
+   "id": 604,
+   "category": "American & Global Icons",
+   "word": "DINER",
+   "taboo": [
+    "RESTAURANT",
+    "COFFEE",
+    "BREAKFAST",
+    "ROAD",
+    "CHEAP"
+   ]
+  },
+  {
+   "id": 605,
+   "category": "American & Global Icons",
+   "word": "JEANS",
+   "taboo": [
+    "DENIM",
+    "BLUE",
+    "PANTS",
+    "POCKET",
+    "WEAR"
+   ]
+  },
+  {
+   "id": 606,
+   "category": "American & Global Icons",
+   "word": "SNEAKERS",
+   "taboo": [
+    "SHOE",
+    "SPORT",
+    "RUN",
+    "FOOT",
+    "LACE"
+   ]
+  },
+  {
+   "id": 607,
+   "category": "American & Global Icons",
+   "word": "T-SHIRT",
+   "taboo": [
+    "COTTON",
+    "SLEEVE",
+    "CASUAL",
+    "PRINT",
+    "WEAR"
+   ]
+  },
+  {
+   "id": 608,
+   "category": "American & Global Icons",
+   "word": "SUNGLASSES",
+   "taboo": [
+    "EYE",
+    "DARK",
+    "WEAR",
+    "BEACH",
+    "FACE"
+   ]
+  },
+  {
+   "id": 609,
+   "category": "American & Global Icons",
+   "word": "TELEVISION",
+   "taboo": [
+    "SCREEN",
+    "WATCH",
+    "CHANNEL",
+    "REMOTE",
+    "SHOW"
+   ]
+  },
+  {
+   "id": 610,
+   "category": "American & Global Icons",
+   "word": "CARTOON",
+   "taboo": [
+    "DRAW",
+    "FUNNY",
+    "CHILD",
+    "ANIMATE",
+    "TELEVISION"
+   ]
+  },
+  {
+   "id": 611,
+   "category": "American & Global Icons",
+   "word": "JAZZ",
+   "taboo": [
+    "MUSIC",
+    "TRUMPET",
+    "BAND",
+    "BLUES",
+    "IMPROVISE"
+   ]
+  },
+  {
+   "id": 612,
+   "category": "American & Global Icons",
+   "word": "ASTRONAUT",
+   "taboo": [
+    "SPACE",
+    "SUIT",
+    "MOON",
+    "FLOAT",
+    "ROCKET"
+   ]
+  },
+  {
+   "id": 613,
+   "category": "American & Global Icons",
+   "word": "DOLLAR",
+   "taboo": [
+    "MONEY",
+    "CURRENCY",
+    "GREEN",
+    "BILL",
+    "AMERICA"
+   ]
+  },
+  {
+   "id": 614,
+   "category": "American & Global Icons",
+   "word": "FLAG",
+   "taboo": [
+    "COUNTRY",
+    "POLE",
+    "WAVE",
+    "STRIPE",
+    "STAR"
+   ]
+  },
+  {
+   "id": 615,
+   "category": "American & Global Icons",
+   "word": "GYM",
+   "taboo": [
+    "EXERCISE",
+    "WEIGHT",
+    "MUSCLE",
+    "TRAIN",
+    "MEMBER"
+   ]
+  },
+  {
+   "id": 616,
+   "category": "American & Global Icons",
+   "word": "PARTY",
+   "taboo": [
+    "GUEST",
+    "MUSIC",
+    "DANCE",
+    "CELEBRATE",
+    "BIRTHDAY"
+   ]
+  },
+  {
+   "id": 617,
+   "category": "American & Global Icons",
+   "word": "BIRTHDAY",
+   "taboo": [
+    "CAKE",
+    "CANDLE",
+    "AGE",
+    "PARTY",
+    "GIFT"
+   ]
+  },
+  {
+   "id": 618,
+   "category": "American & Global Icons",
+   "word": "WEDDING",
+   "taboo": [
+    "MARRY",
+    "RING",
+    "DRESS",
+    "BRIDE",
+    "CHURCH"
+   ]
+  },
+  {
+   "id": 619,
+   "category": "American & Global Icons",
+   "word": "CHRISTMAS",
+   "taboo": [
+    "TREE",
+    "GIFT",
+    "DECEMBER",
+    "SNOW",
+    "SANTA"
+   ]
+  },
+  {
+   "id": 620,
+   "category": "American & Global Icons",
+   "word": "HALLOWEEN",
+   "taboo": [
+    "PUMPKIN",
+    "COSTUME",
+    "CANDY",
+    "OCTOBER",
+    "SCARE"
+   ]
+  },
+  {
+   "id": 621,
+   "category": "People & Characters",
+   "word": "BABY",
+   "taboo": [
+    "SMALL",
+    "CRY",
+    "MILK",
+    "BORN",
+    "MOTHER"
+   ]
+  },
+  {
+   "id": 622,
+   "category": "People & Characters",
+   "word": "GRANDMOTHER",
+   "taboo": [
+    "OLD",
+    "FAMILY",
+    "COOKIE",
+    "WOMAN",
+    "PARENT"
+   ]
+  },
+  {
+   "id": 623,
+   "category": "People & Characters",
+   "word": "KING",
+   "taboo": [
+    "QUEEN",
+    "CROWN",
+    "ROYAL",
+    "RULE",
+    "PALACE"
+   ]
+  },
+  {
+   "id": 624,
+   "category": "People & Characters",
+   "word": "QUEEN",
+   "taboo": [
+    "KING",
+    "CROWN",
+    "ROYAL",
+    "WOMAN",
+    "PALACE"
+   ]
+  },
+  {
+   "id": 625,
+   "category": "People & Characters",
+   "word": "HERO",
+   "taboo": [
+    "BRAVE",
+    "SAVE",
+    "STORY",
+    "VILLAIN",
+    "STRONG"
+   ]
+  },
+  {
+   "id": 626,
+   "category": "People & Characters",
+   "word": "GHOST",
+   "taboo": [
+    "DEAD",
+    "WHITE",
+    "SCARE",
+    "HOUSE",
+    "INVISIBLE"
+   ]
+  },
+  {
+   "id": 627,
+   "category": "People & Characters",
+   "word": "MONSTER",
+   "taboo": [
+    "SCARE",
+    "BIG",
+    "UGLY",
+    "STORY",
+    "CHILD"
+   ]
+  },
+  {
+   "id": 628,
+   "category": "People & Characters",
+   "word": "CLOWN",
+   "taboo": [
+    "CIRCUS",
+    "FUNNY",
+    "NOSE",
+    "MAKEUP",
+    "RED"
+   ]
+  },
+  {
+   "id": 629,
+   "category": "People & Characters",
+   "word": "PIRATE",
+   "taboo": [
+    "SHIP",
+    "TREASURE",
+    "SEA",
+    "EYE",
+    "FLAG"
+   ]
+  },
+  {
+   "id": 630,
+   "category": "People & Characters",
+   "word": "WITCH",
+   "taboo": [
+    "MAGIC",
+    "HAT",
+    "BROOM",
+    "SPELL",
+    "POTION"
+   ]
+  },
+  {
+   "id": 631,
+   "category": "People & Characters",
+   "word": "DRAGON",
+   "taboo": [
+    "FIRE",
+    "WING",
+    "MYTH",
+    "SCALE",
+    "TALE"
+   ]
+  },
+  {
+   "id": 632,
+   "category": "People & Characters",
+   "word": "MERMAID",
+   "taboo": [
+    "HALF",
+    "SEA",
+    "WOMAN",
+    "TAIL",
+    "SWIM"
+   ]
+  },
+  {
+   "id": 633,
+   "category": "Animals",
+   "word": "DINOSAUR",
+   "taboo": [
+    "EXTINCT",
+    "BIG",
+    "FOSSIL",
+    "ANCIENT",
+    "REPTILE"
+   ]
+  },
+  {
+   "id": 634,
+   "category": "Animals",
+   "word": "SWAN",
+   "taboo": [
+    "WHITE",
+    "NECK",
+    "LAKE",
+    "GRACE",
+    "BIRD"
+   ]
+  },
+  {
+   "id": 635,
+   "category": "Animals",
+   "word": "JELLYFISH",
+   "taboo": [
+    "STING",
+    "SEA",
+    "SOFT",
+    "CLEAR",
+    "FLOAT"
+   ]
+  },
+  {
+   "id": 636,
+   "category": "Animals",
+   "word": "GOLDFISH",
+   "taboo": [
+    "ORANGE",
+    "BOWL",
+    "PET",
+    "SMALL",
+    "SWIM"
+   ]
+  },
+  {
+   "id": 637,
+   "category": "Animals",
+   "word": "PEACOCK",
+   "taboo": [
+    "FEATHER",
+    "BLUE",
+    "TAIL",
+    "PROUD",
+    "BIRD"
+   ]
+  },
+  {
+   "id": 638,
+   "category": "Weather & Time",
+   "word": "SUNSET",
+   "taboo": [
+    "EVENING",
+    "ORANGE",
+    "SKY",
+    "HORIZON",
+    "END"
+   ]
+  },
+  {
+   "id": 639,
+   "category": "Weather & Time",
+   "word": "TORNADO",
+   "taboo": [
+    "WIND",
+    "SPIN",
+    "DAMAGE",
+    "FUNNEL",
+    "STORM"
+   ]
+  },
+  {
+   "id": 640,
+   "category": "Weather & Time",
+   "word": "FLOOD",
+   "taboo": [
+    "WATER",
+    "RISE",
+    "DAMAGE",
+    "RIVER",
+    "DRY"
+   ]
+  },
+  {
+   "id": 641,
+   "category": "Food & Drink",
+   "word": "SUSHI",
+   "taboo": [
+    "JAPAN",
+    "RAW",
+    "RICE",
+    "ROLL",
+    "SEAWEED"
+   ]
+  },
+  {
+   "id": 642,
+   "category": "Food & Drink",
+   "word": "TACO",
+   "taboo": [
+    "MEXICO",
+    "SHELL",
+    "FOLD",
+    "MEAT",
+    "SPICY"
+   ]
+  },
+  {
+   "id": 643,
+   "category": "Food & Drink",
+   "word": "PIE",
+   "taboo": [
+    "CRUST",
+    "BAKE",
+    "SLICE",
+    "APPLE",
+    "SWEET"
+   ]
+  },
+  {
+   "id": 644,
+   "category": "Food & Drink",
+   "word": "PINEAPPLE",
+   "taboo": [
+    "TROPICAL",
+    "SPIKY",
+    "YELLOW",
+    "JUICE",
+    "CROWN"
+   ]
+  },
+  {
+   "id": 645,
+   "category": "Food & Drink",
+   "word": "COCONUT",
+   "taboo": [
+    "TROPICAL",
+    "HARD",
+    "WHITE",
+    "MILK",
+    "PALM"
+   ]
+  },
+  {
+   "id": 646,
+   "category": "Food & Drink",
+   "word": "MANGO",
+   "taboo": [
+    "TROPICAL",
+    "SWEET",
+    "YELLOW",
+    "FRUIT",
+    "JUICE"
+   ]
+  },
+  {
+   "id": 647,
+   "category": "Food & Drink",
+   "word": "CHERRY",
+   "taboo": [
+    "RED",
+    "SMALL",
+    "PIT",
+    "TREE",
+    "FRUIT"
+   ]
+  },
+  {
+   "id": 648,
+   "category": "Food & Drink",
+   "word": "CUCUMBER",
+   "taboo": [
+    "GREEN",
+    "LONG",
+    "SALAD",
+    "COOL",
+    "VEGETABLE"
+   ]
+  },
+  {
+   "id": 649,
+   "category": "Food & Drink",
+   "word": "STEAK",
+   "taboo": [
+    "BEEF",
+    "GRILL",
+    "RARE",
+    "KNIFE",
+    "MEAT"
+   ]
+  },
+  {
+   "id": 650,
+   "category": "Food & Drink",
+   "word": "SAUSAGE",
+   "taboo": [
+    "MEAT",
+    "LONG",
+    "GRILL",
+    "BREAKFAST",
+    "SKIN"
+   ]
+  },
+  {
+   "id": 651,
+   "category": "Food & Drink",
+   "word": "SHRIMP",
+   "taboo": [
+    "SEA",
+    "PINK",
+    "SMALL",
+    "SHELL",
+    "EAT"
+   ]
+  },
+  {
+   "id": 652,
+   "category": "Food & Drink",
+   "word": "CANDY",
+   "taboo": [
+    "SWEET",
+    "SUGAR",
+    "CHILD",
+    "WRAP",
+    "TEETH"
+   ]
+  },
+  {
+   "id": 653,
+   "category": "School & Office",
+   "word": "DIARY",
+   "taboo": [
+    "WRITE",
+    "DAY",
+    "PRIVATE",
+    "BOOK",
+    "LOCK"
+   ]
+  },
+  {
+   "id": 654,
+   "category": "School & Office",
+   "word": "ENVELOPE",
+   "taboo": [
+    "LETTER",
+    "SEAL",
+    "PAPER",
+    "MAIL",
+    "STAMP"
+   ]
+  },
+  {
+   "id": 655,
+   "category": "School & Office",
+   "word": "NEWSPAPER",
+   "taboo": [
+    "READ",
+    "DAILY",
+    "PRINT",
+    "ARTICLE",
+    "MORNING"
+   ]
+  },
+  {
+   "id": 656,
+   "category": "Clothes & Accessories",
+   "word": "BRACELET",
+   "taboo": [
+    "WRIST",
+    "JEWEL",
+    "WEAR",
+    "ARM",
+    "GOLD"
+   ]
+  },
+  {
+   "id": 657,
+   "category": "Clothes & Accessories",
+   "word": "COMB",
+   "taboo": [
+    "HAIR",
+    "TEETH",
+    "STRAIGHT",
+    "PLASTIC",
+    "BRUSH"
+   ]
+  },
+  {
+   "id": 658,
+   "category": "House & Furniture",
+   "word": "CHOPSTICKS",
+   "taboo": [
+    "ASIA",
+    "TWO",
+    "WOOD",
+    "EAT",
+    "HOLD"
+   ]
+  },
+  {
+   "id": 659,
+   "category": "House & Furniture",
+   "word": "MICROWAVE",
+   "taboo": [
+    "HEAT",
+    "KITCHEN",
+    "FAST",
+    "FOOD",
+    "BOX"
+   ]
+  },
+  {
+   "id": 660,
+   "category": "Sports & Games",
+   "word": "BALLOON",
+   "taboo": [
+    "AIR",
+    "FLOAT",
+    "POP",
+    "PARTY",
+    "RUBBER"
+   ]
+  },
+  {
+   "id": 661,
+   "category": "Sports & Games",
+   "word": "KITE",
+   "taboo": [
+    "WIND",
+    "STRING",
+    "FLY",
+    "SKY",
+    "PAPER"
+   ]
+  },
+  {
+   "id": 662,
+   "category": "Sports & Games",
+   "word": "DOLL",
+   "taboo": [
+    "TOY",
+    "CHILD",
+    "PLAY",
+    "SMALL",
+    "PLASTIC"
+   ]
+  },
+  {
+   "id": 663,
+   "category": "Technology & Tools",
+   "word": "TELESCOPE",
+   "taboo": [
+    "STAR",
+    "LOOK",
+    "FAR",
+    "LENS",
+    "SPACE"
+   ]
+  },
+  {
+   "id": 664,
+   "category": "Technology & Tools",
+   "word": "FLASHLIGHT",
+   "taboo": [
+    "DARK",
+    "HAND",
+    "BATTERY",
+    "BEAM",
+    "CAMP"
+   ]
+  },
+  {
+   "id": 665,
+   "category": "Body & Health",
+   "word": "THUMB",
+   "taboo": [
+    "HAND",
+    "FINGER",
+    "UP",
+    "SHORT",
+    "FIVE"
+   ]
+  },
+  {
+   "id": 666,
+   "category": "Body & Health",
+   "word": "ELBOW",
+   "taboo": [
+    "ARM",
+    "BEND",
+    "JOINT",
+    "POINT",
+    "MIDDLE"
+   ]
+  },
+  {
+   "id": 667,
+   "category": "Body & Health",
+   "word": "ANKLE",
+   "taboo": [
+    "FOOT",
+    "LEG",
+    "JOINT",
+    "TWIST",
+    "BONE"
+   ]
+  },
+  {
+   "id": 668,
+   "category": "Body & Health",
+   "word": "BEARD",
+   "taboo": [
+    "FACE",
+    "HAIR",
+    "MAN",
+    "SHAVE",
+    "CHIN"
+   ]
+  },
+  {
+   "id": 669,
+   "category": "Body & Health",
+   "word": "SNEEZE",
+   "taboo": [
+    "NOSE",
+    "LOUD",
+    "COLD",
+    "SUDDEN",
+    "TISSUE"
+   ]
+  },
+  {
+   "id": 670,
+   "category": "Body & Health",
+   "word": "BANDAGE",
+   "taboo": [
+    "CUT",
+    "WRAP",
+    "WOUND",
+    "WHITE",
+    "ARM"
+   ]
+  },
+  {
+   "id": 671,
+   "category": "Body & Health",
+   "word": "VACCINE",
+   "taboo": [
+    "NEEDLE",
+    "DISEASE",
+    "PROTECT",
+    "DOCTOR",
+    "ARM"
+   ]
+  },
+  {
+   "id": 672,
+   "category": "Body & Health",
+   "word": "SWEAT",
+   "taboo": [
+    "HOT",
+    "SKIN",
+    "WET",
+    "EXERCISE",
+    "DROP"
+   ]
+  },
+  {
+   "id": 673,
+   "category": "Sports & Games",
+   "word": "GOLF",
+   "taboo": [
+    "CLUB",
+    "HOLE",
+    "GREEN",
+    "SWING",
+    "COURSE"
+   ]
+  },
+  {
+   "id": 674,
+   "category": "Sports & Games",
+   "word": "HOCKEY",
+   "taboo": [
+    "STICK",
+    "PUCK",
+    "ICE",
+    "GOAL",
+    "TEAM"
+   ]
+  },
+  {
+   "id": 675,
+   "category": "Sports & Games",
+   "word": "BOWLING",
+   "taboo": [
+    "PIN",
+    "ROLL",
+    "LANE",
+    "STRIKE",
+    "HEAVY"
+   ]
+  },
+  {
+   "id": 676,
+   "category": "Sports & Games",
+   "word": "KARATE",
+   "taboo": [
+    "JAPAN",
+    "KICK",
+    "BELT",
+    "FIGHT",
+    "MARTIAL"
+   ]
+  },
+  {
+   "id": 677,
+   "category": "Sports & Games",
+   "word": "FISHING",
+   "taboo": [
+    "ROD",
+    "HOOK",
+    "WAIT",
+    "RIVER",
+    "CATCH"
+   ]
+  },
+  {
+   "id": 678,
+   "category": "Sports & Games",
+   "word": "HIKING",
+   "taboo": [
+    "WALK",
+    "MOUNTAIN",
+    "TRAIL",
+    "BOOT",
+    "NATURE"
+   ]
+  },
+  {
+   "id": 679,
+   "category": "Sports & Games",
+   "word": "DIVING",
+   "taboo": [
+    "WATER",
+    "DEEP",
+    "JUMP",
+    "MASK",
+    "SEA"
+   ]
+  },
+  {
+   "id": 680,
+   "category": "American & Global Icons",
+   "word": "ROLLER COASTER",
+   "taboo": [
+    "FAST",
+    "RIDE",
+    "PARK",
+    "SCREAM",
+    "TRACK"
+   ]
+  }
+ ]
+}

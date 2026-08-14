@@ -126,7 +126,7 @@ export default function App() {
       <div className={`glow ${glow}`} aria-hidden />
       <ErrorBoundary>{body}</ErrorBoundary>
       <p
-        className="pointer-events-none fixed inset-inline-0 bottom-0 z-[3] text-center text-[9px] leading-none tracking-[.04em] text-muted/35"
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-[3] text-center text-[9px] leading-none tracking-[.04em] text-muted/35"
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
         dir="ltr"
       >

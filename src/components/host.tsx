@@ -34,10 +34,15 @@ export function ScoreBoard({
   const total = totalTurns(room.settings);
   const finale = highlight != null;
 
-  /** Describers in the order they actually come up. */
+  /**
+   * Describers in the order they actually come up. The horizon runs past
+   * the schedule in overtime, or a player who only described after the
+   * last scheduled turn would bank points and never appear.
+   */
   const order = (team: TeamId) => {
     const seen: string[] = [];
-    for (let i = 0; i < total; i++) {
+    const horizon = Math.max(total, room.turnIndex + 1);
+    for (let i = 0; i < horizon; i++) {
       const r = rolesForTurn(room.players, i);
       if (r?.team === team && !seen.includes(r.clueGiverUid)) seen.push(r.clueGiverUid);
     }

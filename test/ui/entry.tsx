@@ -43,6 +43,12 @@ const CARD: LiveCard = {
   cardId: 0, word: "قهوة عربية", taboo: ["دلة", "فنجان", "هيل", "مرّة", "ضيوف"],
 };
 
+/** The English deck's longest shape — the case that overflowed the card. */
+const CARD_EN: LiveCard = {
+  cardId: 1, word: "AIR CONDITIONER",
+  taboo: ["COLD", "SUMMER", "REMOTE", "WINDOW", "ELECTRICITY"],
+};
+
 function room(over: Partial<Room> = {}): Room {
   const now = Date.now();
   return {
@@ -111,6 +117,18 @@ export function cases(): Case[] {
   /* ---- lobby ---- */
   for (const uid of UIDS) {
     add(`lobby · ${NAMES[uid]}`, <Lobby room={room({ phase: "lobby", turn: null })} uid={uid} />);
+    add(`lobby en · ${NAMES[uid]}`,
+      <Lobby room={room({ phase: "lobby", turn: null, lang: "en" })} uid={uid} />);
+    // Nobody should be teamless, but the type allows it and the panels
+    // have to decide which side is "mine" without one.
+    add(`lobby · no team · ${NAMES[uid]}`, <Lobby uid={uid} room={room({
+      phase: "lobby", turn: null,
+      players: (() => {
+        const p = players();
+        p.c = { ...p.c, team: null as unknown as TeamId };
+        return p;
+      })(),
+    })} />);
   }
 
   /* ---- turn 0 and turn 1: the roles swap, which is when it broke ---- */
@@ -145,9 +163,27 @@ export function cases(): Case[] {
     phaseEndsAt: Date.now() + 20_000,
   }), null, [], LivePhase as never);
 
+  phase("live en · long word", room({ lang: "en" }), CARD_EN, [], LivePhase as never);
+  // A live turn with no `turn` on it: only an older deploy writes that,
+  // and every branch of the screen reads the team off it.
+  phase("live · turn missing", room({ turn: null }), CARD, [], LivePhase as never);
+
   phase("transition t1", room({
     phase: "transition", phaseEndsAt: null, turnIndex: 1,
     turn: { team: "chili", clueGiverUid: "x", judgeUid: "b" },
+  }), null, ROUNDS, TransitionPhase as never);
+
+  phase("transition en", room({
+    phase: "transition", phaseEndsAt: null, turnIndex: 2, lang: "en",
+    turn: { team: "mint", clueGiverUid: "b", judgeUid: "y" },
+  }), null, ROUNDS, TransitionPhase as never);
+
+  // Past the schedule and tied: the wheel must draw no turns below the
+  // one on the table, because overtime is dealt one turn at a time.
+  phase("transition · overtime", room({
+    phase: "transition", phaseEndsAt: null, turnIndex: 8,
+    scores: { mint: 12, chili: 12 },
+    turn: { team: "mint", clueGiverUid: "a", judgeUid: "x" },
   }), null, ROUNDS, TransitionPhase as never);
 
   phase("transition t0 · no rounds yet", room({

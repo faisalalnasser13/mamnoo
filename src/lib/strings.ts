@@ -8,13 +8,17 @@ const pluralEn = (n: number, one: string, many: string) =>
 
 export interface Strings {
   title: string;
+  tagline: string;
   team: Record<TeamId, string>;
   stamp: string;
   you: string;
   kickAria: string;
+  moveAria: string;
   stealWord: string;
   hostPlus: string;
   hostMinus: string;
+  /** Face-down card: the steal, and the beat before the first deal. */
+  unknownCard: string;
 
   chipExplain: string;
   chipJudge: string;
@@ -97,8 +101,17 @@ export interface Strings {
   leave: string;
 
   roomName: string;
+  invitedTo: string;
+  yourNamePh: string;
+  joinCta: string;
+  otherRoom: string;
+  youAreHere: string;
+  tapToSwitch: string;
+  nobodyYet: string;
+  teamsHint: string;
   showQr: string;
   hideQr: string;
+  scanToJoin: string;
   shuffle: string;
   roundLength: string;
   seconds: string;
@@ -166,13 +179,16 @@ export interface Strings {
 
 export const AR: Strings = {
   title: "ممنوع",
+  tagline: "اشرح الكلمة… بدون الكلمات الخمس",
   team: { mint: "النعناع", chili: "الفلفل" },
   stamp: "ممنوع",
   you: " (أنت)",
   kickAria: "اطرد",
+  moveAria: "انقله للفريق الآخر",
   stealWord: "سرقة",
   hostPlus: "host +1",
   hostMinus: "host −1",
+  unknownCard: "؟ ؟ ؟",
 
   chipExplain: "اشرح!",
   chipJudge: "حكم هذه الجولة 👀",
@@ -256,8 +272,17 @@ export const AR: Strings = {
   leave: "خروج",
 
   roomName: "اسم الغرفة",
+  invitedTo: "دعوة لغرفة",
+  yourNamePh: "سعد بن صالح",
+  joinCta: "ادخل الغرفة",
+  otherRoom: "غرفة ثانية",
+  youAreHere: "أنت هنا",
+  tapToSwitch: "اضغط للانتقال",
+  nobodyYet: "ما في أحد بعد",
+  teamsHint: "اضغط على الفريق الآخر لتنتقل له",
   showQr: "▦ رمز الدخول",
   hideQr: "إخفاء الرمز",
+  scanToJoin: "امسح الرمز بالكاميرا للدخول",
   shuffle: "🔀 اخلط الفرق عشوائيًا",
   roundLength: "مدة الجولة",
   seconds: "ثانية",
@@ -326,13 +351,16 @@ export const AR: Strings = {
 
 export const EN: Strings = {
   title: "Banned",
+  tagline: "Describe the word… without the five forbidden ones",
   team: { mint: "Mint", chili: "Chili" },
   stamp: "BANNED",
   you: " (you)",
   kickAria: "Kick",
+  moveAria: "Move to the other team",
   stealWord: "Steal",
   hostPlus: "host +1",
   hostMinus: "host −1",
+  unknownCard: "? ? ?",
 
   chipExplain: "Describe!",
   chipJudge: "Judging this turn 👀",
@@ -416,8 +444,17 @@ export const EN: Strings = {
   leave: "Leave",
 
   roomName: "Room name",
+  invitedTo: "You're invited to",
+  yourNamePh: "Your name",
+  joinCta: "Join the room",
+  otherRoom: "Different room",
+  youAreHere: "You're here",
+  tapToSwitch: "Tap to switch",
+  nobodyYet: "Nobody yet",
+  teamsHint: "Tap the other side to switch teams",
   showQr: "▦ Join code",
   hideQr: "Hide code",
+  scanToJoin: "Scan this with a camera to join",
   shuffle: "🔀 Shuffle teams",
   roundLength: "Turn length",
   seconds: "sec",

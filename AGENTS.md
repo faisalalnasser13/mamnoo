@@ -185,9 +185,11 @@ table down with it — the describer's device is the only one that deals a
 card, so the turn could never start and everyone else sat on
 "بانتظار البطاقة" forever.
 
-`test/ui/run.mjs` renders every screen for every role across 138
+`test/ui/run.mjs` renders every screen for every role across 174
 combinations, deliberately including **rooms missing fields that a later
-deploy added**. That's the realistic case: old documents stay in the
+deploy added** — among them a `live` room with no `turn` on it and a
+player with no team, both of which are shapes only an older deploy
+writes and both of which every branch of those screens reads through. That's the realistic case: old documents stay in the
 database and do not grow new fields.
 
 Two defences came out of it, and both must stay:
@@ -214,11 +216,12 @@ src/lib/rules.ts      pure logic: turn order, scoring, heat, end, stats. No Fire
 src/lib/engine.ts     every state transition, as a guarded transaction
 src/lib/hooks.ts      live subscriptions, countdown, phase/buzz/deal drivers
 src/lib/deck.ts       ~994 Arabic cards (from taboo_deck.json) + 50 room-name words
-src/lib/deck.en.ts    starter English deck (10 cards) + room-name words
+src/lib/deck.en.ts    ~680 English cards (from taboo_deck_680_us.json) + 50 room-name words
 src/lib/strings.ts    AR/EN copy; room.lang picks the pack from lobby onward
 src/lib/arabic.ts     normalisation (from تشفير)
 src/screens/          Home + Lobby, and phases.tsx for everything in-game
-src/components/       ui.tsx (primitives), game.tsx (card/HUD/heat/feed), Wall.tsx
+src/components/       ui.tsx (primitives + the bilingual wordmark), game.tsx
+                      (card/HUD/heat/feed), host.tsx (scoreboard + host menu), QR.tsx
 firestore.rules       what's still enforced at the database layer
 ```
 
@@ -278,6 +281,10 @@ once, at turn start. A 60-second round costs one write, not sixty.
 | Games always finish the round counter | No early target score — a tie past the last turn goes to overtime until someone leads |
 | Room names get a digit suffix | The 50 words ran out. Better than a random code, which nobody can say on a call |
 | A 6-hour-old room gets overwritten | `STALE_ROOM_MS`. There's no server to sweep abandoned rooms, so `createRoom` reclaims them |
+| Tapping your own team panel in the lobby does nothing | It's the lit one. The *other* panel is the switch — the whole panel, not the name. A tap that moved you and a tap that didn't used to look identical |
+| The transition has faint tilted names above and below the matchup | The turn order as a wheel. The row below is who follows, which is the only way a player sees their own turn coming |
+| The wheel draws nothing below the matchup in overtime | Overtime turns are dealt one at a time, so the next describer genuinely isn't decided yet. Guessing it would be a lie the screen can't retract |
+| Past rows on the wheel come from `rounds`, not `rolesForTurn` | A roster that changed mid-game makes a recomputed past wrong. Where a record exists it's what actually happened |
 | The guesser's screen shows guessed words | Only cards that have already left play. The live card is never on the room doc |
 | Sub-300ms gaps don't count as "أسرع تخمين" | That's a double-tap on صح, not telepathy |
 
@@ -300,7 +307,8 @@ once, at turn start. A 60-second round costs one write, not sixty.
 - **No presence indicator.** Firestore has no `onDisconnect`. If this
   matters, it's the one thing worth a Realtime Database instance
   alongside — Spark allows both.
-- **~994 cards** (from taboo_deck.json, kept as-is). A single game uses about
+- **~994 Arabic cards** (from taboo_deck.json) and **~680 English cards**
+  (from taboo_deck_680_us.json), both kept as-is. A single game uses about
   27 and never repeats one. `usedCards` is written in the same transaction
   that deals the card, and rematches in the same room keep that list so
   words don't reshuffle until the deck recycles.
