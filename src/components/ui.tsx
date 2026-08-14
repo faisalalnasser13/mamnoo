@@ -77,6 +77,28 @@ export function YouChip({ team, extra }: { team: TeamId; extra?: string }) {
   );
 }
 
+/**
+ * A section heading with rules either side.
+ *
+ * Both rules fade at both ends so the pair is symmetric: a
+ * `to-r`/`to-l` pair is physical and would flip the taper under RTL.
+ * No letter-spacing — it prises apart the joins in Arabic.
+ */
+export function Title({ children, tone }: { children: React.ReactNode; tone?: string }) {
+  const rule = (
+    <i className="h-px min-w-4 flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+  );
+  return (
+    <div className="flex items-center gap-3">
+      {rule}
+      <h2 className="shrink-0 font-display text-[23px] leading-none" style={{ color: tone ?? "#FFF6E9" }}>
+        {children}
+      </h2>
+      {rule}
+    </div>
+  );
+}
+
 export function Label({ children, tone }: { children: React.ReactNode; tone?: string }) {
   return (
     <p className="text-center text-[11.5px] font-bold tracking-[.18em]"

@@ -7,7 +7,7 @@ import {
 } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
 import { S, type Strings } from "../lib/strings";
-import { Btn, Flash, Label, TEAM, Waiting, YouChip } from "../components/ui";
+import { Btn, Flash, Label, TEAM, Title, Waiting, YouChip } from "../components/ui";
 import { HostControls, PausedBanner, ScoreBoard } from "../components/host";
 import { Card, CardSkeleton, Feed, Heat, Hud, RunLine } from "../components/game";
 
@@ -495,14 +495,16 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
   return (
     <div className="shell">
       {team && <YouChip team={team} extra={oursNext ? s.ourTurn : s.theirTurnChip} />}
-      <div className="h-3" />
+      <div className="h-4" />
+      <Title>{s.nextRoundTitle}</Title>
+      <div className="h-2.5" />
       <Label>
         {overtime
           ? s.overtimeRound(room.turnIndex + 1)
           : s.roundOf(room.turnIndex + 1, total)}
       </Label>
 
-      <div className="mt-3.5 flex gap-1.5">
+      <div className="mt-3 flex gap-1.5">
         {Array.from({ length: pipCount }, (_, i) => (
           <i key={i} className="h-[7px] flex-1 rounded-full"
              style={{
@@ -514,6 +516,8 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
 
       <Wheel room={room} s={s} turn={room.turn} rounds={rounds} />
 
+      <div className="mt-4" />
+      <Title>{s.scoreTitle}</Title>
       <ScoreBoard room={room} uid={uid} rounds={rounds} />
       {yourTurnNote && (
         <>

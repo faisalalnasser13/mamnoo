@@ -11,6 +11,28 @@ import { S } from "../lib/strings";
 /* ------------------------------------------------------------------ */
 
 /**
+ * A describer's own total, signed.
+ *
+ * The greens and reds are deliberately off the team palette: a negative
+ * in chili pink on the chili side read as "chili scored", and mint on the
+ * mint side did the same. These are darker, so they still sit under the
+ * team totals in the hierarchy while staying legible on the panel.
+ *
+ * A skip costs half a point, so these are not always whole numbers.
+ */
+function Points({ n }: { n: number }) {
+  const sign = n > 0 ? "+" : n < 0 ? "−" : "";
+  // Bright enough to survive the 42% dim the finale puts on the losing
+  // column, dark enough not to compete with the team totals.
+  const color = n > 0 ? "#4CBE7B" : n < 0 ? "#E1584F" : "#A99BC4";
+  return (
+    <b className="tabular-nums font-black" dir="ltr" style={{ color }}>
+      {sign}{Math.abs(n)}
+    </b>
+  );
+}
+
+/**
  * One board, not two.
  *
  * Team total is the centred heading. During the game, per-player rows
@@ -72,14 +94,13 @@ export function ScoreBoard({
               {rows.map((u) => (
                 <div
                   key={u}
-                  className="grid grid-cols-[1.25rem_minmax(0,1fr)_1.75rem] items-baseline gap-1 text-[12.5px] font-medium"
-                  style={{ opacity: 0.85 }}
+                  className="grid grid-cols-[1.25rem_minmax(0,1fr)_2.25rem] items-baseline gap-1 text-[12.5px] font-medium"
                 >
                   <span />
-                  <span className="truncate text-start">
+                  <span className="truncate text-start" style={{ opacity: 0.85 }}>
                     {room.players[u]?.name ?? "…"}{u === uid ? s.you : ""}
                   </span>
-                  <span className="tabular-nums text-end" dir="ltr">{scored[u]}</span>
+                  <span className="text-end"><Points n={scored[u]} /></span>
                 </div>
               ))}
             </div>
@@ -131,15 +152,15 @@ export function ScoreBoard({
     const played = playerUid in scored;
     return (
       <div
-        className="grid h-[26px] grid-cols-[1.25rem_minmax(0,1fr)_1.75rem] items-center gap-1 px-3 text-[12.5px] font-medium"
+        className="grid h-[26px] grid-cols-[1.25rem_minmax(0,1fr)_2.25rem] items-center gap-1 px-3 text-[12.5px] font-medium"
         style={{ opacity: cellDim(team) }}
       >
         <span className="text-center leading-none">{won ? "🥇" : ""}</span>
         <span className="truncate text-start" style={{ opacity: played ? 1 : 0.55 }}>
           {room.players[playerUid]?.name ?? "…"}{playerUid === uid ? s.you : ""}
         </span>
-        <span className="tabular-nums text-end" dir="ltr" style={{ opacity: played ? 1 : 0.55 }}>
-          {played ? scored[playerUid] : "–"}
+        <span className="text-end" dir="ltr" style={{ opacity: played ? 1 : 0.55 }}>
+          {played ? <Points n={scored[playerUid]} /> : "–"}
         </span>
       </div>
     );

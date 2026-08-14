@@ -74,6 +74,8 @@ export interface Strings {
 
   overtimeRound: (n: number) => string;
   roundOf: (n: number, total: number) => string;
+  nextRoundTitle: string;
+  scoreTitle: string;
   roleExplain: string;
   roleJudge: string;
   vs: string;
@@ -245,6 +247,8 @@ export const AR: Strings = {
 
   overtimeRound: (n) => `وقت إضافي · الجولة ${n}`,
   roundOf: (n, total) => `الجولة ${n} من ${total}`,
+  nextRoundTitle: "الجولة القادمة",
+  scoreTitle: "النتيجة",
   roleExplain: "يشرح",
   roleJudge: "يحكم",
   vs: "ضد",
@@ -417,6 +421,8 @@ export const EN: Strings = {
 
   overtimeRound: (n) => `Overtime · turn ${n}`,
   roundOf: (n, total) => `Turn ${n} of ${total}`,
+  nextRoundTitle: "Next Round",
+  scoreTitle: "Score",
   roleExplain: "Describes",
   roleJudge: "Judges",
   vs: "vs",
