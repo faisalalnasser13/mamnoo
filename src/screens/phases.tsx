@@ -462,7 +462,7 @@ function Wheel({
       >
         <Side t={turn.team} mark={<span className="text-[18px] leading-none">🎤</span>} who={nameOf(room, turn.clueGiverUid)} />
         <span className="shrink-0 text-[20px] leading-none" role="img" aria-label={s.vs}>⚔️</span>
-        <Side t={OTHER[turn.team]} mark={<Gavel size={20} />} who={nameOf(room, turn.judgeUid)} />
+        <Side t={OTHER[turn.team]} mark={<Gavel size={18} />} who={nameOf(room, turn.judgeUid)} />
       </div>
 
       <div>
