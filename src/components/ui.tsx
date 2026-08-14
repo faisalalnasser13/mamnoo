@@ -1,9 +1,9 @@
 import React from "react";
 import type { TeamId } from "../lib/types";
 
-export const TEAM: Record<TeamId, { name: string; emoji: string; hex: string }> = {
-  mint:  { name: "النعناع", emoji: "🌿", hex: "#2FD6BC" },
-  chili: { name: "الفلفل",  emoji: "🌶️", hex: "#FF4D79" },
+export const TEAM: Record<TeamId, { emoji: string; hex: string }> = {
+  mint:  { emoji: "🌿", hex: "#2FD6BC" },
+  chili: { emoji: "🌶️", hex: "#FF4D79" },
 };
 
 export function Btn({

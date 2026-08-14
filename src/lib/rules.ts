@@ -12,7 +12,7 @@ export type { TeamId, Turn, Settings, LogEntry, Outcome, RoundRecord, Stats };
 export const TEAMS: TeamId[] = ["mint", "chili"];
 export const OTHER: Record<TeamId, TeamId> = { mint: "chili", chili: "mint" };
 
-/** First team to this ends the game, whatever the round count says. */
+/** First team to this used to end early — kept only so old rooms/docs still typecheck. */
 export const TARGET_SCORE = 21;
 /**
  * Seed for the unused `skipsLeft` field on old rooms. Skips are unlimited;
@@ -232,14 +232,19 @@ export const heatPips = (streak: number) => Math.max(0, streak);
 /** Team totals can go negative — a buzz at 0 is −1, not a free pass. */
 export const applyPoints = (score: number, pts: number) => score + pts;
 
+/**
+ * Game ends only after the scheduled turns are done — and not while
+ * the score is tied. A tie keeps dealing overtime turns (teams still
+ * alternate) until someone leads.
+ */
 export function isOver(
   scores: Record<TeamId, number>,
   nextIndex: number,
   settings: Settings,
-): "target" | "rounds" | null {
-  if (scores.mint >= TARGET_SCORE || scores.chili >= TARGET_SCORE) return "target";
-  if (nextIndex >= totalTurns(settings)) return "rounds";
-  return null;
+): "rounds" | null {
+  if (nextIndex < totalTurns(settings)) return null;
+  if (scores.mint === scores.chili) return null;
+  return "rounds";
 }
 
 export function winnerOf(scores: Record<TeamId, number>): TeamId | "draw" {

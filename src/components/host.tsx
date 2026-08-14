@@ -4,6 +4,7 @@ import type { HostAction } from "../lib/engine";
 import { membersOf, OTHER, pointsByPlayer, rolesForTurn, totalTurns } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
 import { TEAM } from "./ui";
+import { S } from "../lib/strings";
 
 /* ------------------------------------------------------------------ */
 /* scoreboard                                                         */
@@ -28,6 +29,7 @@ export function ScoreBoard({
   /** Winning team (or draw) — enables trophy / medals / full roster. */
   highlight?: TeamId | "draw" | null;
 }) {
+  const s = S(room.lang);
   const scored = pointsByPlayer(rounds);
   const total = totalTurns(room.settings);
   const finale = highlight != null;
@@ -54,7 +56,7 @@ export function ScoreBoard({
         <div className="flex min-w-0 flex-1 flex-col px-3 py-3">
           <div className="text-center">
             <div className="text-[11px] font-black" style={{ color: hex }}>
-              {TEAM[team].emoji} {TEAM[team].name}
+              {TEAM[team].emoji} {s.team[team]}
             </div>
             <div className="mt-0.5 font-display text-[28px] leading-none" style={{ color: hex }} dir="ltr">
               {room.scores[team]}
@@ -70,7 +72,7 @@ export function ScoreBoard({
                 >
                   <span />
                   <span className="truncate text-start">
-                    {room.players[u]?.name ?? "…"}{u === uid ? " (أنت)" : ""}
+                    {room.players[u]?.name ?? "…"}{u === uid ? s.you : ""}
                   </span>
                   <span className="tabular-nums text-end" dir="ltr">{scored[u]}</span>
                 </div>
@@ -107,7 +109,7 @@ export function ScoreBoard({
           <span className="text-[30px] leading-none">{TEAM[team].emoji}</span>
         </div>
         <div className="mt-1.5 text-[17px] font-black" style={{ color: hex }}>
-          {TEAM[team].name}
+          {s.team[team]}
         </div>
         <div className="mt-0.5 font-display text-[34px] leading-none" style={{ color: hex }} dir="ltr">
           {room.scores[team]}
@@ -129,7 +131,7 @@ export function ScoreBoard({
       >
         <span className="text-center leading-none">{won ? "🥇" : ""}</span>
         <span className="truncate text-start" style={{ opacity: played ? 1 : 0.55 }}>
-          {room.players[playerUid]?.name ?? "…"}{playerUid === uid ? " (أنت)" : ""}
+          {room.players[playerUid]?.name ?? "…"}{playerUid === uid ? s.you : ""}
         </span>
         <span className="tabular-nums text-end" dir="ltr" style={{ opacity: played ? 1 : 0.55 }}>
           {played ? scored[playerUid] : "–"}
@@ -187,6 +189,7 @@ export function ScoreBoard({
 export function HostControls({ room }: { room: Room }) {
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const s = S(room.lang);
 
   const run = (action: HostAction) => {
     setErr(null);
@@ -196,7 +199,13 @@ export function HostControls({ room }: { room: Room }) {
         // more than once without reopening.
         if (action !== "plusGuess" && action !== "minusGuess") setOpen(false);
       })
-      .catch((e) => setErr(errText(e)));
+      .catch((e) => setErr(errText(e, room.lang)));
+  };
+
+  const kick = (target: string) => {
+    setErr(null);
+    api.kickPlayer({ roomId: room.id, uid: target })
+      .catch((e) => setErr(errText(e, room.lang)));
   };
 
   const inTurn = room.phase === "live" || room.phase === "steal";
@@ -210,7 +219,11 @@ export function HostControls({ room }: { room: Room }) {
           ? OTHER[room.turn.team]
           : room.turn.team)
       : null;
-  const guessName = guessTeam ? TEAM[guessTeam].name : "فريق التخمين";
+  const guessName = guessTeam ? s.team[guessTeam] : s.guessTeamFallback;
+
+  const kickable = Object.entries(room.players)
+    .filter(([u]) => u !== room.hostUid)
+    .sort((a, b) => a[1].joinedAt - b[1].joinedAt);
 
   if (!open) {
     return (
@@ -218,7 +231,7 @@ export function HostControls({ room }: { room: Room }) {
         onClick={() => setOpen(true)}
         className="mx-auto mt-2 block rounded-full px-3 py-1 text-[11px] font-bold text-muted/70"
       >
-        ⚙︎ تحكّم المضيف
+        ⚙︎ {s.hostMenu}
       </button>
     );
   }
@@ -226,34 +239,55 @@ export function HostControls({ room }: { room: Room }) {
   return (
     <div className="mt-2 rounded-[16px] border border-white/10 bg-black/35 p-3">
       <div className="mb-2 flex items-center">
-        <span className="text-[11px] font-black tracking-[.16em] text-muted">تحكّم المضيف</span>
+        <span className="text-[11px] font-black tracking-[.16em] text-muted">{s.hostMenu}</span>
         <button onClick={() => setOpen(false)} className="ms-auto text-[15px] text-muted">✕</button>
       </div>
 
       <div className="flex flex-col gap-2">
         {guessTeam && (
           <>
-            <Ctl onClick={() => run("plusGuess")} label={`＋ نقطة لـ${guessName}`} tone="#2FD6BC"
-                 hint="فريق التخمين — حتى تبدأ الجولة التالية" />
-            <Ctl onClick={() => run("minusGuess")} label={`− نقطة من ${guessName}`} tone="#FF9A3C"
-                 hint="فريق التخمين — حتى تبدأ الجولة التالية" />
+            <Ctl onClick={() => run("plusGuess")} label={s.plusGuess(guessName)} tone="#2FD6BC"
+                 hint={s.guessHint} />
+            <Ctl onClick={() => run("minusGuess")} label={s.minusGuess(guessName)} tone="#FF9A3C"
+                 hint={s.guessHint} />
           </>
         )}
         {inTurn && (
           room.paused
-            ? <Ctl onClick={() => run("resume")} label="▶︎ كمّل" tone="#2FD6BC" />
-            : <Ctl onClick={() => run("pause")} label="⏸ وقّف مؤقتًا" tone="#FFD84D" />
+            ? <Ctl onClick={() => run("resume")} label={s.resume} tone="#2FD6BC" />
+            : <Ctl onClick={() => run("pause")} label={s.pause} tone="#FFD84D" />
         )}
         {inTurn && (
-          <Ctl onClick={() => run("addTime")} label="⏱ أضف 5 ثوانٍ" tone="#FFD84D"
-               hint="تمديد المؤقّت الحالي" />
+          <Ctl onClick={() => run("addTime")} label={s.addTime} tone="#FFD84D"
+               hint={s.addTimeHint} />
         )}
         {inTurn && (
-          <Ctl onClick={() => run("skipTurn")} label="⏭ أنهِ الجولة" tone="#FF9A3C"
-               hint="إذا وقف جهاز الشارح ولا تبدأ البطاقة" />
+          <Ctl onClick={() => run("skipTurn")} label={s.skipTurn} tone="#FF9A3C"
+               hint={s.skipTurnHint} />
         )}
-        <Ctl onClick={() => run("endGame")} label="⏹ أنهِ اللعبة" tone="#FF4D79"
-             hint="يروح للنتيجة النهائية مباشرة" />
+        {kickable.length > 0 && (
+          <div className="rounded-[13px] bg-black/30 px-3 py-2.5">
+            <div className="text-[14.5px] font-black text-chili">{s.kickPlayer}</div>
+            <small className="block text-[11px] font-normal text-muted">{s.kickHint}</small>
+            <div className="mt-2 flex flex-col gap-1.5">
+              {kickable.map(([u, p]) => (
+                <button
+                  key={u}
+                  onClick={() => kick(u)}
+                  className="flex items-center gap-2 rounded-[10px] bg-black/25 px-2.5 py-2 text-start"
+                >
+                  <span className="min-w-0 flex-1 truncate text-[13.5px] font-bold">
+                    {p.name}
+                    {p.team ? ` · ${TEAM[p.team].emoji}` : ""}
+                  </span>
+                  <span className="shrink-0 text-[12px] font-black text-chili">{s.kick}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        <Ctl onClick={() => run("endGame")} label={s.endGame} tone="#FF4D79"
+             hint={s.endGameHint} />
       </div>
 
       {err && <p className="mt-2 text-center text-[12px] font-bold text-chili">{err}</p>}
@@ -277,11 +311,12 @@ function Ctl({
 }
 
 /** Shown to everyone while the host has the game paused. */
-export function PausedBanner() {
+export function PausedBanner({ lang }: { lang?: import("../lib/types").Lang }) {
+  const s = S(lang);
   return (
     <div className="mt-3 rounded-[16px] border-2 border-lemon/40 bg-lemon/10 px-4 py-3 text-center">
-      <p className="font-display text-[18px] text-lemon">⏸ اللعبة موقوفة</p>
-      <p className="mt-1 text-[12.5px] text-muted">المؤقّت متوقّف. بانتظار المضيف.</p>
+      <p className="font-display text-[18px] text-lemon">{s.pausedTitle}</p>
+      <p className="mt-1 text-[12.5px] text-muted">{s.pausedSub}</p>
     </div>
   );
 }

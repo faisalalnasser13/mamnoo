@@ -29,19 +29,22 @@ export class ErrorBoundary extends React.Component<
     return (
       <div className="shell justify-center">
         <p className="text-center font-display text-[26px]">صار خلل بالشاشة</p>
+        <p className="mt-1 text-center font-display text-[18px] text-muted">Something broke on this screen</p>
         <p className="mt-3 text-center text-[14px] leading-relaxed text-muted">
           اللعبة مستمرة مع البقية. أعد التحميل وسترجع لنفس الجولة.
+          <br />
+          The game is still going for everyone else. Reload to rejoin this turn.
         </p>
         <div className="h-6" />
         <button className="btn btn-lemon" onClick={() => location.reload()}>
-          أعد التحميل
+          أعد التحميل · Reload
         </button>
         <div className="h-3" />
         <button
           className="btn btn-ghost"
           onClick={() => { location.hash = ""; location.reload(); }}
         >
-          ارجع للبداية
+          ارجع للبداية · Home
         </button>
         <p className="mt-6 text-center text-[11px] text-muted/60" dir="ltr">
           {this.state.error.message}

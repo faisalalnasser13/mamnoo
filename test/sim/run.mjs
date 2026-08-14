@@ -29,6 +29,7 @@ await esbuild.build({
     join(root, "src/lib/rules.ts"),
     join(root, "src/lib/arabic.ts"),
     join(root, "src/lib/deck.ts"),
+    join(root, "src/lib/deck.en.ts"),
   ],
   outdir,
   outExtension: { ".js": ".cjs" },

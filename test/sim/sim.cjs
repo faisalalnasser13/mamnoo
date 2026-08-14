@@ -49,7 +49,7 @@ async function playOneGame(n) {
   const uids = names.map((_, i) => `u${n}_${i}`);
 
   as(uids[0]);
-  const { roomId } = await api.createRoom({ name: names[0] });
+  const { roomId } = await api.createRoom({ name: names[0], lang: "ar" });
   for (let i = 1; i < uids.length; i++) {
     as(uids[i]);
     await api.joinRoom({ roomId, name: names[i] });
@@ -238,15 +238,16 @@ async function playOneGame(n) {
 
   /* ---- post-game ---- */
   const total = R.totalTurns(room.settings);
-  invariant("more turns were played than configured", room.turnIndex < total + 1,
+  invariant("more turns were played than the guard allows", room.turnIndex < total + 40,
     `${room.turnIndex} of ${total}`);
   // Scores may be negative — a buzz at 0 is −1 on purpose.
   invariant("the winner disagrees with the score",
     room.winner === R.winnerOf(room.scores));
   invariant("the game ended without a reason", Boolean(room.endReason));
-  if (room.endReason === "target") {
-    invariant("nobody actually reached the target",
-      room.scores.mint >= R.TARGET_SCORE || room.scores.chili >= R.TARGET_SCORE);
+  if (room.endReason === "rounds") {
+    invariant("ended before the scheduled rounds finished",
+      room.turnIndex + 1 >= total, `${room.turnIndex} of ${total}`);
+    invariant("natural end left a tie", room.winner !== "draw");
   }
 
   // No word may repeat inside one game. usedCards is written in the same
@@ -261,7 +262,7 @@ async function playOneGame(n) {
   // The same, checked against what players actually saw rather than the
   // bookkeeping array: every word in every round log, across the game.
   const wordsSeen = [];
-  for (let i = 0; i < total; i++) {
+  for (let i = 0; i <= room.turnIndex; i++) {
     const rec = fs.__peek(`rooms/${roomId}/rounds/${i}`);
     if (!rec) continue;
     for (const e of rec.log) if (e.res !== "steal") wordsSeen.push(e.w);
@@ -273,7 +274,7 @@ async function playOneGame(n) {
   // A reused room name must not carry the previous game's records into
   // this one — that regression is invisible until the final screen.
   invariant("round records outlived the game they belong to",
-    fs.__peek(`rooms/${roomId}/rounds/${total}`) == null);
+    fs.__peek(`rooms/${roomId}/rounds/${room.turnIndex + 1}`) == null);
 
   return { turns: room.turnIndex, scored: scoredCards, reason: room.endReason };
 }

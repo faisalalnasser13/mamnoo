@@ -27,8 +27,9 @@ import {
   pickBalancedTeam, shuffledTeams, resolveCard, applyPoints, isOver, winnerOf,
   drawFrom, membersOf, SKIP_LOCKOUT_MS, stealAllowed, liveStartPad,
 } from "./rules";
-import type { Outcome, Phase, Room, Settings, TeamId } from "./types";
-import { DECK, ROOM_WORDS } from "./deck";
+import type { Lang, Outcome, Phase, Room, Settings, TeamId } from "./types";
+import { deckFor, roomWordsFor } from "./decks";
+import { S, asLang } from "./strings";
 
 export { TIMER_GRACE_MS, BUZZ_HOLD_MS, STEAL_MS, SKIP_LOCKOUT_MS };
 
@@ -37,12 +38,13 @@ export class GameError extends Error {
   constructor(public code: string, message: string) { super(message); }
 }
 
-export function errText(e: unknown): string {
+export function errText(e: unknown, lang: Lang = "ar"): string {
   if (e instanceof GameError) return e.message;
   const code = (e as { code?: string })?.code ?? "";
-  if (code.includes("permission-denied")) return "لا تملك صلاحية هذه الخطوة.";
-  if (code.includes("unavailable")) return "الشبكة ضعيفة. حاول مرة أخرى.";
-  return "صار خطأ. حاول مرة أخرى.";
+  const s = S(lang);
+  if (code.includes("permission-denied")) return s.err.permission;
+  if (code.includes("unavailable")) return s.err.network;
+  return s.err.generic;
 }
 
 const roomRef = (id: string) => doc(db, "rooms", id);
@@ -50,23 +52,23 @@ const roomRef = (id: string) => doc(db, "rooms", id);
 const cardRef = (id: string) => doc(db, "rooms", id, "secret", "card");
 const roundRef = (id: string, i: number) => doc(db, "rooms", id, "rounds", String(i));
 
-function me(): string {
+function me(lang: Lang = "ar"): string {
   const uid = auth.currentUser?.uid;
-  if (!uid) throw new GameError("unauthenticated", "سجّل الدخول أولًا.");
+  if (!uid) throw new GameError("unauthenticated", S(lang).err.signIn);
   return uid;
 }
 
 function requireHost(room: Room, uid: string) {
-  if (room.hostUid !== uid) throw new GameError("permission-denied", "هذا التحكم للمضيف فقط.");
+  if (room.hostUid !== uid) throw new GameError("permission-denied", S(room.lang).err.hostOnly);
 }
 
 function requireMember(room: Room, uid: string) {
-  if (!room.players[uid]) throw new GameError("permission-denied", "لست في هذه الغرفة.");
+  if (!room.players[uid]) throw new GameError("permission-denied", S(room.lang).err.notInRoom);
 }
 
 async function loadRoom(id: string): Promise<Room> {
   const snap = await getDoc(roomRef(id));
-  if (!snap.exists()) throw new GameError("not-found", "لا توجد غرفة بهذا الاسم.");
+  if (!snap.exists()) throw new GameError("not-found", S("ar").err.noSuchRoom);
   return asRoom(id, snap.data() as Record<string, unknown>);
 }
 
@@ -87,6 +89,7 @@ function asRoom(id: string, raw: Record<string, unknown>): Room {
     players: r.players ?? {},
     scores: { mint: r.scores?.mint ?? 0, chili: r.scores?.chili ?? 0 },
     usedCards: Array.isArray(r.usedCards) ? r.usedCards : [],
+    lang: asLang(r.lang),
     round: {
       cardId: round.cardId ?? null,
       cardAt: round.cardAt ?? null,
@@ -132,19 +135,20 @@ export const STALE_ROOM_MS = 6 * 60 * 60 * 1000;
  * rooms than this will ever need, and every name is still sayable out
  * loud on a call — which is the entire reason they aren't random codes.
  */
-function nameCandidates(): string[] {
-  const base = [...ROOM_WORDS].sort(() => rand() - 0.5);
+function nameCandidates(lang: Lang): string[] {
+  const base = [...roomWordsFor(lang)].sort(() => rand() - 0.5);
   const out = [...base];
   for (let n = 2; n <= 9; n++) for (const w of base) out.push(`${w}${n}`);
   return out;
 }
 
-async function createRoom({ name }: { name: string }) {
-  const uid = me();
+async function createRoom({ name, lang }: { name: string; lang: Lang }) {
+  const L = asLang(lang);
+  const uid = me(L);
   const clean = name.trim().slice(0, NAME_MAX);
-  if (!clean) throw new GameError("invalid-argument", "اكتب اسمك أولًا.");
+  if (!clean) throw new GameError("invalid-argument", S(L).err.writeName);
 
-  for (const id of nameCandidates()) {
+  for (const id of nameCandidates(L)) {
     const created = await runTransaction(db, async (tx) => {
       const snap = await tx.get(roomRef(id));
       if (snap.exists()) {
@@ -156,6 +160,7 @@ async function createRoom({ name }: { name: string }) {
       const t = Date.now();
       tx.set(roomRef(id), {
         hostUid: uid,
+        lang: L,
         phase: "lobby" as Phase,
         turnIndex: 0,
         paused: false,
@@ -176,17 +181,17 @@ async function createRoom({ name }: { name: string }) {
     });
     if (created) return { roomId: id };
   }
-  throw new GameError("resource-exhausted", "كل أسماء الغرف مشغولة الآن. جرّب بعد قليل.");
+  throw new GameError("resource-exhausted", S(L).err.namesBusy);
 }
 
 async function joinRoom({ roomId, name }: { roomId: string; name: string }) {
   const uid = me();
   const clean = name.trim().slice(0, NAME_MAX);
-  if (!clean) throw new GameError("invalid-argument", "اكتب اسمك أولًا.");
+  if (!clean) throw new GameError("invalid-argument", S("ar").err.writeName);
 
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "لا توجد غرفة بهذا الاسم.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.noSuchRoom);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
 
     if (room.players[uid]) {
@@ -194,10 +199,10 @@ async function joinRoom({ roomId, name }: { roomId: string; name: string }) {
       return;
     }
     if (room.phase !== "lobby") {
-      throw new GameError("failed-precondition", "اللعبة بدأت. انتظر الجولة القادمة.");
+      throw new GameError("failed-precondition", S(room.lang).err.gameStarted);
     }
     if (Object.keys(room.players).length >= 12) {
-      throw new GameError("resource-exhausted", "الغرفة ممتلئة (12 لاعبًا).");
+      throw new GameError("resource-exhausted", S(room.lang).err.roomFull);
     }
     const mintN = membersOf(room.players, "mint").length;
     const chiliN = membersOf(room.players, "chili").length;
@@ -236,15 +241,72 @@ async function kickPlayer({ roomId, uid: target }: { roomId: string; uid: string
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
-    if (target === uid) throw new GameError("invalid-argument", "ما تقدر تطرد نفسك.");
+    if (target === uid) throw new GameError("invalid-argument", S(room.lang).err.kickSelf);
     if (!room.players[target]) return;
-    tx.update(roomRef(roomId), {
+
+    const remaining = { ...room.players };
+    delete remaining[target];
+    const rest = Object.keys(remaining);
+    const t = Date.now();
+
+    if (!rest.length) {
+      tx.delete(cardRef(roomId));
+      tx.delete(roomRef(roomId));
+      return;
+    }
+
+    const mintLeft = membersOf(remaining, "mint").length;
+    const chiliLeft = membersOf(remaining, "chili").length;
+    const sideEmptied = mintLeft === 0 || chiliLeft === 0;
+
+    // Mid-game with an empty side — the table can't continue.
+    if (room.phase !== "lobby" && sideEmptied) {
+      tx.update(roomRef(roomId), {
+        [`players.${target}`]: deleteField(),
+        phase: "over" as Phase,
+        winner: mintLeft > 0 ? "mint" : chiliLeft > 0 ? "chili" : winnerOf(room.scores),
+        endReason: "abandoned",
+        phaseEndsAt: null,
+        updatedAt: t,
+      });
+      tx.delete(cardRef(roomId));
+      return;
+    }
+
+    // Kicking the describer mid-turn would leave the table stuck waiting
+    // for a card that never comes — close the turn the same way skipTurn does.
+    const stuckDescriber =
+      (room.phase === "live" || room.phase === "steal")
+      && room.turn?.clueGiverUid === target;
+    if (stuckDescriber) {
+      writeRecap(tx, room, {});
+      tx.update(roomRef(roomId), {
+        [`players.${target}`]: deleteField(),
+        updatedAt: t,
+      });
+      return;
+    }
+
+    const patch: Record<string, unknown> = {
       [`players.${target}`]: deleteField(),
-      updatedAt: Date.now(),
-    });
+      updatedAt: t,
+    };
+
+    // Rebind the current turn if it still points at the kicked player
+    // (e.g. judge kicked on the transition screen).
+    if (
+      room.phase !== "lobby"
+      && room.turn
+      && (room.turn.clueGiverUid === target || room.turn.judgeUid === target)
+    ) {
+      const turn = rolesForTurn(remaining, room.turnIndex);
+      if (turn) patch.turn = turn;
+    }
+
+    tx.update(roomRef(roomId), patch);
   });
   return { ok: true };
 }
@@ -253,10 +315,10 @@ async function updateSettings({ roomId, settings }: { roomId: string; settings: 
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
-    if (room.phase !== "lobby") throw new GameError("failed-precondition", "الإعدادات تتغيّر قبل البدء فقط.");
+    if (room.phase !== "lobby") throw new GameError("failed-precondition", S(room.lang).err.settingsLobby);
     const next: Settings = {
       roundSecs: snapSetting(settings.roundSecs ?? room.settings.roundSecs, ROUND_SECS_OPTIONS),
       roundsPerTeam: snapSetting(settings.roundsPerTeam ?? room.settings.roundsPerTeam, ROUNDS_PER_TEAM_OPTIONS),
@@ -270,10 +332,10 @@ async function shuffleTeams({ roomId }: { roomId: string }) {
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
-    if (room.phase !== "lobby") throw new GameError("failed-precondition", "الخلط قبل البدء فقط.");
+    if (room.phase !== "lobby") throw new GameError("failed-precondition", S(room.lang).err.shuffleLobby);
     const teams = shuffledTeams(Object.keys(room.players), rand);
     const patch: Record<string, unknown> = { updatedAt: Date.now() };
     for (const [u, t] of Object.entries(teams)) patch[`players.${u}.team`] = t;
@@ -286,12 +348,12 @@ async function setTeam({ roomId, uid: target, team }: { roomId: string; uid: str
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     if (room.hostUid !== uid && target !== uid) {
-      throw new GameError("permission-denied", "المضيف فقط ينقل الآخرين.");
+      throw new GameError("permission-denied", S(room.lang).err.moveOthers);
     }
-    if (room.phase !== "lobby") throw new GameError("failed-precondition", "التبديل قبل البدء فقط.");
+    if (room.phase !== "lobby") throw new GameError("failed-precondition", S(room.lang).err.switchLobby);
     tx.update(roomRef(roomId), { [`players.${target}.team`]: team, updatedAt: Date.now() });
   });
   return { ok: true };
@@ -309,13 +371,13 @@ async function startGame({ roomId }: { roomId: string }) {
 
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
     if (room.phase !== "lobby") return; // idempotent: someone already started
 
     const turn = rolesForTurn(room.players, 0);
-    if (!turn) throw new GameError("failed-precondition", "كل فريق يحتاج لاعبًا واحدًا على الأقل.");
+    if (!turn) throw new GameError("failed-precondition", S(room.lang).err.needPlayer);
 
     // Keep usedCards across rematches in the same room so the table
     // doesn't see the same words again until the deck recycles.
@@ -344,11 +406,11 @@ async function startTurn({ roomId }: { roomId: string }) {
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
     if (room.phase !== "transition") return; // idempotent
-    if (!room.turn) throw new GameError("failed-precondition", "لا يوجد دور محدّد.");
+    if (!room.turn) throw new GameError("failed-precondition", S(room.lang).err.noTurn);
 
     const t = Date.now();
     // Bake the silent start beat into the deadline so the table still
@@ -381,7 +443,7 @@ async function ensureCard({ roomId }: { roomId: string }) {
 
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     if (room.phase !== "live") return;
     if (room.turn?.clueGiverUid !== uid) return;
@@ -394,13 +456,14 @@ async function ensureCard({ roomId }: { roomId: string }) {
     );
     if (Date.now() < room.phaseStartedAt + pad) return;
 
-    picked = drawFrom(DECK.length, room.usedCards ?? [], rand);
+    const deck = deckFor(room.lang);
+    picked = drawFrom(deck.length, room.usedCards ?? [], rand);
     const used = picked.recycled ? [picked.id] : [...(room.usedCards ?? []), picked.id];
 
     tx.set(cardRef(roomId), {
       cardId: picked.id,
-      word: DECK[picked.id].w,
-      taboo: DECK[picked.id].t,
+      word: deck[picked.id].w,
+      taboo: deck[picked.id].t,
       turnIndex: room.turnIndex,
       at: Date.now(),
     });
@@ -426,12 +489,12 @@ async function resolve({
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     if (room.phase !== "live") return;
     if (room.round.cardId !== fromCardId) return; // already resolved
     if (room.turn?.clueGiverUid !== uid) {
-      throw new GameError("permission-denied", "الشارح فقط يحسم البطاقة.");
+      throw new GameError("permission-denied", S(room.lang).err.giverOnly);
     }
     if (res === "skip") {
       // The button is disabled during the lockout, but a stale render or
@@ -439,11 +502,12 @@ async function resolve({
       // the steal winnable, so it's enforced here too.
       const left = (room.phaseEndsAt ?? 0) - Date.now();
       if (left <= SKIP_LOCKOUT_MS) {
-        throw new GameError("failed-precondition", "ما في تبديل في آخر 10 ثوانٍ.");
+        throw new GameError("failed-precondition", S(room.lang).err.skipLocked);
       }
     }
 
-    const card = DECK[fromCardId];
+    const card = deckFor(room.lang)[fromCardId];
+    if (!card) return;
     const r = resolveCard(res, room.round.streak, room.round.skipsLeft);
     const team = room.turn.team;
     const t = Date.now();
@@ -476,13 +540,13 @@ async function buzz({ roomId, fromCardId }: { roomId: string; fromCardId: number
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     if (room.phase !== "live") return;
     if (room.round.cardId !== fromCardId) return;
     if (room.round.buzzedAt !== null) return; // already buzzed
     if (room.turn?.judgeUid !== uid) {
-      throw new GameError("permission-denied", "الحكم فقط يضغط ممنوع.");
+      throw new GameError("permission-denied", S(room.lang).err.judgeBuzz);
     }
     tx.update(roomRef(roomId), { "round.buzzedAt": Date.now(), updatedAt: Date.now() });
   });
@@ -494,15 +558,15 @@ async function claimSteal({ roomId }: { roomId: string }) {
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     if (room.phase !== "steal") return; // idempotent
     if (room.turn?.judgeUid !== uid) {
-      throw new GameError("permission-denied", "الحكم فقط يحسم السرقة.");
+      throw new GameError("permission-denied", S(room.lang).err.judgeSteal);
     }
     const thief = OTHER[room.turn.team];
     writeRecap(tx, room, {
-      extraLog: { w: "سرقة", res: "steal" as Outcome, pts: 1, t: room.settings.roundSecs * 1000 },
+      extraLog: { w: S(room.lang).stealWord, res: "steal" as Outcome, pts: 1, t: room.settings.roundSecs * 1000 },
       stealTo: thief,
     });
   });
@@ -524,7 +588,7 @@ async function advancePhase({
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
 
     requireMember(room, uid);
@@ -575,7 +639,8 @@ async function advancePhase({
 function applyBuzz(tx: Transaction, room: Room) {
   const id = room.round.cardId;
   if (id === null || !room.turn) return;
-  const card = DECK[id];
+  const card = deckFor(room.lang)[id];
+  if (!card) return;
   const r = resolveCard("buzz", room.round.streak, room.round.skipsLeft);
   const t = Date.now();
   tx.update(roomRef(room.id), {
@@ -706,7 +771,7 @@ async function hostControl({
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
     const t = Date.now();
@@ -767,7 +832,7 @@ async function hostControl({
       if (!team || !room.turn) return;
       const delta = action === "plusGuess" ? 1 : -1;
       const entry = {
-        w: delta > 0 ? "host +1" : "host −1",
+        w: delta > 0 ? S(room.lang).hostPlus : S(room.lang).hostMinus,
         res: "host" as Outcome,
         pts: delta,
         t: Math.max(0, t - room.phaseStartedAt),
@@ -823,7 +888,7 @@ async function rematch({ roomId }: { roomId: string }) {
   await wipeSubcollections(roomId);
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
-    if (!snap.exists()) throw new GameError("not-found", "الغرفة غير موجودة.");
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
     if (room.phase === "lobby") return;

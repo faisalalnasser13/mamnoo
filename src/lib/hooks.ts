@@ -51,6 +51,7 @@ function normalizeRoom(id: string, raw: Record<string, unknown>): Room {
     usedCards: Array.isArray(r.usedCards) ? r.usedCards : [],
     winner: r.winner ?? null,
     endReason: r.endReason ?? null,
+    lang: (r.lang === "en" ? "en" : "ar"),
     createdAt: r.createdAt ?? 0,
     updatedAt: r.updatedAt ?? 0,
   };

@@ -89,6 +89,9 @@ Consequences you must preserve:
 - The clue-giver is the only creator, so there is exactly one dealer.
 - Never put the current card's word on the room document. `round.log`
   only ever receives a word **after** the card has left play.
+- `round.cardId` is an index into `deckFor(room.lang)`, not a global
+  deck. `lang` is written at `createRoom` and never changes — Arabic and
+  English rooms can share one Firebase project without mixing words.
 
 ### 5. Digits are always 0–9
 
@@ -210,7 +213,9 @@ built straight from `taboo_deck.json` via `scripts/build-deck.mjs`.
 src/lib/rules.ts      pure logic: turn order, scoring, heat, end, stats. No Firebase.
 src/lib/engine.ts     every state transition, as a guarded transaction
 src/lib/hooks.ts      live subscriptions, countdown, phase/buzz/deal drivers
-src/lib/deck.ts       ~994 cards (from taboo_deck.json) + 50 room-name words
+src/lib/deck.ts       ~994 Arabic cards (from taboo_deck.json) + 50 room-name words
+src/lib/deck.en.ts    starter English deck (10 cards) + room-name words
+src/lib/strings.ts    AR/EN copy; room.lang picks the pack from lobby onward
 src/lib/arabic.ts     normalisation (from تشفير)
 src/screens/          Home + Lobby, and phases.tsx for everything in-game
 src/components/       ui.tsx (primitives), game.tsx (card/HUD/heat/feed), Wall.tsx
@@ -228,7 +233,7 @@ lobby ──ابدأ اللعب (host)──▶ transition ──ابدأ الج
                                   │                              ▼
                              recap ◀──────────────────────────  steal
                                   │
-                        21 points or all turns ──▶ over
+                        all turns done (extend while tied) ──▶ over
 ```
 
 **Who owns each transition.** Without a server this must be decided
@@ -266,10 +271,11 @@ once, at turn start. A 60-second round costs one write, not sixty.
 | `wipeSubcollections` iterates `.docs`, not `forEach` | Both exist on a real QuerySnapshot, but `.docs` is a plain array and can't be missing. A silent `catch` around `forEach` once hid a broken wipe, which let a reused room name carry the previous game's records into the next game's final screen. Don't reintroduce the swallow |
 | The backdrop is a dot grid, not the "wall of words" | The wall was readable Arabic, and on a phone the eye keeps trying to read anything legible. It was competing with the card for exactly the attention the card needs |
 | The host can end a turn mid-play | `hostControl({ action: "skipTurn" })`. It's the only way out of a turn whose describer dropped off: the card is dealt by their device, and a round with no card can't be ended by the clock either |
+| The host can kick mid-game | Lobby and host menu. Kicking the describer mid-turn closes the turn; emptying a side ends the game |
 | Pausing banks the remaining time | `pausedLeft`. Resuming from a fresh full timer would hand out free seconds |
 | One scoreboard, not two | Team total and per-player breakdown are the same information at two zoom levels, so the total is the heading of the list that produces it |
 | A buzz at zero makes the score −1 | `applyPoints` does not floor. A free pass at 0 made ممنوع cost nothing when you were already losing |
-| Games end before the round counter runs out | 21 points ends it early. Half the simulated games end this way |
+| Games always finish the round counter | No early target score — a tie past the last turn goes to overtime until someone leads |
 | Room names get a digit suffix | The 50 words ran out. Better than a random code, which nobody can say on a call |
 | A 6-hour-old room gets overwritten | `STALE_ROOM_MS`. There's no server to sweep abandoned rooms, so `createRoom` reclaims them |
 | The guesser's screen shows guessed words | Only cards that have already left play. The live card is never on the room doc |

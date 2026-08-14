@@ -67,6 +67,7 @@ function room(over: Partial<Room> = {}): Room {
       ],
     },
     usedCards: [0, 1, 2],
+    lang: "ar",
     winner: null,
     endReason: null,
     createdAt: now - 100_000,

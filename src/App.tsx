@@ -36,6 +36,15 @@ export default function App() {
   const { room, missing } = useRoom(uid ? roomId : null);
   const me = room && uid ? room.players[uid] : null;
 
+  useEffect(() => {
+    const en = room?.lang === "en";
+    document.documentElement.lang = en ? "en" : "ar";
+    document.documentElement.dir = en ? "ltr" : "rtl";
+    document.title = !room || !me
+      ? "ممنوع · Banned"
+      : en ? "Banned" : "ممنوع";
+  }, [room, me]);
+
   // Only the two people entitled to the card even open the listener.
   const role = room && uid ? roleOf(room, uid) : "guesser";
   const card = useCard(
@@ -67,33 +76,39 @@ export default function App() {
     body = (
       <div className="shell justify-center">
         <p className="text-center font-display text-[24px]">ما قدرنا نتصل</p>
+        <p className="mt-1 text-center font-display text-[18px] text-muted">Couldn't connect</p>
         <p className="mt-3 text-center text-[14px] leading-relaxed text-muted">
           تأكد أن «تسجيل الدخول المجهول» مفعّل في Firebase، ثم أعد التحميل.
+          <br />
+          Enable Anonymous sign-in in Firebase, then reload.
         </p>
         <div className="h-5" />
-        <Btn variant="ghost" onClick={() => location.reload()}>أعد المحاولة</Btn>
+        <Btn variant="ghost" onClick={() => location.reload()}>أعد المحاولة · Retry</Btn>
       </div>
     );
   } else if (!uid) {
-    body = <div className="shell justify-center"><Label>لحظة…</Label></div>;
+    body = <div className="shell justify-center"><Label>لحظة… · One sec…</Label></div>;
   } else if (!roomId) {
     body = <Home onEnter={enter} initialCode="" />;
   } else if (missing) {
     body = (
       <div className="shell justify-center">
         <p className="text-center font-display text-[24px]">الغرفة انتهت</p>
+        <p className="mt-1 text-center font-display text-[18px] text-muted">Room's gone</p>
         <p className="mt-3 text-center text-[14px] text-muted">
           إمّا خرج آخر لاعب، أو الاسم غير صحيح.
+          <br />
+          Last player left, or the name is wrong.
         </p>
         <div className="h-5" />
-        <Btn onClick={() => { location.hash = ""; setRoomId(null); }}>ارجع للبداية</Btn>
+        <Btn onClick={() => { location.hash = ""; setRoomId(null); }}>ارجع للبداية · Home</Btn>
       </div>
     );
   } else if (!room) {
-    body = <div className="shell justify-center"><Label>جاري الدخول…</Label></div>;
+    body = <div className="shell justify-center"><Label>جاري الدخول… · Joining…</Label></div>;
   } else if (!me) {
     // Known room, but we're not in it — the join form, prefilled.
-    body = <Home onEnter={enter} initialCode={room.id} />;
+    body = <Home onEnter={enter} initialCode={room.id} joinLang={room.lang} />;
   } else {
     const ctx = { room, uid, card, rounds };
     body =

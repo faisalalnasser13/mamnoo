@@ -3,9 +3,10 @@ import { api, errText } from "../lib/firebase";
 import { useBuzzHaptic, useCountdown, useFlash, type LiveCard } from "../lib/hooks";
 import {
   canSkip, computeStats, inLockout, membersOf, nextTurnFor, OTHER,
-  SKIP_LOCKOUT_MS, TARGET_SCORE, totalTurns,
+  SKIP_LOCKOUT_MS, totalTurns,
 } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
+import { S } from "../lib/strings";
 import { Avatar, Btn, Flash, Label, TEAM, Waiting, YouChip } from "../components/ui";
 import { HostControls, PausedBanner, ScoreBoard } from "../components/host";
 import { Card, CardSkeleton, Feed, Heat, Hud, RunLine } from "../components/game";
@@ -39,6 +40,7 @@ export function roleOf(room: Room, uid: string): "giver" | "judge" | "guesser" {
 export function LivePhase({ room, uid, card }: Ctx) {
   const { remaining, pct, warn, rush } = useCountdown(room);
   const { msg, flash } = useFlash();
+  const s = S(room.lang);
   const role = roleOf(room, uid);
   const team = myTeam(room, uid);
   const buzzed = room.round.buzzedAt !== null;
@@ -52,7 +54,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
   // Only the describer is holding the phone that matters here.
   useBuzzHaptic(role === "giver", room.round.buzzedAt);
 
-  const call = (p: Promise<unknown>) => p.catch((e) => flash(errText(e)));
+  const call = (p: Promise<unknown>) => p.catch((e) => flash(errText(e, room.lang)));
 
   /* ---- describer ---- */
   if (role === "giver" && room.turn) {
@@ -60,44 +62,45 @@ export function LivePhase({ room, uid, card }: Ctx) {
     const opp = room.scores[OTHER[room.turn.team]];
     const gap = own - opp;
     // No tatweel (ـ) anywhere in the UI — it renders as a gap in Tajawal.
-    const gapText = gap > 0 ? `فريقك متقدّم بفارق ${gap}`
-      : gap < 0 ? `فريقك متأخر بفارق ${-gap}` : "تعادل";
+    const gapText = gap > 0 ? s.aheadBy(gap)
+      : gap < 0 ? s.behindBy(-gap) : s.tied;
 
     return (
       <div className="shell">
-        {team && <YouChip team={team} extra="اشرح!" />}
+        {team && <YouChip team={team} extra={s.chipExplain} />}
         <div className="h-2.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
         <div className="h-3.5" />
 
         {card
-          ? <Card word={card.word} taboo={card.taboo} kicker={buzzed ? "…" : rush ? "بسرعة!" : "اشرحها"} buzzed={buzzed} />
-          : <CardSkeleton note="جاري السحب…" />}
+          ? <Card word={card.word} taboo={card.taboo} stamp={s.stamp}
+              kicker={buzzed ? "…" : rush ? s.hurry : s.explainIt} buzzed={buzzed} />
+          : <CardSkeleton note={s.drawing} />}
 
         <Heat streak={room.round.streak}
-          note={buzzed ? "💧 انطفأ الحماس"
-            : room.round.streak >= 2 ? "🔥 القادمة بنقطتين"
+          note={buzzed ? s.heatOff
+            : room.round.streak >= 2 ? s.heatNext
             : undefined} />
 
         <RunLine red={buzzed}>
-          {buzzed ? "−1 · البطاقة محروقة" : `+${room.round.points} هذه الجولة · ${gapText}`}
+          {buzzed ? s.burned : s.thisRound(room.round.points, gapText)}
         </RunLine>
 
-        {room.paused && <PausedBanner />}
+        {room.paused && <PausedBanner lang={room.lang} />}
         <Flash msg={msg} />
         <div className="flex-1" />
         {room.hostUid === uid && <HostControls room={room} />}
         <div className="mt-2 flex flex-col gap-3">
           <Btn variant="mint" disabled={buzzed || cardId === null}
             onClick={() => cardId !== null && call(api.resolve({ roomId: room.id, res: "ok", fromCardId: cardId }))}>
-            صح ✓
+            {s.correct}
           </Btn>
           <Btn variant="ghost"
             disabled={buzzed || cardId === null || !canSkip(remaining)}
             onClick={() => cardId !== null && call(api.resolve({ roomId: room.id, res: "skip", fromCardId: cardId }))}>
             {locked
-              ? `🔒 ما في تبديل في آخر ${SKIP_LOCKOUT_MS / 1000} ثوانٍ`
-              : <>تخطي <span className="text-chili">−0.5</span></>}
+              ? s.skipLocked(SKIP_LOCKOUT_MS / 1000)
+              : <>{s.skip} <span className="text-chili">−0.5</span></>}
           </Btn>
         </div>
       </div>
@@ -108,32 +111,31 @@ export function LivePhase({ room, uid, card }: Ctx) {
   if (role === "judge") {
     return (
       <div className="shell">
-        {team && <YouChip team={team} extra="حكم هذه الجولة 👀" />}
+        {team && <YouChip team={team} extra={s.chipJudge} />}
         <div className="h-2.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
         <div className="h-3.5" />
         {card
-          ? <Card word={card.word} taboo={card.taboo} buzzed={buzzed} small />
-          : <CardSkeleton note="بانتظار البطاقة…" />}
+          ? <Card word={card.word} taboo={card.taboo} buzzed={buzzed} small stamp={s.stamp} />
+          : <CardSkeleton note={s.waitingCard} />}
         {/* Only the describer's device deals. If theirs is asleep or its
             tab crashed, no card ever arrives and the clock can't rescue
             the turn — so say so instead of showing a silent spinner. */}
         {!card && stalled && (
           <p className="mt-3 text-center text-[12.5px] leading-relaxed text-muted">
-            ما وصلت البطاقة. جهاز {nameOf(room, room.turn?.clueGiverUid ?? "")} قد يكون نايم —
-            المضيف يقدر ينهي الجولة من ⚙︎ تحكّم المضيف.
+            {s.stalled(nameOf(room, room.turn?.clueGiverUid ?? ""))}
           </p>
         )}
-        {room.paused && <PausedBanner />}
+        {room.paused && <PausedBanner lang={room.lang} />}
         <Flash msg={msg} />
         <div className="flex-1" />
         {room.hostUid === uid && <HostControls room={room} />}
         <Btn variant="chili" huge disabled={buzzed || cardId === null}
           onClick={() => cardId !== null && call(api.buzz({ roomId: room.id, fromCardId: cardId }))}>
-          ممنوع!
+          {s.buzz}
         </Btn>
         <div className="h-2.5" />
-        <Label>اضغط إذا قال إحدى الخمس</Label>
+        <Label>{s.buzzHint}</Label>
       </div>
     );
   }
@@ -151,12 +153,12 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <div className="h-2.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
         <div className="flex-1" />
-        <p className="text-center font-display text-[64px] leading-none text-chili">ممنوع!</p>
+        <p className="text-center font-display text-[64px] leading-none text-chili">{s.floorBuzz}</p>
         <p className="mt-3 text-center text-[15px] font-bold text-muted">
-          {nameOf(room, room.turn?.clueGiverUid ?? "")} قال كلمة ممنوعة
+          {s.saidTaboo(nameOf(room, room.turn?.clueGiverUid ?? ""))}
         </p>
         <p className="mt-1 text-center text-[13px] text-muted">
-          {mineTurn(room, uid) ? "−1 عليكم · البطاقة محروقة" : "−1 عليهم · البطاقة محروقة"}
+          {mineTurn(room, uid) ? s.burnedUs : s.burnedThem}
         </p>
         <div className="flex-1" />
       </div>
@@ -169,20 +171,20 @@ export function LivePhase({ room, uid, card }: Ctx) {
   if (mine) {
     return (
       <div className="shell">
-        {team && <YouChip team={team} extra="خمّن! 📣" />}
+        {team && <YouChip team={team} extra={s.chipGuess} />}
         <div className="h-2.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
         <div className="h-5" />
-        <Label>يشرح الآن</Label>
+        <Label>{s.explainingNow}</Label>
         <p className="mt-1 text-center font-display text-[32px]">
           {nameOf(room, room.turn?.clueGiverUid ?? "")} 🎤
         </p>
         <Heat streak={room.round.streak} />
-        <Feed log={room.round.log} newestFirst />
-        {room.paused && <PausedBanner />}
+        <Feed log={room.round.log} newestFirst lang={room.lang} />
+        {room.paused && <PausedBanner lang={room.lang} />}
         <div className="flex-1" />
         {room.hostUid === uid && <HostControls room={room} />}
-        <Label>صيحوا بالإجابة في المكالمة 📣</Label>
+        <Label>{s.shoutAnswer}</Label>
       </div>
     );
   }
@@ -195,13 +197,13 @@ export function LivePhase({ room, uid, card }: Ctx) {
      stand to take, not with what the opponents are scoring. */
   return (
     <div className="shell">
-      {team && <YouChip team={team} extra="استمعوا 👂" />}
+      {team && <YouChip team={team} extra={s.chipListen} />}
       <div className="h-2.5" />
       <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
       <div className="h-5" />
-      <Label>دور الخصم</Label>
+      <Label>{s.theirTurn}</Label>
       <p className="mt-1 text-center font-display text-[28px]">
-        {nameOf(room, room.turn?.clueGiverUid ?? "")} يشرح
+        {s.explaining(nameOf(room, room.turn?.clueGiverUid ?? ""))}
       </p>
 
       {/* Once skip locks, the card on the table is the one that will be
@@ -211,26 +213,24 @@ export function LivePhase({ room, uid, card }: Ctx) {
         locked ? "border-chili bg-chili/20" : "border-chili/30 bg-chili/10"
       }`}>
         <p className="font-display text-[19px] text-chili">
-          {locked ? "🔒 ما يقدر يبدّل — ركّزوا" : "احفظوا الشرح"}
+          {locked ? s.skipLockedIdle : s.rememberClues}
         </p>
         <p className="mt-1.5 text-[13.5px] leading-relaxed text-muted">
-          {locked
-            ? "هذه البطاقة هي الأخيرة. إن لم يخمّنوها، فهي لكم."
-            : "إذا انتهى الوقت وبقيت بطاقة، لكم عشر ثوانٍ لسرقتها — ونقطة إن خمّنتموها."}
+          {locked ? s.lastCardYours : s.stealIfTime}
         </p>
       </div>
 
       <div className="mt-4 rounded-[16px] bg-black/25 px-4 py-3 text-center">
-        <span className="text-[13px] font-bold text-muted">جابوا هذه الجولة</span>
+        <span className="text-[13px] font-bold text-muted">{s.theyScored}</span>
         <p className="font-display text-[30px]" style={{ color: TEAM[room.turn!.team].hex }}>
           +{room.round.points}
         </p>
       </div>
 
-      {room.paused && <PausedBanner />}
+      {room.paused && <PausedBanner lang={room.lang} />}
       <div className="flex-1" />
       {room.hostUid === uid && <HostControls room={room} />}
-      <Label>{nameOf(room, room.turn?.judgeUid ?? "")} يحكم عنكم 🚨</Label>
+      <Label>{s.judgingForYou(nameOf(room, room.turn?.judgeUid ?? ""))}</Label>
     </div>
   );
 }
@@ -248,6 +248,7 @@ export function StealPhase({ room, uid }: Ctx) {
   const { remaining, pct, warn, rush } = useCountdown(room);
   const { msg, flash } = useFlash();
   if (!room.turn) return null;
+  const s = S(room.lang);
 
   const thief = OTHER[room.turn.team];
   const team = myTeam(room, uid);
@@ -258,23 +259,21 @@ export function StealPhase({ room, uid }: Ctx) {
 
   return (
     <div className="shell">
-      {team && <YouChip team={team} extra={mine ? "فرصتكم!" : "انتهت جولتكم"} />}
+      {team && <YouChip team={team} extra={mine ? s.chipSteal : s.chipTurnOver} />}
       <div className="h-2.5" />
       <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
       <div className="h-5" />
-      <Label>انتهى وقت {TEAM[room.turn.team].name} على هذه البطاقة</Label>
-      <p className="mt-1 text-center font-display text-[42px] text-chili">سرقة!</p>
+      <Label>{s.timeUpOn(s.team[room.turn.team])}</Label>
+      <p className="mt-1 text-center font-display text-[42px] text-chili">{s.stealYell}</p>
       <p className="mt-2 text-center text-[14.5px] leading-relaxed text-muted">
-        {mine
-          ? "خمّنوا من الشرح الذي سمعتموه — الحكم يضغط إن صحّت"
-          : "ما في دفاع. حكم الخصم يقرر إن سرقوا البطاقة"}
+        {mine ? s.stealYours : s.stealTheirs}
       </p>
 
       <div className="flex-1" />
       <div className="card" style={{ rotate: "1.5deg", padding: "24px 18px" }}>
         <div className="card-word" style={{ fontSize: 38, margin: 0 }}>؟ ؟ ؟</div>
       </div>
-      {room.paused && <PausedBanner />}
+      {room.paused && <PausedBanner lang={room.lang} />}
       <Flash msg={msg} />
       <div className="flex-1" />
       {room.hostUid === uid && <HostControls room={room} />}
@@ -282,11 +281,11 @@ export function StealPhase({ room, uid }: Ctx) {
       {roleOf(room, uid) === "judge"
         ? (
           <Btn variant="chili"
-            onClick={() => api.claimSteal({ roomId: room.id }).catch((e) => flash(errText(e)))}>
-            خمّنّاها — نقطة لنا
+            onClick={() => api.claimSteal({ roomId: room.id }).catch((e) => flash(errText(e, room.lang)))}>
+            {s.stealAward}
           </Btn>
         )
-        : <Waiting>{nameOf(room, room.turn.judgeUid)} يحكم على السرقة…</Waiting>}
+        : <Waiting>{s.waitingSteal(nameOf(room, room.turn.judgeUid))}</Waiting>}
     </div>
   );
 }
@@ -298,21 +297,22 @@ export function StealPhase({ room, uid }: Ctx) {
 export function RecapPhase({ room, uid, rounds }: Ctx) {
   const { msg, flash } = useFlash();
   if (!room.turn) return null;
+  const s = S(room.lang);
   const team = myTeam(room, uid);
   const mine = team === room.turn.team;
   const pts = room.round.points;
 
   return (
     <div className="shell">
-      {team && <YouChip team={team} extra={mine ? "جولتكم" : "جولتهم"} />}
+      {team && <YouChip team={team} extra={mine ? s.chipYourTurn : s.chipTheirTurn} />}
       <div className="h-3" />
-      <Label>شرحها {nameOf(room, room.turn.clueGiverUid)}</Label>
+      <Label>{s.recapExplained(nameOf(room, room.turn.clueGiverUid))}</Label>
       <p className="mt-0.5 text-center font-display text-[68px] leading-none"
          style={{ color: pts >= 0 ? "#2FD6BC" : "#FF4D79" }}>
         {pts >= 0 ? "+" : ""}{pts}
       </p>
       <ScoreBoard room={room} uid={uid} rounds={rounds} />
-      <Feed log={room.round.log} />
+      <Feed log={room.round.log} lang={room.lang} />
       <Flash msg={msg} />
       <div className="flex-1" />
       {room.hostUid === uid && <HostControls room={room} />}
@@ -320,11 +320,11 @@ export function RecapPhase({ room, uid, rounds }: Ctx) {
         ? (
           <Btn className="mt-2" onClick={() => api.advancePhase({
               roomId: room.id, fromPhase: "recap", fromTurn: room.turnIndex,
-            }).catch((e) => flash(errText(e)))}>
-            تمام
+            }).catch((e) => flash(errText(e, room.lang)))}>
+            {s.recapOk}
           </Btn>
         )
-        : <Waiting>بانتظار {nameOf(room, room.hostUid)}… ⏳</Waiting>}
+        : <Waiting>{s.waitingHost(nameOf(room, room.hostUid))}</Waiting>}
     </div>
   );
 }
@@ -342,16 +342,20 @@ export function RecapPhase({ room, uid, rounds }: Ctx) {
 export function TransitionPhase({ room, uid, rounds }: Ctx) {
   const { msg, flash } = useFlash();
   if (!room.turn) return null;
+  const s = S(room.lang);
 
   const total = totalTurns(room.settings);
+  const overtime = room.turnIndex >= total;
   const team = myTeam(room, uid);
   const oppTeam = OTHER[room.turn.team];
-  const mineAt = nextTurnFor(room.players, room.turnIndex, total, uid);
+  const horizon = Math.max(total, room.turnIndex + total);
+  const mineAt = nextTurnFor(room.players, room.turnIndex, horizon, uid);
+  const pipCount = Math.max(total, room.turnIndex + 1);
 
   const yourTurnNote =
     mineAt === null ? null
-    : mineAt === room.turnIndex ? "دورك الآن! 🎤"
-    : `دورك أنت في الجولة ${mineAt + 1}`;
+    : mineAt === room.turnIndex ? s.yourTurnNow
+    : s.yourTurnAt(mineAt + 1);
 
   const Side = ({ t, role, who }: { t: TeamId; role: string; who: string }) => (
     <div className="flex-1 rounded-[20px] bg-black/25 px-2 py-3.5 text-center">
@@ -360,7 +364,7 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
       </div>
       <div className="mx-auto mb-1.5 w-fit"><Avatar name={who} team={t} big /></div>
       <div className="text-[16.5px] font-black">{who}</div>
-      <div className="mt-0.5 text-[11.5px] text-muted">{TEAM[t].emoji} {TEAM[t].name}</div>
+      <div className="mt-0.5 text-[11.5px] text-muted">{TEAM[t].emoji} {s.team[t]}</div>
     </div>
   );
 
@@ -368,12 +372,16 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
 
   return (
     <div className="shell">
-      {team && <YouChip team={team} extra={oursNext ? "دوركم" : "دورهم"} />}
+      {team && <YouChip team={team} extra={oursNext ? s.ourTurn : s.theirTurnChip} />}
       <div className="h-3" />
-      <Label>الجولة {room.turnIndex + 1} من {total}</Label>
+      <Label>
+        {overtime
+          ? s.overtimeRound(room.turnIndex + 1)
+          : s.roundOf(room.turnIndex + 1, total)}
+      </Label>
 
       <div className="mt-3.5 flex gap-1.5">
-        {Array.from({ length: total }, (_, i) => (
+        {Array.from({ length: pipCount }, (_, i) => (
           <i key={i} className="h-[7px] flex-1 rounded-full"
              style={{
                background: i < room.turnIndex ? "#FFD84D" : i === room.turnIndex ? "#FF9A3C" : "rgba(255,246,233,.15)",
@@ -383,9 +391,9 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
       </div>
 
       <div className="mt-4 flex items-center gap-2.5">
-        <Side t={room.turn.team} role="يشرح" who={nameOf(room, room.turn.clueGiverUid)} />
-        <span className="font-display text-[21px] text-lemon">ضد</span>
-        <Side t={oppTeam} role="يحكم" who={nameOf(room, room.turn.judgeUid)} />
+        <Side t={room.turn.team} role={s.roleExplain} who={nameOf(room, room.turn.clueGiverUid)} />
+        <span className="font-display text-[21px] text-lemon">{s.vs}</span>
+        <Side t={oppTeam} role={s.roleJudge} who={nameOf(room, room.turn.judgeUid)} />
       </div>
 
       <ScoreBoard room={room} uid={uid} rounds={rounds} />
@@ -399,18 +407,20 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
       <Flash msg={msg} />
       <div className="flex-1" />
 
+      {room.hostUid === uid && <HostControls room={room} />}
+
       {room.hostUid === uid
         ? (
           <>
             <Btn variant="tang"
-              onClick={() => api.startTurn({ roomId: room.id }).catch((e) => flash(errText(e)))}>
-              ابدأ جولة {nameOf(room, room.turn.clueGiverUid)} ▸
+              onClick={() => api.startTurn({ roomId: room.id }).catch((e) => flash(errText(e, room.lang)))}>
+              {s.startTurn(nameOf(room, room.turn.clueGiverUid))}
             </Btn>
             <div className="h-2.5" />
-            <Label>أنت المضيف — الجميع بانتظارك</Label>
+            <Label>{s.youAreHost}</Label>
           </>
         )
-        : <Waiting>بانتظار {nameOf(room, room.hostUid)} ليبدأ… ⏳</Waiting>}
+        : <Waiting>{s.waitingHostStart(nameOf(room, room.hostUid))}</Waiting>}
     </div>
   );
 }
@@ -427,6 +437,7 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
  */
 export function EndPhase({ room, uid, rounds }: Ctx) {
   const { msg, flash } = useFlash();
+  const s = S(room.lang);
   const stats = computeStats(rounds);
   const win = room.winner;
   const draw = win === "draw" || !win;
@@ -434,38 +445,38 @@ export function EndPhase({ room, uid, rounds }: Ctx) {
   const rows: Array<{ em: string; gloss: string; title: string; sub: string }> = [];
   if (stats.talker) {
     rows.push({
-      em: "🎤", gloss: "أكثر من شرح",
+      em: "🎤", gloss: s.mostExplained,
       title: nameOf(room, stats.talker.uid),
-      sub: `${stats.talker.n} بطاقة`,
+      sub: s.cardsN(stats.talker.n),
     });
   }
   if (stats.buzzer) {
     rows.push({
-      em: "🚨", gloss: "أشد حكم",
+      em: "🚨", gloss: s.harshestJudge,
       title: nameOf(room, stats.buzzer.uid),
-      sub: `${stats.buzzer.n} مرة`,
+      sub: s.timesN(stats.buzzer.n),
     });
   }
   if (stats.longest) {
     rows.push({
-      em: "🐢", gloss: "أطول كلمة",
+      em: "🐢", gloss: s.longestWord,
       title: stats.longest.word,
-      sub: `${Math.round(stats.longest.ms / 1000)} ثانية`,
+      sub: s.secondsN(Math.round(stats.longest.ms / 1000)),
     });
   }
   if (stats.streak) {
     rows.push({
-      em: "🔥", gloss: "أطول سلسلة",
+      em: "🔥", gloss: s.longestStreak,
       title: nameOf(room, stats.streak.uid),
-      sub: `${stats.streak.n} متتالية`,
+      sub: s.streakN(stats.streak.n),
     });
   }
 
   const reason =
-    draw ? "🤝 تعادل"
-    : room.endReason === "target" ? `أول من وصل ${TARGET_SCORE}`
-    : room.endReason === "abandoned" ? "أنهاها المضيف"
-    : "انتهت الجولات";
+    draw ? s.reasonDraw
+    : room.endReason === "abandoned" ? s.reasonHost
+    : room.turnIndex + 1 > totalTurns(room.settings) ? s.reasonOvertime
+    : s.reasonRounds;
 
   return (
     <div className="shell">
@@ -506,16 +517,17 @@ export function EndPhase({ room, uid, rounds }: Ctx) {
 function EndButtons({
   room, uid, flash,
 }: { room: Room; uid: string; flash: (m: string) => void }) {
+  const s = S(room.lang);
   return (
     <div className="flex flex-col gap-3">
       {room.hostUid === uid && (
-        <Btn variant="tang" onClick={() => api.rematch({ roomId: room.id }).catch((e) => flash(errText(e)))}>
-          مرة ثانية بنفس الفرق
+        <Btn variant="tang" onClick={() => api.rematch({ roomId: room.id }).catch((e) => flash(errText(e, room.lang)))}>
+          {s.rematch}
         </Btn>
       )}
       <Btn variant="ghost"
         onClick={() => api.leaveRoom({ roomId: room.id }).finally(() => { location.hash = ""; location.reload(); })}>
-        خروج
+        {s.leave}
       </Btn>
     </div>
   );

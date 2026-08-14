@@ -11,6 +11,7 @@ const require = createRequire(import.meta.url);
 const here = dirname(fileURLToPath(import.meta.url));
 const R = require(join(here, "lib/rules.cjs"));
 const { DECK, ROOM_WORDS } = require(join(here, "lib/deck.cjs"));
+const { DECK_EN, ROOM_WORDS_EN } = require(join(here, "lib/deck.en.cjs"));
 
 let pass = 0;
 const fails = [];
@@ -28,6 +29,14 @@ ok("deck is non-trivial", DECK.length >= 900);
 ok("room words outnumber a realistic concurrent load", ROOM_WORDS.length >= 30);
 eq("room words are unique", new Set(ROOM_WORDS).size, ROOM_WORDS.length);
 eq("card answers are unique", new Set(DECK.map((c) => c.w)).size, DECK.length);
+
+ok("english starter deck is present", DECK_EN.length >= 10);
+ok("english room words are unique", new Set(ROOM_WORDS_EN).size === ROOM_WORDS_EN.length);
+eq("english card answers are unique", new Set(DECK_EN.map((c) => c.w)).size, DECK_EN.length);
+for (const c of DECK_EN) {
+  ok(`«${c.w}» has five taboo words`, c.t.length === 5);
+  ok(`«${c.w}» taboo words are distinct`, new Set(c.t).size === 5);
+}
 
 for (const c of DECK) {
   ok(`«${c.w}» has five taboo words`, c.t.length === 5);
@@ -122,10 +131,11 @@ eq("a joiner fills the smaller side (mirrored)", R.pickBalancedTeam(0, 2, "u"), 
 
 const S = { roundSecs: 60, roundsPerTeam: 4 };
 eq("total turns is per-team times two", R.totalTurns(S), 8);
-eq("hitting the target ends it", R.isOver({ mint: 21, chili: 3 }, 2, S), "target");
-eq("running out of turns ends it", R.isOver({ mint: 5, chili: 4 }, 8, S), "rounds");
+eq("scheduled turns still running are not over", R.isOver({ mint: 21, chili: 3 }, 2, S), null);
+eq("running out of turns with a lead ends it", R.isOver({ mint: 5, chili: 4 }, 8, S), "rounds");
 eq("mid-game is not over", R.isOver({ mint: 5, chili: 4 }, 3, S), null);
-eq("the target beats the round count", R.isOver({ mint: 21, chili: 21 }, 8, S), "target");
+eq("a tie past the round count extends", R.isOver({ mint: 21, chili: 21 }, 8, S), null);
+eq("overtime ends once someone leads", R.isOver({ mint: 22, chili: 21 }, 10, S), "rounds");
 eq("winner reads the score", R.winnerOf({ mint: 9, chili: 4 }), "mint");
 eq("a level score is a draw", R.winnerOf({ mint: 4, chili: 4 }), "draw");
 

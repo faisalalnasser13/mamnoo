@@ -1,5 +1,7 @@
 export type TeamId = "mint" | "chili";
 
+export type Lang = "ar" | "en";
+
 export type Phase = "lobby" | "transition" | "live" | "steal" | "recap" | "over";
 
 /** How a card left play — or a host score correction on the call. */
@@ -55,6 +57,8 @@ export interface RoundState {
 export interface Room {
   id: string;
   hostUid: string;
+  /** Locked at create — never changes mid-game. Old rooms default to ar. */
+  lang: Lang;
   phase: Phase;
   /** 0-based. Even turns belong to mint, odd to chili. */
   turnIndex: number;

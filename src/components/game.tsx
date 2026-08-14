@@ -1,6 +1,7 @@
 import React from "react";
-import type { LogEntry, TeamId } from "../lib/types";
+import type { LogEntry, Lang, TeamId } from "../lib/types";
 import { HEAT_EVERY, heatPips } from "../lib/rules";
+import { S } from "../lib/strings";
 import { Tally } from "./ui";
 
 /* ------------------------------------------------------------------ */
@@ -10,13 +11,14 @@ import { Tally } from "./ui";
  * `small` is the judge's variant — they need to read it, not perform it.
  */
 export function Card({
-  word, taboo, kicker, buzzed, small,
+  word, taboo, kicker, buzzed, small, stamp,
 }: {
   word: string;
   taboo: string[];
   kicker?: string;
   buzzed?: boolean;
   small?: boolean;
+  stamp?: string;
 }) {
   return (
     <div className={`card ${buzzed ? "card-buzzed" : ""}`} style={small ? { padding: "18px 16px 16px" } : undefined}>
@@ -37,7 +39,7 @@ export function Card({
           <b key={t} style={{ fontSize: small ? 16 : 17.5 }}>{t}</b>
         ))}
       </div>
-      {buzzed && <div className="stamp">ممنوع</div>}
+      {buzzed && <div className="stamp">{stamp ?? "ممنوع"}</div>}
     </div>
   );
 }
@@ -158,9 +160,23 @@ const OUTCOME: Record<LogEntry["res"], { sym: string; cls: string; label: (p: nu
  * keeps them in the game while they wait, and it never leaks the card
  * currently in play, only cards that have already left it.
  */
-export function Feed({ log, newestFirst }: { log?: LogEntry[]; newestFirst?: boolean }) {
+export function Feed({
+  log, newestFirst, lang,
+}: {
+  log?: LogEntry[];
+  newestFirst?: boolean;
+  lang?: Lang;
+}) {
   const safe = log ?? [];
   if (!safe.length) return null;
+  const s = S(lang);
+  const label = (res: LogEntry["res"], p: number) => {
+    if (res === "ok") return p === 2 ? s.feedOk2 : s.feedOk;
+    if (res === "buzz") return s.feedBuzz;
+    if (res === "skip") return s.feedSkip;
+    if (res === "steal") return s.feedSteal;
+    return "";
+  };
   const items = newestFirst ? [...safe].reverse() : safe;
   return (
     <div className="mt-3.5 flex flex-col gap-2">
@@ -172,7 +188,7 @@ export function Feed({ log, newestFirst }: { log?: LogEntry[]; newestFirst?: boo
               {o.sym}
             </span>
             {e.w}
-            <span className="ms-auto text-[12.5px] font-bold text-muted">{o.label(e.pts)}</span>
+            <span className="ms-auto text-[12.5px] font-bold text-muted">{label(e.res, e.pts)}</span>
           </div>
         );
       })}
