@@ -8,6 +8,38 @@ export const TEAM: Record<TeamId, { emoji: string; hex: string }> = {
 };
 
 /**
+ * A wooden court gavel. Unicode has a claw hammer and a robed judge,
+ * neither of which is this — so it's drawn, not an emoji.
+ *
+ * The silhouette is the one people know: round head, short handle,
+ * sounding block. Reads at 12px because the three parts stay separate
+ * shapes, not carved grain.
+ */
+export function Gavel({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size} height={size} viewBox="0 0 24 24"
+      fill="none" aria-hidden
+      style={{ display: "block", flexShrink: 0 }}
+    >
+      {/* sounding block */}
+      <rect x="2.5" y="18.2" width="13" height="3.6" rx="0.9" fill="#5A3010" />
+      <rect x="3" y="18.2" width="12" height="1.15" rx="0.5" fill="#7A4A1C" />
+      <g transform="rotate(-36 13 12)">
+        {/* handle */}
+        <rect x="11.15" y="8.2" width="2.7" height="12.4" rx="1.25" fill="#6B3A14" />
+        <rect x="11.45" y="9" width="0.7" height="10" rx="0.35" fill="#8B5A2B" opacity=".55" />
+        {/* head */}
+        <rect x="5.6" y="5" width="13.8" height="5.6" rx="1.7" fill="#C4894A" />
+        <rect x="5.6" y="5" width="2.4" height="5.6" rx="1.2" fill="#8B4E22" />
+        <rect x="17" y="5" width="2.4" height="5.6" rx="1.2" fill="#8B4E22" />
+        <rect x="8" y="6.05" width="8.8" height="1.15" rx="0.5" fill="#E0B27A" opacity=".55" />
+      </g>
+    </svg>
+  );
+}
+
+/**
  * The two names of the game, as one lockup.
  *
  * Both words are the same family, weight and colour, and the Latin one

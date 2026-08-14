@@ -7,7 +7,7 @@ import {
 } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
 import { S, type Strings } from "../lib/strings";
-import { Btn, Flash, Label, TEAM, Title, Waiting, YouChip } from "../components/ui";
+import { Btn, Flash, Gavel, Label, TEAM, Title, Waiting, YouChip } from "../components/ui";
 import { HostControls, PausedBanner, ScoreBoard } from "../components/host";
 import { Card, CardSkeleton, Feed, Heat, Hud, RunLine } from "../components/game";
 
@@ -422,19 +422,22 @@ function Wheel({
       >
         <span className="tabular-nums text-muted/70" dir="ltr">{k + 1}</span>
         <span style={{ color: TEAM[row.team].hex }}>🎤 {nameOf(room, row.clueGiverUid)}</span>
-        <span style={{ color: TEAM[OTHER[row.team]].hex }}>🧑‍⚖️ {nameOf(room, row.judgeUid)}</span>
+        <span className="inline-flex items-center gap-0.5" style={{ color: TEAM[OTHER[row.team]].hex }}>
+          <Gavel size={far ? 11 : 13} />
+          {nameOf(room, row.judgeUid)}
+        </span>
       </div>
     );
   };
 
   /**
-   * Name in the team's colour, role as an emoji. The spelled-out
+   * Name in the team's colour, role as a mark. The spelled-out
    * «يشرح» / «يحكم» and the team emoji were both repeating what the
    * colour and the mark already say.
    */
-  const Side = ({ t, mark, who }: { t: TeamId; mark: string; who: string }) => (
+  const Side = ({ t, mark, who }: { t: TeamId; mark: React.ReactNode; who: string }) => (
     <div className="flex min-w-0 flex-1 items-center justify-center gap-1.5">
-      <span className="shrink-0 text-[18px] leading-none">{mark}</span>
+      <span className="shrink-0">{mark}</span>
       <span
         className="truncate font-display text-[20px] leading-none"
         style={{ color: TEAM[t].hex }}
@@ -457,9 +460,9 @@ function Wheel({
         className="my-1 flex items-center gap-2 rounded-[18px] bg-black/25 px-3 py-2.5"
         style={{ boxShadow: "0 0 0 2px rgba(255,216,77,.16)" }}
       >
-        <Side t={turn.team} mark="🎤" who={nameOf(room, turn.clueGiverUid)} />
+        <Side t={turn.team} mark={<span className="text-[18px] leading-none">🎤</span>} who={nameOf(room, turn.clueGiverUid)} />
         <span className="shrink-0 text-[20px] leading-none" role="img" aria-label={s.vs}>⚔️</span>
-        <Side t={OTHER[turn.team]} mark="🧑‍⚖️" who={nameOf(room, turn.judgeUid)} />
+        <Side t={OTHER[turn.team]} mark={<Gavel size={20} />} who={nameOf(room, turn.judgeUid)} />
       </div>
 
       <div>
