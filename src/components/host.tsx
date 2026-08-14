@@ -13,17 +13,16 @@ import { S } from "../lib/strings";
 /**
  * A describer's own total, signed.
  *
- * The greens and reds are deliberately off the team palette: a negative
- * in chili pink on the chili side read as "chili scored", and mint on the
- * mint side did the same. These are darker, so they still sit under the
- * team totals in the hierarchy while staying legible on the panel.
- *
- * A skip costs half a point, so these are not always whole numbers.
+ * Independent green / red, not the team palette: these rows sit under a
+ * heading that is already mint or chili, and they appear on recap,
+ * transition and the finale — polarity has to read the same in every
+ * column. A skip costs half a point, so these are not always whole numbers.
  */
 function Points({ n }: { n: number }) {
   const sign = n > 0 ? "+" : n < 0 ? "−" : "";
-  // Bright enough to survive the 42% dim the finale puts on the losing
-  // column, dark enough not to compete with the team totals.
+  // Off the team palette so a chili −2 is still "lost points", not
+  // "chili's colour". Bright enough to survive the 42% dim on the
+  // losing column of the finale.
   const color = n > 0 ? "#4CBE7B" : n < 0 ? "#E1584F" : "#A99BC4";
   return (
     <b className="tabular-nums font-black" dir="ltr" style={{ color }}>

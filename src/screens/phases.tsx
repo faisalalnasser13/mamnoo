@@ -324,9 +324,12 @@ export function RecapPhase({ room, uid, rounds }: Ctx) {
       {team && <YouChip team={team} extra={mine ? s.chipYourTurn : s.chipTheirTurn} />}
       <div className="h-3" />
       <Label>{s.recapExplained(nameOf(room, room.turn.clueGiverUid))}</Label>
+      {/* Team colour regardless of sign — mint-for-plus / chili-for-minus
+          made a chili +5 look like mint had scored, and a mint −1 like
+          chili had. The board under this number is already team-coloured. */}
       <p className="mt-0.5 text-center font-display text-[68px] leading-none"
-         style={{ color: pts >= 0 ? "#2FD6BC" : "#FF4D79" }}>
-        {pts >= 0 ? "+" : ""}{pts}
+         style={{ color: TEAM[room.turn.team].hex }}>
+        {pts > 0 ? "+" : ""}{pts}
       </p>
       <ScoreBoard room={room} uid={uid} rounds={rounds} />
       <div className="max-h-[36vh] overflow-y-auto">
