@@ -394,7 +394,7 @@ function Wheel({
    */
   const Ghost = ({ k, far }: { k: number; far?: boolean }) => {
     const row = at(k);
-    const height = far ? 24 : 30;
+    const height = far ? 18 : 22;
     // An empty slot keeps its height so the matchup doesn't walk up and
     // down the screen between turns, and carries a hairline so the gap
     // on the first turn reads as the end of the wheel, not as a hole.
@@ -409,10 +409,10 @@ function Wheel({
     return (
       <div
         aria-hidden
-        className="flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap font-bold"
+        className="flex items-center justify-center gap-1.5 overflow-hidden whitespace-nowrap font-bold"
         style={{
           height,
-          fontSize: far ? 11.5 : 13,
+          fontSize: far ? 11 : 12.5,
           opacity: far ? 0.28 : 0.55,
           // rotateX only: translate and skew are physical, so anything
           // horizontal here would lean the wrong way under LTR.
@@ -422,30 +422,30 @@ function Wheel({
       >
         <span className="tabular-nums text-muted/70" dir="ltr">{k + 1}</span>
         <span style={{ color: TEAM[row.team].hex }}>🎤 {nameOf(room, row.clueGiverUid)}</span>
-        <span style={{ color: TEAM[OTHER[row.team]].hex }}>👀 {nameOf(room, row.judgeUid)}</span>
+        <span style={{ color: TEAM[OTHER[row.team]].hex }}>🔨 {nameOf(room, row.judgeUid)}</span>
       </div>
     );
   };
 
   /**
-   * One name, one role, one team emoji. The initial-in-a-circle avatar
-   * and the spelled-out team name were both saying what the emoji and
-   * the colour already say, on the one screen where the only question is
-   * who is up against whom.
+   * Name in the team's colour, role as an emoji. The spelled-out
+   * «يشرح» / «يحكم» and the team emoji were both repeating what the
+   * colour and the mark already say.
    */
-  const Side = ({ t, role, who }: { t: TeamId; role: string; who: string }) => (
-    <div className="min-w-0 flex-1 text-center">
-      <div className="text-[10px] font-black tracking-[.16em]" style={{ color: TEAM[t].hex }}>
-        {role}
-      </div>
-      <div className="mt-1.5 truncate font-display text-[21px] leading-tight">
-        <span className="me-1 text-[15px]">{TEAM[t].emoji}</span>{who}
-      </div>
+  const Side = ({ t, mark, who }: { t: TeamId; mark: string; who: string }) => (
+    <div className="flex min-w-0 flex-1 items-center justify-center gap-1.5">
+      <span className="shrink-0 text-[18px] leading-none">{mark}</span>
+      <span
+        className="truncate font-display text-[20px] leading-none"
+        style={{ color: TEAM[t].hex }}
+      >
+        {who}
+      </span>
     </div>
   );
 
   return (
-    <div className="mt-3">
+    <div className="mt-1">
       <div>
         <Ghost k={i - 2} far />
         <Ghost k={i - 1} />
@@ -454,12 +454,12 @@ function Wheel({
       {/* One panel, not two: the duel is a single fact, and two boxes with
           a word between them read as two separate cards to compare. */}
       <div
-        className="my-2 flex items-center gap-2 rounded-[20px] bg-black/25 px-3 py-3.5"
+        className="my-1 flex items-center gap-2 rounded-[18px] bg-black/25 px-3 py-2.5"
         style={{ boxShadow: "0 0 0 2px rgba(255,216,77,.16)" }}
       >
-        <Side t={turn.team} role={s.roleExplain} who={nameOf(room, turn.clueGiverUid)} />
-        <span className="shrink-0 text-[22px] leading-none" role="img" aria-label={s.vs}>⚔️</span>
-        <Side t={OTHER[turn.team]} role={s.roleJudge} who={nameOf(room, turn.judgeUid)} />
+        <Side t={turn.team} mark="🎤" who={nameOf(room, turn.clueGiverUid)} />
+        <span className="shrink-0 text-[20px] leading-none" role="img" aria-label={s.vs}>⚔️</span>
+        <Side t={OTHER[turn.team]} mark="🔨" who={nameOf(room, turn.judgeUid)} />
       </div>
 
       <div>
@@ -482,7 +482,6 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
   const s = S(room.lang);
 
   const total = totalTurns(room.settings);
-  const overtime = room.turnIndex >= total;
   const team = myTeam(room, uid);
   const horizon = Math.max(total, room.turnIndex + total);
   const mineAt = nextTurnFor(room.players, room.turnIndex, horizon, uid);
@@ -496,16 +495,9 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
   return (
     <div className="shell">
       {team && <YouChip team={team} />}
-      <div className="h-1.5" />
-      <Label>
-        {overtime
-          ? s.overtimeRound(room.turnIndex + 1)
-          : s.roundOf(room.turnIndex + 1, total)}
-      </Label>
-
-      <div className="mt-3 flex gap-1.5">
+      <div className="mt-2 flex gap-1.5">
         {Array.from({ length: pipCount }, (_, i) => (
-          <i key={i} className="h-[7px] flex-1 rounded-full"
+          <i key={i} className="h-[5px] flex-1 rounded-full"
              style={{
                background: i < room.turnIndex ? "#FFD84D" : i === room.turnIndex ? "#FF9A3C" : "rgba(255,246,233,.15)",
                boxShadow: i === room.turnIndex ? "0 0 12px rgba(255,154,60,.7)" : undefined,
@@ -513,16 +505,16 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
         ))}
       </div>
 
-      <div className="mt-4" />
+      <div className="mt-2.5" />
       <Title>{s.nextRoundTitle}</Title>
       <Wheel room={room} s={s} turn={room.turn} rounds={rounds} />
 
-      <div className="mt-4" />
+      <div className="mt-2.5" />
       <Title>{s.scoreTitle}</Title>
-      <ScoreBoard room={room} uid={uid} rounds={rounds} />
+      <ScoreBoard room={room} uid={uid} rounds={rounds} compact />
       {yourTurnNote && (
         <>
-          <div className="h-3.5" />
+          <div className="h-2" />
           <Label tone="#FF9A3C">{yourTurnNote}</Label>
         </>
       )}

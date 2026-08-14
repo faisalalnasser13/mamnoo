@@ -40,12 +40,11 @@ function Points({ n }: { n: number }) {
  * trophy, and winners wear a gold medal.
  */
 export function ScoreBoard({
-  room, uid, rounds, highlight,
+  room, uid, rounds, highlight, compact,
 }: {
   room: Room;
   uid: string;
   rounds: RoundRecord[];
-  /** Kept for call-site compatibility. */
   compact?: boolean;
   /** Winning team (or draw) — enables trophy / medals / full roster. */
   highlight?: TeamId | "draw" | null;
@@ -79,17 +78,17 @@ export function ScoreBoard({
       const hex = TEAM[team].hex;
       const rows = order(team).filter((u) => u in scored);
       return (
-        <div className="flex min-w-0 flex-1 flex-col px-3 py-3">
+        <div className={`flex min-w-0 flex-1 flex-col px-3 ${compact ? "py-2" : "py-3"}`}>
           <div className="text-center">
             <div className="text-[11px] font-black" style={{ color: hex }}>
               {TEAM[team].emoji} {s.team[team]}
             </div>
-            <div className="mt-0.5 font-display text-[28px] leading-none" style={{ color: hex }} dir="ltr">
+            <div className={`mt-0.5 font-display leading-none ${compact ? "text-[24px]" : "text-[28px]"}`} style={{ color: hex }} dir="ltr">
               {room.scores[team]}
             </div>
           </div>
           {rows.length > 0 && (
-            <div className="mt-2.5 flex flex-col gap-1">
+            <div className={`flex flex-col gap-1 ${compact ? "mt-1.5" : "mt-2.5"}`}>
               {rows.map((u) => (
                 <div
                   key={u}
@@ -108,7 +107,7 @@ export function ScoreBoard({
       );
     };
     return (
-      <div className="mt-3 flex overflow-hidden rounded-[18px] bg-black/25">
+      <div className={`flex overflow-hidden rounded-[18px] bg-black/25 ${compact ? "mt-1.5" : "mt-3"}`}>
         <Column team="mint" />
         <div className="w-px shrink-0 self-stretch bg-white/10" />
         <Column team="chili" />

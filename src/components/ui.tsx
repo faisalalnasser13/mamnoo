@@ -87,7 +87,7 @@ export function Title({ children, tone }: { children: React.ReactNode; tone?: st
   return (
     <div className="flex items-center gap-3">
       {rule}
-      <h2 className="shrink-0 font-display text-[23px] leading-none" style={{ color: tone ?? "#FFF6E9" }}>
+      <h2 className="shrink-0 font-display text-[20px] leading-none" style={{ color: tone ?? "#FFF6E9" }}>
         {children}
       </h2>
       {rule}
