@@ -181,14 +181,19 @@ export function Home({
 /* ------------------------------------------------------------------ */
 
 function Chips({
-  value, options, onPick, disabled,
-}: { value: number; options: readonly number[]; onPick: (n: number) => void; disabled: boolean }) {
+  value, options, onPick, disabled, compact,
+}: {
+  value: number; options: readonly number[]; onPick: (n: number) => void; disabled: boolean;
+  compact?: boolean;
+}) {
   return (
-    <div className="flex gap-1.5">
+    <div className={`flex ${compact ? "gap-1" : "gap-1.5"}`}>
       {options.map((o) => (
         <button
           key={o} disabled={disabled} onClick={() => onPick(o)}
-          className={`flex-1 rounded-[13px] border-2 py-2.5 text-[14px] font-black transition ${
+          className={`min-w-0 flex-1 border-2 font-black transition ${
+            compact ? "rounded-[10px] py-1.5 text-[12px]" : "rounded-[13px] py-2.5 text-[14px]"
+          } ${
             value === o
               ? "border-lemon bg-lemon text-night"
               : "border-transparent bg-black/25 text-muted"
@@ -350,6 +355,7 @@ export function Lobby({ room, uid }: { room: Room; uid: string }) {
           <span>{s.totalRounds(totalTurns(room.settings))}</span>
         </div>
         <Chips value={room.settings.roundsPerTeam} options={ROUNDS_PER_TEAM_OPTIONS} disabled={!isHost}
+          compact
           onPick={(n) => call(api.updateSettings({ roomId: room.id, settings: { roundsPerTeam: n } }))} />
         <p className="mt-1.5 text-center text-[11px] leading-relaxed text-muted">
           {s.roundsHint(room.settings.roundsPerTeam, totalTurns(room.settings))}

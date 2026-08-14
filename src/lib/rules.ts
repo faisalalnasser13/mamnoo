@@ -63,7 +63,7 @@ export const BUZZ_HOLD_MS = 900;
 export const NAME_MAX = 20;
 
 export const ROUND_SECS_OPTIONS = [45, 60, 90] as const;
-export const ROUNDS_PER_TEAM_OPTIONS = [3, 4, 5] as const;
+export const ROUNDS_PER_TEAM_OPTIONS = [3, 4, 5, 6, 7, 8] as const;
 
 export const DEFAULTS: Settings = { roundSecs: 60, roundsPerTeam: 4 };
 

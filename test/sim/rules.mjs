@@ -265,6 +265,7 @@ ok("the eligibility boundary is inclusive",
 eq("an odd timer snaps to the nearest option", R.snapSetting(50, R.ROUND_SECS_OPTIONS), 45);
 eq("a huge timer clamps to the top option", R.snapSetting(9999, R.ROUND_SECS_OPTIONS), 90);
 eq("a negative round count clamps to the bottom", R.snapSetting(-4, R.ROUNDS_PER_TEAM_OPTIONS), 3);
+eq("eight turns per team is a real option", R.snapSetting(8, R.ROUNDS_PER_TEAM_OPTIONS), 8);
 
 /* ---------------- report ---------------- */
 

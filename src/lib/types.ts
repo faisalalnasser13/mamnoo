@@ -20,7 +20,7 @@ export interface Player {
 export interface Settings {
   /** 45 | 60 | 90 */
   roundSecs: number;
-  /** 3 | 4 | 5 — turns per team, so total turns = roundsPerTeam * 2 */
+  /** 3–8 — turns per team, so total turns = roundsPerTeam * 2 */
   roundsPerTeam: number;
 }
 
