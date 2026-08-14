@@ -422,7 +422,7 @@ function Wheel({
       >
         <span className="tabular-nums text-muted/70" dir="ltr">{k + 1}</span>
         <span style={{ color: TEAM[row.team].hex }}>🎤 {nameOf(room, row.clueGiverUid)}</span>
-        <span style={{ color: TEAM[OTHER[row.team]].hex }}>🔨 {nameOf(room, row.judgeUid)}</span>
+        <span style={{ color: TEAM[OTHER[row.team]].hex }}>🧑‍⚖️ {nameOf(room, row.judgeUid)}</span>
       </div>
     );
   };
@@ -459,7 +459,7 @@ function Wheel({
       >
         <Side t={turn.team} mark="🎤" who={nameOf(room, turn.clueGiverUid)} />
         <span className="shrink-0 text-[20px] leading-none" role="img" aria-label={s.vs}>⚔️</span>
-        <Side t={OTHER[turn.team]} mark="🔨" who={nameOf(room, turn.judgeUid)} />
+        <Side t={OTHER[turn.team]} mark="🧑‍⚖️" who={nameOf(room, turn.judgeUid)} />
       </div>
 
       <div>
