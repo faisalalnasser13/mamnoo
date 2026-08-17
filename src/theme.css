@@ -389,6 +389,31 @@ html[data-kit="cafe"] .steal-prep:not(.steal-prep-on) .steal-prep-title {
   color: var(--plate);
 }
 
+/* Host sheet — its own night palette, both kits. Theme tokens on the
+   page (especially cafe's dark --fg) must not leak onto this overlay. */
+.host-sheet {
+  background: #1C1528;
+  color: #FFF6E9;
+  border-color: rgba(255, 246, 233, .18);
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, .45);
+}
+.host-sheet-title { color: #FFF6E9; }
+.host-sheet-kicker { color: #C9B8D4; }
+.host-sheet-hint { color: #A99BC4; }
+.host-sheet-close {
+  background: #FFF6E9; color: #241638;
+}
+.host-sheet-well { background: #2A223A; }
+.host-sheet-row { background: #14101C; color: #FFF6E9; }
+.host-pad-plus, .host-ctl-go { background: #4CBE7B; color: #10322D; }
+.host-pad-minus, .host-ctl-ban { background: #E1584F; color: #fff; }
+.host-ctl-lemon { background: #FFD84D; color: #241638; }
+.host-ctl-tang { background: #FF9A3C; color: #241638; }
+.host-ctl-go .host-ctl-note,
+.host-ctl-lemon .host-ctl-note,
+.host-ctl-tang .host-ctl-note { color: rgba(36, 22, 56, .58); }
+.host-ctl-ban .host-ctl-note { color: rgba(255, 255, 255, .78); }
+
 html[data-kit="cafe"] .bg-black\/25 { background-color: rgba(42, 36, 28, .06); }
 html[data-kit="cafe"] .bg-black\/30 { background-color: rgba(42, 36, 28, .08); }
 html[data-kit="cafe"] .bg-black\/35 { background-color: rgba(42, 36, 28, .10); }
