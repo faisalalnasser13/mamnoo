@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { FlashMsg } from "../lib/hooks";
 import type { Lang, TeamId } from "../lib/types";
 
@@ -147,16 +147,65 @@ export function Avatar({ name, team, big }: { name: string; team: TeamId; big?: 
   );
 }
 
-/** Both scores, always visible — including mid-clue. */
-export function Tally({ scores }: { scores: Record<TeamId, number> }) {
+/**
+ * Both scores, always visible — including mid-clue.
+ *
+ * When a total moves (صح, skip, buzz, or a host +/−), that pill plays
+ * option C: a ring, an emoji punch, the new number fading in, and a
+ * signed delta. Green/red are off the team palette so a chili plus
+ * doesn't look like chili scoring and a mint minus doesn't look like
+ * mint. `loud` is the spectator size — guessers have no card, so the
+ * tick has room to be the event.
+ */
+export function Tally({
+  scores, loud,
+}: {
+  scores: Record<TeamId, number>;
+  loud?: boolean;
+}) {
+  const prev = useRef(scores);
+  const gen = useRef(0);
+  const [hit, setHit] = useState<Partial<Record<TeamId, { d: number; k: number }>>>({});
+
+  useEffect(() => {
+    const next: typeof hit = {};
+    let any = false;
+    (["mint", "chili"] as const).forEach((t) => {
+      const d = scores[t] - prev.current[t];
+      if (d !== 0) {
+        gen.current += 1;
+        next[t] = { d, k: gen.current };
+        any = true;
+      }
+    });
+    prev.current = scores;
+    if (any) setHit(next);
+  }, [scores.mint, scores.chili]);
+
+  const Pill = ({ team, emoji, ink }: { team: TeamId; emoji: string; ink: string }) => {
+    const h = hit[team];
+    const up = h != null && h.d > 0;
+    return (
+      <span
+        className={`tally-pill ${loud ? "tally-loud" : ""} ${h ? (up ? "tally-up" : "tally-down") : ""}`}
+        style={{ background: TEAM[team].hex, color: ink }}
+      >
+        {h && <i key={`r${h.k}`} className="tally-ring" aria-hidden />}
+        <span className="tally-em">{emoji}</span>
+        <span className="tally-num">{scores[team]}</span>
+        {h && (
+          <span key={`g${h.k}`} className="tally-ghost" aria-hidden>
+            {h.d > 0 ? "+" : "−"}{Math.abs(h.d)}
+          </span>
+        )}
+      </span>
+    );
+  };
+
   return (
     <div className="flex gap-1.5" dir="ltr">
-      <span className="flex items-center gap-1 rounded-full bg-mint px-3 py-1 text-[14px] font-black text-[#10322D]">
-        🌿 {scores.mint}
-      </span>
-      <span className="flex items-center gap-1 rounded-full bg-chili px-3 py-1 text-[14px] font-black text-white">
-        🌶️ {scores.chili}
-      </span>
+      <Pill team="mint" emoji="🌿" ink="#10322D" />
+      <Pill team="chili" emoji="🌶️" ink="#fff" />
     </div>
   );
 }

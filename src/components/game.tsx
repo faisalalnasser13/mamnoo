@@ -77,7 +77,7 @@ export function CardSkeleton({ note, unknown }: { note: string; unknown?: string
  * width animation read as a second timer strip trailing the real one.
  */
 export function Hud({
-  remaining, pct, warn, rush, scores, right,
+  remaining, pct, warn, rush, scores, right, loud,
 }: {
   remaining: number | null;
   pct: number;
@@ -85,6 +85,8 @@ export function Hud({
   rush?: boolean;
   scores?: Record<TeamId, number>;
   right?: React.ReactNode;
+  /** Spectator size — the tick is the event when there's no card. */
+  loud?: boolean;
 }) {
   const secs = Math.ceil((remaining ?? 0) / 1000);
   const text = remaining == null ? "—" : `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
@@ -109,7 +111,7 @@ export function Hud({
         >
           {text}
         </span>
-        {right ?? (scores && <Tally scores={scores} />)}
+        {right ?? (scores && <Tally scores={scores} loud={loud} />)}
       </div>
     </div>
   );

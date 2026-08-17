@@ -165,6 +165,62 @@ input, textarea { -webkit-user-select: text; user-select: text }
 .clock-rush { animation: blink .55s steps(1, end) infinite }
 .bar-rush { animation: blink .55s steps(1, end) infinite }
 
+/* Score tick on the HUD pills (option C). Green/red are off the team
+   palette so polarity isn't mint-vs-chili. */
+.tally-pill {
+  position: relative; overflow: visible;
+  display: flex; align-items: center; gap: 4px;
+  border-radius: 999px; padding: 4px 11px;
+  font-size: 14px; font-weight: 900;
+}
+.tally-loud { padding: 7px 14px; font-size: 18px; gap: 6px; }
+.tally-em { display: inline-block; line-height: 1; transform-origin: 50% 80%; }
+.tally-loud .tally-em { font-size: 22px; }
+.tally-num { font-variant-numeric: tabular-nums; }
+.tally-ring {
+  position: absolute; inset: -5px; border-radius: 999px; pointer-events: none;
+  border: 2px solid currentColor; opacity: 0;
+}
+.tally-loud .tally-ring { inset: -9px; border-width: 3px; }
+.tally-ghost {
+  position: absolute; inset-inline-end: 8px; top: -2px;
+  font-size: 11px; font-weight: 900; line-height: 1; pointer-events: none;
+  opacity: 0; text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+.tally-loud .tally-ghost { font-size: 16px; inset-inline-end: 10px; top: -6px; }
+.tally-up .tally-ring, .tally-up .tally-ghost { color: #4CBE7B; }
+.tally-down .tally-ring, .tally-down .tally-ghost { color: #E1584F; }
+.tally-up .tally-ring, .tally-down .tally-ring { animation: tallyRing .55s ease-out forwards; }
+.tally-up .tally-em, .tally-down .tally-em { animation: tallyEm .5s cubic-bezier(.15, 1.5, .4, 1); }
+.tally-loud.tally-up .tally-em, .tally-loud.tally-down .tally-em {
+  animation-name: tallyEmLoud;
+}
+.tally-up .tally-num, .tally-down .tally-num { animation: tallyFade .45s ease; }
+.tally-up .tally-ghost, .tally-down .tally-ghost { animation: tallyGhost .6s ease-out forwards; }
+@keyframes tallyRing {
+  0% { opacity: .95; transform: scale(.72) }
+  100% { opacity: 0; transform: scale(1.35) }
+}
+@keyframes tallyEm {
+  0% { transform: scale(1) }
+  35% { transform: scale(1.55) }
+  100% { transform: scale(1) }
+}
+@keyframes tallyEmLoud {
+  0% { transform: scale(1) }
+  35% { transform: scale(1.85) }
+  100% { transform: scale(1) }
+}
+@keyframes tallyFade {
+  0% { opacity: .25; transform: translateY(4px) }
+  100% { opacity: 1; transform: translateY(0) }
+}
+@keyframes tallyGhost {
+  0% { opacity: 0; transform: translateY(4px) scale(.8) }
+  25% { opacity: 1 }
+  100% { opacity: 0; transform: translateY(-14px) }
+}
+
 .field {
   width: 100%; background: rgba(0,0,0,.28); border: 2px solid #4A3568;
   border-radius: 16px; padding: 14px; color: #FFF6E9; text-align: center;
