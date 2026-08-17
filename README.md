@@ -70,7 +70,7 @@ as a backstop so a locked phone can't freeze the game.
 ### The sealed card
 
 ```
-rooms/{id}/secret/card    read:  clueGiver or judge only
+rooms/{id}/secret/card    read:  clueGiver always; judge during live only
                           write: clueGiver only
 ```
 
@@ -78,7 +78,9 @@ This is the one place this project is stricter than its sibling تشفير.
 There, a devtools peek at the opponent's code is cheating at the margins.
 Here, the card *is* the game — a guesser who reads it has nothing left to
 play. So it's enforced at the database layer, and the client only opens
-that listener for the two roles entitled to it.
+that listener for the roles entitled to it: describer and judge while
+the turn is live; describer only during steal (the original judge sits
+out — they already saw the word).
 
 The current card's word never touches the room document. `round.log`
 receives a word only after the card has left play.

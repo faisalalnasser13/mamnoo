@@ -12,9 +12,10 @@ rules_version = '2';
 // In تشفير, a peek at the opponent's round code is cheating at the
 // margins and the rules let it go. Here, seeing the card IS the game —
 // a guesser who reads it has nothing left to play. So the live card is
-// sealed at the database layer: readable only by the clue-giver and the
-// judge, writable only by the clue-giver. It costs one get() per access
-// and it's worth it.
+// sealed at the database layer: readable only by the clue-giver and
+// (during live) the judge. During steal the original judge sits out,
+// so they lose the read. Writable only by the clue-giver. It costs
+// one get() per access and it's worth it.
 //
 // What these rules still DON'T stop: a clue-giver could award themselves
 // points they didn't earn. Deliberate — see the Trust model in README.
@@ -59,13 +60,17 @@ service cloud.firestore {
         return roomData(roomId).turn != null
                && roomData(roomId).turn[field] == request.auth.uid;
       }
-      allow read: if inRoom(roomId) && (role('clueGiverUid') || role('judgeUid'));
+      allow read: if inRoom(roomId) && (
+        role('clueGiverUid')
+        || (role('judgeUid') && roomData(roomId).phase == 'live')
+      );
       // Only the describer deals — one writer, so the deck can't fork.
       allow create, update: if inRoom(roomId) && role('clueGiverUid');
       // Clearing a spent card is not a leak (the word is already in the
-      // public log). The judge awards steals, the host recovers stuck
-      // turns, and any phone may drive the clock — all of those paths
-      // delete this doc inside the same transaction that ends the turn.
+      // public log). The describer awards or skips the steal, the host
+      // recovers stuck turns, and any phone may drive the clock — all
+      // of those paths delete this doc inside the same transaction that
+      // ends the turn.
       allow delete: if inRoom(roomId);
     }
 

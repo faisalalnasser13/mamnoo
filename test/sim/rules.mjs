@@ -168,13 +168,6 @@ ok("lockout is on late", R.inLockout(4000));
 ok("lockout is off once time is gone", !R.inLockout(0));
 ok("lockout is off with no clock", !R.inLockout(null));
 
-// A card nobody had time to describe is not worth stealing.
-ok("a fresh card cannot be stolen", !R.stealAllowed(10_000, 12_000));
-ok("a described card can be stolen", R.stealAllowed(10_000, 20_000));
-ok("no card means no steal", !R.stealAllowed(null, 20_000));
-ok("the eligibility boundary is inclusive",
-   R.stealAllowed(10_000, 10_000 + R.STEAL_MIN_CLUE_MS));
-
 /* ---------------- stats ---------------- */
 
 {

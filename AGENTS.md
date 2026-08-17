@@ -75,17 +75,21 @@ In تشفير, a player who opens devtools mid-round can read the opponent's
 code. That's cheating at the margins and the rules let it go. Here,
 seeing the card **is** the game — a guesser who reads it has nothing left
 to play. So `rooms/{id}/secret/card` is readable only by
-`turn.clueGiverUid` and `turn.judgeUid`, and **created/updated** only by
-the clue-giver. Any room member may **delete** it — clearing a spent card
-is not a leak (the word is already in the public log), and the judge,
-host, and clock backstops all need to delete it inside the transaction
-that ends the turn.
+`turn.clueGiverUid` during live *and* steal, and by `turn.judgeUid`
+during live only. The original judge sits out of the steal — they
+already saw the word — so they must not keep the listener. The card is
+**created/updated** only by the clue-giver. Any room member may **delete**
+it — clearing a spent card is not a leak (the word is already in the
+public log), and the hinter, host, and clock backstops all need to
+delete it inside the transaction that ends the turn.
 
 Consequences you must preserve:
 
-- `useCard` only opens the listener when the local player holds one of
-  those two roles. Don't "simplify" it into an always-on subscription —
-  guessers would spray permission errors into the console.
+- `useCard` only opens the listener when the local player is allowed to
+  see the card: live → giver or judge; steal → giver only. Don't
+  "simplify" it into an always-on subscription — guessers (and the
+  original judge during steal) would spray permission errors into the
+  console.
 - The clue-giver is the only creator, so there is exactly one dealer.
 - Never put the current card's word on the room document. `round.log`
   only ever receives a word **after** the card has left play.
@@ -185,7 +189,7 @@ table down with it — the describer's device is the only one that deals a
 card, so the turn could never start and everyone else sat on
 "بانتظار البطاقة" forever.
 
-`test/ui/run.mjs` renders every screen for every role across 174
+`test/ui/run.mjs` renders every screen for every role across 180
 combinations, deliberately including **rooms missing fields that a later
 deploy added** — among them a `live` room with no `turn` on it and a
 player with no team, both of which are shapes only an older deploy
@@ -246,6 +250,7 @@ explicitly or clients fight:
 |---|---|
 | start game, start turn, تمام, rematch | host, on a tap |
 | live → steal, steal → recap | clue-giver's device on the clock; everyone else 2s later as a backstop |
+| steal award / miss | clue-giver tap (`claimSteal` / `denySteal`) |
 | buzz mark → the actual −1 | clue-giver's device after `BUZZ_HOLD_MS`; judge as fallback |
 | dealing the next card | clue-giver only (they're the only permitted writer) |
 
@@ -259,13 +264,13 @@ once, at turn start. A 60-second round costs one write, not sixty.
 | Looks wrong | Why it's right |
 |---|---|
 | The judge is on the *other* team | That's the design. It's what keeps the non-active team listening instead of checking their phone |
-| The same judge decides the steal | They're the one already holding the card. Giving it to a third role adds a screen and saves nothing |
+| The original hinter judges the steal | They already hold the card. The original judge is on the stealing team and would spoil the guess if they kept seeing it |
 | A skip costs −0.5 and is unlimited | Correct. It also kills the streak; only the last 10s lock it |
 | The third correct and every one after are worth 2 | Heat stays on until skip/buzz. A 6-streak scores 1,1,2,2,2,2 — pips keep growing past three |
 | The idle team's screen leads with the steal, not the score | Those players have no button for a whole minute. Framing the wait as preparation is the only thing that makes listening rational rather than polite |
 | Guessers get a full-screen "ممنوع!" | The judge and describer both get a stamped card. Without this branch the rest of the table saw *nothing* for 900ms, then a quiet line in a list — the loudest moment in the game, invisible to most of the room |
 | Skip is disabled in the last 10 seconds | `SKIP_LOCKOUT_MS`. Without it the steal is trivially defused: with seconds left the describer skips, burning the card the opponents were listening to and dealing one they've heard nothing about. Enforced in `resolve()`, not just by greying the button |
-| A steal sometimes doesn't happen when time expires mid-card | `STEAL_MIN_CLUE_MS`. A card dealt 2 seconds before the buzzer was never described, so guessing it is a coin flip. Below the threshold the turn just ends |
+| A steal still fires if the card was just dealt | Intentional. If a card is in play at 0:00 the other team always gets a steal attempt — even a late deal |
 | The idle team's panel changes colour at 0:10 | That's the skip lockout. The card on the table is now the one they'll get to steal, which turns a dead minute into a countdown worth watching |
 | «أطول كلمة» instead of «الكلمة المستحيلة» | The old stat counted words that fell more than once — impossible, since no word repeats inside a game. It was always null. Time-on-table is the thing players actually remember |
 | No tatweel (ـ) anywhere in the UI | It renders as a visible gap in Tajawal. Write «بفارق 3», never «بـ 3» |

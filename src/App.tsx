@@ -45,11 +45,16 @@ export default function App() {
       : en ? "Banned" : "ممنوع";
   }, [room, me]);
 
-  // Only the two people entitled to the card even open the listener.
+  // Only the people entitled to the card even open the listener.
+  // Live: describer + judge. Steal: describer only — the original
+  // judge is on the stealing team and must not keep seeing the word.
   const role = room && uid ? roleOf(room, uid) : "guesser";
   const card = useCard(
     room?.id ?? null,
-    Boolean(room && (room.phase === "live") && (role === "giver" || role === "judge")),
+    Boolean(room && (
+      (room.phase === "live" && (role === "giver" || role === "judge"))
+      || (room.phase === "steal" && role === "giver")
+    )),
   );
   // Needed by the transition board as well as the final screen.
   const rounds = useRounds(

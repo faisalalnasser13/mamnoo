@@ -99,8 +99,9 @@ export interface LiveCard { cardId: number; word: string; taboo: string[] }
 
 /**
  * The card in play. Security rules make this unreadable to anyone but
- * the clue-giver and the judge, so a guesser opening devtools gets a
- * permission error, not the answer.
+ * the clue-giver and (during live) the judge, so a guesser opening
+ * devtools gets a permission error, not the answer. During steal only
+ * the original hinter keeps the listener — the original judge sits out.
  *
  * Retries on error: a permission blip at the moment roles flip used to
  * kill the listener until refresh.

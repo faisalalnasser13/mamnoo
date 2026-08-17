@@ -65,7 +65,10 @@ export interface Strings {
   stealYell: string;
   stealYours: string;
   stealTheirs: string;
+  stealYouJudge: string;
+  stealYouSit: string;
   stealAward: string;
+  stealMiss: string;
   waitingSteal: (name: string) => string;
 
   recapExplained: (name: string) => string;
@@ -171,7 +174,7 @@ export interface Strings {
     giverOnly: string;
     skipLocked: string;
     judgeBuzz: string;
-    judgeSteal: string;
+    giverSteal: string;
     permission: string;
     network: string;
     generic: string;
@@ -236,9 +239,12 @@ export const AR: Strings = {
 
   timeUpOn: (team) => `انتهى وقت ${team} على هذه البطاقة`,
   stealYell: "سرقة!",
-  stealYours: "خمّنوا من الشرح الذي سمعتموه — الحكم يضغط إن صحّت",
-  stealTheirs: "ما في دفاع. حكم الخصم يقرر إن سرقوا البطاقة",
-  stealAward: "خمّنّاها — نقطة لنا",
+  stealYours: "خمّنوا من الشرح الذي سمعتموه. الشارح يحكم إن صحّت.",
+  stealTheirs: "الفريق الآخر يحاول يسرقها. الشارح يحكم إن خمّنوها.",
+  stealYouJudge: "الآن دور الفريق الآخر يسرقها. أنت الحكم — الكلمة باقية عندك.",
+  stealYouSit: "فريقك يحاول يسرقها. أنت شفت البطاقة — ما تقدر تشارك.",
+  stealAward: "خمّنوها — نقطة لهم",
+  stealMiss: "ما قدروا — تخطَّ",
   waitingSteal: (name) => `${name} يحكم على السرقة…`,
 
   recapExplained: (name) => `شرحها ${name}`,
@@ -345,7 +351,7 @@ export const AR: Strings = {
     giverOnly: "الشارح فقط يحسم البطاقة.",
     skipLocked: "ما في تبديل في آخر 10 ثوانٍ.",
     judgeBuzz: "الحكم فقط يضغط ممنوع.",
-    judgeSteal: "الحكم فقط يحسم السرقة.",
+    giverSteal: "الشارح فقط يحسم السرقة.",
     permission: "لا تملك صلاحية هذه الخطوة.",
     network: "الشبكة ضعيفة. حاول مرة أخرى.",
     generic: "صار خطأ. حاول مرة أخرى.",
@@ -410,9 +416,12 @@ export const EN: Strings = {
 
   timeUpOn: (team) => `${team}'s time is up on this card`,
   stealYell: "Steal!",
-  stealYours: "Guess from what you heard — the judge taps if you're right",
-  stealTheirs: "No defence. Their judge decides if they stole it",
-  stealAward: "We got it — point for us",
+  stealYours: "Guess from what you heard. The describer judges if you got it.",
+  stealTheirs: "The other team is trying to steal it. The describer judges if they got it.",
+  stealYouJudge: "Now it's the other team's turn to steal. You judge — the word stays on your phone.",
+  stealYouSit: "Your team is attempting the steal. You already saw the card — you can't participate.",
+  stealAward: "They got it — point for them",
+  stealMiss: "They missed — skip",
   waitingSteal: (name) => `${name} is judging the steal…`,
 
   recapExplained: (name) => `${name} described`,
@@ -519,7 +528,7 @@ export const EN: Strings = {
     giverOnly: "Only the describer can resolve the card.",
     skipLocked: "No skip in the last 10 seconds.",
     judgeBuzz: "Only the judge can tap Banned.",
-    judgeSteal: "Only the judge can award the steal.",
+    giverSteal: "Only the describer can judge the steal.",
     permission: "You don't have permission for that.",
     network: "The network is weak. Try again.",
     generic: "Something went wrong. Try again.",

@@ -38,14 +38,6 @@ export const STEAL_MS = 10_000;
  */
 export const SKIP_LOCKOUT_MS = 10_000;
 
-/**
- * A card must have been in play this long for a steal to be offered.
- *
- * Closes the other half: bank a card at 0:02, a fresh one deals, time
- * expires immediately, and the opponents are asked to guess something
- * nobody described. Below this threshold the turn simply ends.
- */
-export const STEAL_MIN_CLUE_MS = 5_000;
 /** Small skew so a slightly-fast phone isn't rejected at the true deadline. */
 export const CLOCK_SKEW_MS = 250;
 /** Hidden beat after the host starts a turn, before the visible clock drains. */
@@ -198,15 +190,6 @@ export function canSkip(remainingMs: number | null): boolean {
 /** Is the describer inside the no-swap window? */
 export function inLockout(remainingMs: number | null): boolean {
   return remainingMs !== null && remainingMs > 0 && remainingMs <= SKIP_LOCKOUT_MS;
-}
-
-/**
- * A steal is only worth offering when the opponents actually heard the
- * card described. `cardAt` is when it was dealt.
- */
-export function stealAllowed(cardAt: number | null, now: number): boolean {
-  if (cardAt === null) return false;
-  return now - cardAt >= STEAL_MIN_CLUE_MS;
 }
 
 /**

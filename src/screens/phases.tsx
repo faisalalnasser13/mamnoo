@@ -164,7 +164,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
       <div className="shell">
         {team && <YouChip team={team} />}
         <div className="h-1.5" />
-        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
+        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
         <div className="flex-1" />
         <p className="text-center font-display text-[64px] leading-none text-chili">{s.floorBuzz}</p>
         <p className="mt-3 text-center text-[15px] font-bold text-muted">
@@ -186,7 +186,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
       <div className="shell">
         {team && <YouChip team={team} />}
         <div className="h-1.5" />
-        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
+        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
         <div className="h-5" />
         <Label>{s.explainingNow}</Label>
         <p className="mt-1 text-center font-display text-[32px]">
@@ -216,7 +216,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
     <div className="shell">
       {team && <YouChip team={team} />}
       <div className="h-1.5" />
-      <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
+      <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
       <div className="h-5" />
       <Label>{s.theirTurn}</Label>
       <p className="mt-1 text-center font-display text-[28px]">
@@ -261,48 +261,67 @@ function mineTurn(room: Room, uid: string) {
 /* steal                                                              */
 /* ------------------------------------------------------------------ */
 
-export function StealPhase({ room, uid }: Ctx) {
+export function StealPhase({ room, uid, card }: Ctx) {
   const { remaining, pct, warn, rush } = useCountdown(room);
   const { msg, flash } = useFlash();
   if (!room.turn) return null;
   const s = S(room.lang);
+  const call = (p: Promise<unknown>) => p.catch((e) => flash(errText(e, room.lang)));
 
+  const giver = uid === room.turn.clueGiverUid;
+  const wasJudge = uid === room.turn.judgeUid;
   const thief = OTHER[room.turn.team];
   const team = myTeam(room, uid);
-  const mine = team === thief;
-  // There is no defence. Only the opposing judge can award the steal;
-  // the describing team just watches the clock. Don't tell them to
-  // "defend" — they have no button and no veto.
+  const stealing = team === thief;
+  const hinterName = nameOf(room, room.turn.clueGiverUid);
+
+  const body = giver
+    ? s.stealYouJudge
+    : wasJudge
+      ? s.stealYouSit
+      : stealing
+        ? s.stealYours
+        : s.stealTheirs;
 
   return (
     <div className="shell">
       {team && <YouChip team={team} />}
       <div className="h-1.5" />
-      <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
+      <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
       <div className="h-5" />
       <Label>{s.timeUpOn(s.team[room.turn.team])}</Label>
       <p className="mt-1 text-center font-display text-[42px] text-chili">{s.stealYell}</p>
       <p className="mt-2 text-center text-[14.5px] leading-relaxed text-muted">
-        {mine ? s.stealYours : s.stealTheirs}
+        {body}
       </p>
 
       <div className="flex-1" />
-      <div className="card" style={{ rotate: "1.5deg", padding: "24px 18px" }}>
-        <div className="card-word" style={{ fontSize: 38, margin: 0 }}>{s.unknownCard}</div>
-      </div>
+      {giver && card
+        ? <Card word={card.word} taboo={card.taboo} stamp={s.stamp} kicker={s.stealYell} />
+        : (
+          <div className="card" style={{ rotate: "1.5deg", padding: "24px 18px" }}>
+            <div className="card-word" style={{ fontSize: 38, margin: 0 }}>{s.unknownCard}</div>
+          </div>
+        )}
       {room.paused && <PausedBanner lang={room.lang} />}
       <Flash msg={msg} />
       <div className="flex-1" />
       {room.hostUid === uid && <HostControls room={room} />}
 
-      {roleOf(room, uid) === "judge"
+      {giver
         ? (
-          <Btn variant="chili"
-            onClick={() => api.claimSteal({ roomId: room.id }).catch((e) => flash(errText(e, room.lang)))}>
-            {s.stealAward}
-          </Btn>
+          <div className="mt-2 flex flex-col gap-3">
+            <Btn variant="chili"
+              onClick={() => call(api.claimSteal({ roomId: room.id }))}>
+              {s.stealAward}
+            </Btn>
+            <Btn variant="ghost"
+              onClick={() => call(api.denySteal({ roomId: room.id }))}>
+              {s.stealMiss}
+            </Btn>
+          </div>
         )
-        : <Waiting>{s.waitingSteal(nameOf(room, room.turn.judgeUid))}</Waiting>}
+        : <Waiting>{s.waitingSteal(hinterName)}</Waiting>}
     </div>
   );
 }

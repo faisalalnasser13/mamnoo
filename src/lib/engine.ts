@@ -25,7 +25,7 @@ import {
   TIMER_GRACE_MS, TIMER_START_GRACE_MS, BUZZ_HOLD_MS, DEFAULTS, NAME_MAX,
   ROUND_SECS_OPTIONS, ROUNDS_PER_TEAM_OPTIONS, snapSetting, rolesForTurn,
   pickBalancedTeam, shuffledTeams, resolveCard, applyPoints, isOver, winnerOf,
-  drawFrom, membersOf, SKIP_LOCKOUT_MS, stealAllowed, liveStartPad,
+  drawFrom, membersOf, SKIP_LOCKOUT_MS, liveStartPad,
 } from "./rules";
 import type { Lang, Outcome, Phase, Room, Settings, TeamId } from "./types";
 import { deckFor, roomWordsFor } from "./decks";
@@ -553,7 +553,7 @@ async function buzz({ roomId, fromCardId }: { roomId: string; fromCardId: number
   return { ok: true };
 }
 
-/** The judge awards the steal. Credits the other team, then ends the turn. */
+/** The original hinter awards the steal. Credits the other team, then ends the turn. */
 async function claimSteal({ roomId }: { roomId: string }) {
   const uid = me();
   await runTransaction(db, async (tx) => {
@@ -561,14 +561,30 @@ async function claimSteal({ roomId }: { roomId: string }) {
     if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     if (room.phase !== "steal") return; // idempotent
-    if (room.turn?.judgeUid !== uid) {
-      throw new GameError("permission-denied", S(room.lang).err.judgeSteal);
+    if (room.turn?.clueGiverUid !== uid) {
+      throw new GameError("permission-denied", S(room.lang).err.giverSteal);
     }
     const thief = OTHER[room.turn.team];
     writeRecap(tx, room, {
       extraLog: { w: S(room.lang).stealWord, res: "steal" as Outcome, pts: 1, t: room.settings.roundSecs * 1000 },
       stealTo: thief,
     });
+  });
+  return { ok: true };
+}
+
+/** The hinter skips the steal — the other team missed it. Ends the turn with no steal credit. */
+async function denySteal({ roomId }: { roomId: string }) {
+  const uid = me();
+  await runTransaction(db, async (tx) => {
+    const snap = await tx.get(roomRef(roomId));
+    if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
+    const room = asRoom(roomId, snap.data() as Record<string, unknown>);
+    if (room.phase !== "steal") return; // idempotent
+    if (room.turn?.clueGiverUid !== uid) {
+      throw new GameError("permission-denied", S(room.lang).err.giverSteal);
+    }
+    writeRecap(tx, room, {});
   });
   return { ok: true };
 }
@@ -607,9 +623,9 @@ async function advancePhase({
         return;
       }
       if (!expired && !force) return;
-      // Time is up. A card still in play is worth one steal attempt —
-      // but only if the opponents actually heard it described.
-      if (room.round.cardId !== null && stealAllowed(room.round.cardAt, Date.now())) {
+      // Time is up. A card still in play is always worth one steal
+      // attempt — even if it was dealt in the last seconds.
+      if (room.round.cardId !== null) {
         tx.update(roomRef(roomId), {
           phase: "steal" as Phase,
           "round.stealEndsAt": Date.now() + STEAL_MS,
@@ -938,5 +954,5 @@ async function wipeSubcollections(roomId: string) {
 export const api = {
   createRoom, joinRoom, leaveRoom, kickPlayer, updateSettings, shuffleTeams,
   setTeam, startGame, startTurn, ensureCard, resolve, buzz, claimSteal,
-  advancePhase, rematch, hostControl, loadRoom,
+  denySteal, advancePhase, rematch, hostControl, loadRoom,
 };

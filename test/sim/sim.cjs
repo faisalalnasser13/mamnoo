@@ -173,14 +173,17 @@ async function playOneGame(n) {
     }
 
     if (room.phase === "steal") {
-      invariant("a steal was offered on a card nobody described",
-        room.round.cardAt === null
-        || Date.now() - room.round.cardAt >= R.STEAL_MIN_CLUE_MS,
-        `turn ${room.turnIndex}`);
       const before = { ...room.scores };
       const thief = R.OTHER[room.turn.team];
-      if (rand() < 0.5) {
-        as(room.turn.judgeUid);
+      // The original judge is on the stealing team and must not award.
+      as(room.turn.judgeUid);
+      await api.claimSteal({ roomId }).catch(() => {});
+      const still = await roomOf(roomId);
+      invariant("the original judge awarded a steal",
+        still.phase === "steal", `turn ${room.turnIndex}`);
+      const roll = rand();
+      if (roll < 0.4) {
+        as(room.turn.clueGiverUid);
         await api.claimSteal({ roomId });
         if (rand() < 0.4) await api.claimSteal({ roomId }).catch(() => {}); // double-tap
         const after = await roomOf(roomId);
@@ -190,6 +193,15 @@ async function playOneGame(n) {
           after.scores[room.turn.team] === before[room.turn.team], `turn ${room.turnIndex}`);
         invariant("a double steal scored twice",
           after.scores[thief] - before[thief] <= 1, `turn ${room.turnIndex}`);
+      } else if (roll < 0.65) {
+        as(room.turn.clueGiverUid);
+        await api.denySteal({ roomId });
+        if (rand() < 0.4) await api.denySteal({ roomId }).catch(() => {});
+        const after = await roomOf(roomId);
+        invariant("a missed steal still scored",
+          after.scores[thief] === before[thief], `turn ${room.turnIndex}`);
+        invariant("a missed steal left steal phase",
+          after.phase === "recap", `turn ${room.turnIndex}`);
       } else {
         advanceClock(R.STEAL_MS + R.TIMER_GRACE_MS + 500);
         for (const u of uids) {

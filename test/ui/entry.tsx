@@ -153,6 +153,10 @@ export function cases(): Case[] {
     phase: "steal", phaseEndsAt: Date.now() + 6000,
     round: { ...room().round, stealEndsAt: Date.now() + 6000 },
   }), null, [], StealPhase as never);
+  phase("steal · hinter has card", room({
+    phase: "steal", phaseEndsAt: Date.now() + 6000,
+    round: { ...room().round, stealEndsAt: Date.now() + 6000 },
+  }), CARD, [], StealPhase as never);
 
   phase("recap", room({ phase: "recap", phaseEndsAt: null }), null, ROUNDS, RecapPhase as never);
   phase("recap · no rounds yet", room({ phase: "recap", phaseEndsAt: null }),
