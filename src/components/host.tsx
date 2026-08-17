@@ -3,7 +3,7 @@ import { api, errText } from "../lib/firebase";
 import type { HostAction } from "../lib/engine";
 import { membersOf, OTHER, pointsByPlayer, rolesForTurn, totalTurns } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
-import { TEAM } from "./ui";
+import { look, TeamMark } from "./ui";
 import { S } from "../lib/strings";
 
 /* ------------------------------------------------------------------ */
@@ -75,13 +75,13 @@ export function ScoreBoard({
   /* ---- in-game: independent columns (only played rows) ---- */
   if (!finale) {
     const Column = ({ team }: { team: TeamId }) => {
-      const hex = TEAM[team].hex;
+      const hex = look(room.kit, team).hex;
       const rows = order(team).filter((u) => u in scored);
       return (
         <div className={`flex min-w-0 flex-1 flex-col px-3 ${compact ? "py-2" : "py-3"}`}>
           <div className="text-center">
-            <div className="text-[11px] font-black" style={{ color: hex }}>
-              {TEAM[team].emoji} {s.team[team]}
+            <div className="flex items-center justify-center gap-1 text-[11px] font-black" style={{ color: hex }}>
+              <TeamMark kit={room.kit} team={team} size={12} /> {s.team[room.kit][team]}
             </div>
             <div className={`mt-0.5 font-display leading-none ${compact ? "text-[24px]" : "text-[28px]"}`} style={{ color: hex }} dir="ltr">
               {room.scores[team]}
@@ -121,7 +121,7 @@ export function ScoreBoard({
   const rowCount = Math.max(mintRows.length, chiliRows.length);
 
   const Header = ({ team }: { team: TeamId }) => {
-    const hex = TEAM[team].hex;
+    const hex = look(room.kit, team).hex;
     const won = highlight === team;
     return (
       <div className="px-3 pb-2 pt-3 text-center" style={{ opacity: cellDim(team) }}>
@@ -130,10 +130,10 @@ export function ScoreBoard({
           <span className={`text-[30px] leading-none ${won ? "" : "invisible"}`} aria-hidden={!won}>
             🏆
           </span>
-          <span className="text-[30px] leading-none">{TEAM[team].emoji}</span>
+          <TeamMark kit={room.kit} team={team} size={30} />
         </div>
         <div className="mt-1.5 text-[17px] font-black" style={{ color: hex }}>
-          {s.team[team]}
+          {s.team[room.kit][team]}
         </div>
         <div className="mt-0.5 font-display text-[34px] leading-none" style={{ color: hex }} dir="ltr">
           {room.scores[team]}
@@ -165,7 +165,7 @@ export function ScoreBoard({
   };
 
   const winHex =
-    highlight === "mint" || highlight === "chili" ? TEAM[highlight].hex : null;
+    highlight === "mint" || highlight === "chili" ? look(room.kit, highlight).hex : null;
 
   return (
     <div className="relative mt-3 overflow-hidden rounded-[18px] bg-black/25">
@@ -243,7 +243,7 @@ export function HostControls({ room }: { room: Room }) {
           ? OTHER[room.turn.team]
           : room.turn.team)
       : null;
-  const guessName = guessTeam ? s.team[guessTeam] : s.guessTeamFallback;
+  const guessName = guessTeam ? s.team[room.kit][guessTeam] : s.guessTeamFallback;
 
   const kickable = Object.entries(room.players)
     .filter(([u]) => u !== room.hostUid)
@@ -302,7 +302,7 @@ export function HostControls({ room }: { room: Room }) {
                 >
                   <span className="min-w-0 flex-1 truncate text-[13.5px] font-bold">
                     {p.name}
-                    {p.team ? ` · ${TEAM[p.team].emoji}` : ""}
+                    {p.team ? <span className="inline-flex items-center gap-1"> · <TeamMark kit={room.kit} team={p.team} size={14} /></span> : ""}
                   </span>
                   <span className="shrink-0 text-[12px] font-black text-minus">{s.kick}</span>
                 </button>

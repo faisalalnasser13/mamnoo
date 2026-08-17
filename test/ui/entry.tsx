@@ -74,6 +74,7 @@ function room(over: Partial<Room> = {}): Room {
     },
     usedCards: [0, 1, 2],
     lang: "ar",
+    kit: "classic",
     winner: null,
     endReason: null,
     createdAt: now - 100_000,
@@ -119,6 +120,8 @@ export function cases(): Case[] {
     add(`lobby · ${NAMES[uid]}`, <Lobby room={room({ phase: "lobby", turn: null })} uid={uid} />);
     add(`lobby en · ${NAMES[uid]}`,
       <Lobby room={room({ phase: "lobby", turn: null, lang: "en" })} uid={uid} />);
+    add(`lobby cafe · ${NAMES[uid]}`,
+      <Lobby room={room({ phase: "lobby", turn: null, kit: "cafe" })} uid={uid} />);
     // Nobody should be teamless, but the type allows it and the panels
     // have to decide which side is "mine" without one.
     add(`lobby · no team · ${NAMES[uid]}`, <Lobby uid={uid} room={room({
@@ -168,6 +171,7 @@ export function cases(): Case[] {
   }), null, [], LivePhase as never);
 
   phase("live en · long word", room({ lang: "en" }), CARD_EN, [], LivePhase as never);
+  phase("live cafe", room({ kit: "cafe" }), CARD, [], LivePhase as never);
   // A live turn with no `turn` on it: only an older deploy writes that,
   // and every branch of the screen reads the team off it.
   phase("live · turn missing", room({ turn: null }), CARD, [], LivePhase as never);

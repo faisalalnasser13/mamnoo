@@ -1,11 +1,50 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { FlashMsg } from "../lib/hooks";
-import type { Lang, TeamId } from "../lib/types";
+import type { Kit, Lang, TeamId } from "../lib/types";
 
-export const TEAM: Record<TeamId, { emoji: string; hex: string }> = {
-  mint:  { emoji: "🌿", hex: "#2FD6BC" },
-  chili: { emoji: "🌶️", hex: "#FF4D79" },
+export type Look = { hex: string; ink: string; emoji?: string; src?: string };
+
+const CLASSIC: Record<TeamId, Look> = {
+  mint:  { emoji: "🌿", hex: "#2FD6BC", ink: "#10322D" },
+  chili: { emoji: "🌶️", hex: "#FF4D79", ink: "#fff" },
 };
+
+const CAFE: Record<TeamId, Look> = {
+  mint:  { emoji: "☕", hex: "#C4843A", ink: "#2A1608" },
+  chili: { src: "/tea.png", hex: "#E25D35", ink: "#fff" },
+};
+
+export function look(kit: Kit, team: TeamId): Look {
+  return (kit === "cafe" ? CAFE : CLASSIC)[team];
+}
+
+/** The old mint/chili table — kept for anything that isn't kit-aware yet. */
+export const TEAM: Record<TeamId, { emoji: string; hex: string }> = {
+  mint:  { emoji: CLASSIC.mint.emoji!, hex: CLASSIC.mint.hex },
+  chili: { emoji: CLASSIC.chili.emoji!, hex: CLASSIC.chili.hex },
+};
+
+export function TeamMark({ kit, team, size = 16 }: { kit: Kit; team: TeamId; size?: number }) {
+  const L = look(kit, team);
+  if (L.src) {
+    return (
+      <img
+        src={L.src}
+        alt=""
+        width={size}
+        height={size}
+        draggable={false}
+        aria-hidden
+        style={{ display: "block", flexShrink: 0, width: size, height: size, objectFit: "contain" }}
+      />
+    );
+  }
+  return (
+    <span className="leading-none" style={{ fontSize: size }} aria-hidden>
+      {L.emoji}
+    </span>
+  );
+}
 
 /**
  * Wooden court gavel, same box as the mic emoji next to it.
@@ -86,10 +125,10 @@ export function Btn({
  * ("اشرح!", "دوركم") was a second heading competing with the one the
  * phase actually needs. A 16px mark is enough to glance at.
  */
-export function YouChip({ team }: { team: TeamId }) {
+export function YouChip({ team, kit }: { team: TeamId; kit: Kit }) {
   return (
     <div className="mx-auto leading-none" aria-hidden>
-      <span className="text-[16px] leading-none">{TEAM[team].emoji}</span>
+      <TeamMark kit={kit} team={team} size={16} />
     </div>
   );
 }
@@ -133,14 +172,14 @@ export function Waiting({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function Avatar({ name, team, big }: { name: string; team: TeamId; big?: boolean }) {
-  const t = TEAM[team];
+export function Avatar({ name, team, kit, big }: { name: string; team: TeamId; kit: Kit; big?: boolean }) {
+  const t = look(kit, team);
   return (
     <span
-      className={`grid shrink-0 place-items-center rounded-full font-black text-night ${
+      className={`grid shrink-0 place-items-center rounded-full font-black ${
         big ? "h-[50px] w-[50px] font-display text-[21px]" : "h-[26px] w-[26px] text-[11.5px]"
       }`}
-      style={{ background: t.hex, color: team === "chili" ? "#fff" : "#241638" }}
+      style={{ background: t.hex, color: t.ink }}
     >
       {(name || "؟").trim().charAt(0)}
     </span>
@@ -158,10 +197,11 @@ export function Avatar({ name, team, big }: { name: string; team: TeamId; big?: 
  * tick has room to be the event.
  */
 export function Tally({
-  scores, loud,
+  scores, loud, kit,
 }: {
   scores: Record<TeamId, number>;
   loud?: boolean;
+  kit: Kit;
 }) {
   const prev = useRef(scores);
   const gen = useRef(0);
@@ -182,16 +222,17 @@ export function Tally({
     if (any) setHit(next);
   }, [scores.mint, scores.chili]);
 
-  const Pill = ({ team, emoji, ink }: { team: TeamId; emoji: string; ink: string }) => {
+  const Pill = ({ team }: { team: TeamId }) => {
+    const L = look(kit, team);
     const h = hit[team];
     const up = h != null && h.d > 0;
     return (
       <span
         className={`tally-pill ${loud ? "tally-loud" : ""} ${h ? (up ? "tally-up" : "tally-down") : ""}`}
-        style={{ background: TEAM[team].hex, color: ink }}
+        style={{ background: L.hex, color: L.ink }}
       >
         {h && <i key={`r${h.k}`} className="tally-ring" aria-hidden />}
-        <span className="tally-em">{emoji}</span>
+        <span className="tally-em"><TeamMark kit={kit} team={team} size={loud ? 22 : 16} /></span>
         <span className="tally-num">{scores[team]}</span>
         {h && (
           <span key={`g${h.k}`} className="tally-ghost" aria-hidden>
@@ -204,8 +245,8 @@ export function Tally({
 
   return (
     <div className="flex gap-1.5" dir="ltr">
-      <Pill team="mint" emoji="🌿" ink="#10322D" />
-      <Pill team="chili" emoji="🌶️" ink="#fff" />
+      <Pill team="mint" />
+      <Pill team="chili" />
     </div>
   );
 }

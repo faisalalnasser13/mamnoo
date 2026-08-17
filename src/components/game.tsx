@@ -1,5 +1,5 @@
 import React from "react";
-import type { LogEntry, Lang, TeamId } from "../lib/types";
+import type { Kit, LogEntry, Lang, TeamId } from "../lib/types";
 import { HEAT_EVERY, heatPips } from "../lib/rules";
 import { S } from "../lib/strings";
 import { Tally } from "./ui";
@@ -77,7 +77,7 @@ export function CardSkeleton({ note, unknown }: { note: string; unknown?: string
  * width animation read as a second timer strip trailing the real one.
  */
 export function Hud({
-  remaining, pct, warn, rush, scores, right, loud,
+  remaining, pct, warn, rush, scores, right, loud, kit,
 }: {
   remaining: number | null;
   pct: number;
@@ -87,6 +87,7 @@ export function Hud({
   right?: React.ReactNode;
   /** Spectator size — the tick is the event when there's no card. */
   loud?: boolean;
+  kit?: Kit;
 }) {
   const secs = Math.ceil((remaining ?? 0) / 1000);
   const text = remaining == null ? "—" : `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
@@ -111,7 +112,7 @@ export function Hud({
         >
           {text}
         </span>
-        {right ?? (scores && <Tally scores={scores} loud={loud} />)}
+        {right ?? (scores && <Tally scores={scores} loud={loud} kit={kit ?? "classic"} />)}
       </div>
     </div>
   );

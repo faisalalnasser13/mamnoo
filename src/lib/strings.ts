@@ -1,4 +1,4 @@
-import type { Lang, TeamId } from "./types";
+import type { Kit, Lang, TeamId } from "./types";
 import { plural as pluralAr } from "./arabic";
 
 export type { Lang };
@@ -9,7 +9,7 @@ const pluralEn = (n: number, one: string, many: string) =>
 export interface Strings {
   title: string;
   tagline: string;
-  team: Record<TeamId, string>;
+  team: Record<Kit, Record<TeamId, string>>;
   stamp: string;
   you: string;
   kickAria: string;
@@ -185,7 +185,10 @@ export interface Strings {
 export const AR: Strings = {
   title: "ممنوع",
   tagline: "اشرح الكلمة… بدون الكلمات الخمس",
-  team: { mint: "النعناع", chili: "الفلفل" },
+  team: {
+    classic: { mint: "النعناع", chili: "الفلفل" },
+    cafe: { mint: "قهوة", chili: "شاهي" },
+  },
   stamp: "ممنوع",
   you: " (أنت)",
   kickAria: "اطرد",
@@ -362,7 +365,10 @@ export const AR: Strings = {
 export const EN: Strings = {
   title: "Banned",
   tagline: "Describe the word… without the five forbidden ones",
-  team: { mint: "Mint", chili: "Chili" },
+  team: {
+    classic: { mint: "Mint", chili: "Chili" },
+    cafe: { mint: "Coffee", chili: "Tea" },
+  },
   stamp: "BANNED",
   you: " (you)",
   kickAria: "Kick",
@@ -542,4 +548,8 @@ export function S(lang: Lang | null | undefined): Strings {
 
 export function asLang(raw: unknown): Lang {
   return raw === "en" ? "en" : "ar";
+}
+
+export function asKit(raw: unknown): Kit {
+  return raw === "cafe" ? "cafe" : "classic";
 }

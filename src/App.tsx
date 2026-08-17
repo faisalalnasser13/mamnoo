@@ -68,11 +68,12 @@ export default function App() {
 
   const { warn, rush } = useCountdown(room);
   const inClock = room?.phase === "live" || room?.phase === "steal";
+  const cafe = room?.kit === "cafe";
   const glow =
     rush && inClock ? "glow-rush"
     : warn && inClock ? "glow-warn"
-    : me?.team === "chili" ? "glow-chili"
-    : me?.team === "mint" ? "glow-mint"
+    : me?.team === "chili" ? (cafe ? "glow-tea" : "glow-chili")
+    : me?.team === "mint" ? (cafe ? "glow-coffee" : "glow-mint")
     : "";
 
   let body: React.ReactNode;

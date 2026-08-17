@@ -29,7 +29,7 @@ import {
 } from "./rules";
 import type { Lang, Outcome, Phase, Room, Settings, TeamId } from "./types";
 import { deckFor, roomWordsFor } from "./decks";
-import { S, asLang } from "./strings";
+import { S, asLang, asKit } from "./strings";
 
 export { TIMER_GRACE_MS, BUZZ_HOLD_MS, STEAL_MS, SKIP_LOCKOUT_MS };
 
@@ -90,6 +90,7 @@ function asRoom(id: string, raw: Record<string, unknown>): Room {
     scores: { mint: r.scores?.mint ?? 0, chili: r.scores?.chili ?? 0 },
     usedCards: Array.isArray(r.usedCards) ? r.usedCards : [],
     lang: asLang(r.lang),
+    kit: asKit(r.kit),
     round: {
       cardId: round.cardId ?? null,
       cardAt: round.cardAt ?? null,
@@ -161,6 +162,7 @@ async function createRoom({ name, lang }: { name: string; lang: Lang }) {
       tx.set(roomRef(id), {
         hostUid: uid,
         lang: L,
+        kit: rand() < 0.5 ? "classic" : "cafe",
         phase: "lobby" as Phase,
         turnIndex: 0,
         paused: false,

@@ -1,5 +1,12 @@
 export type TeamId = "mint" | "chili";
 
+/**
+ * Display kit. Engine IDs stay mint/chili so scores and turn order
+ * don't fork; the kit only changes names, colours and marks.
+ * Written at createRoom and never changes. Old rooms default to classic.
+ */
+export type Kit = "classic" | "cafe";
+
 export type Lang = "ar" | "en";
 
 export type Phase = "lobby" | "transition" | "live" | "steal" | "recap" | "over";
@@ -59,6 +66,8 @@ export interface Room {
   hostUid: string;
   /** Locked at create — never changes mid-game. Old rooms default to ar. */
   lang: Lang;
+  /** Locked at create. classic = mint/chili, cafe = coffee/shahe. */
+  kit: Kit;
   phase: Phase;
   /** 0-based. Even turns belong to mint, odd to chili. */
   turnIndex: number;

@@ -52,6 +52,7 @@ function normalizeRoom(id: string, raw: Record<string, unknown>): Room {
     winner: r.winner ?? null,
     endReason: r.endReason ?? null,
     lang: (r.lang === "en" ? "en" : "ar"),
+    kit: (r.kit === "cafe" ? "cafe" : "classic"),
     createdAt: r.createdAt ?? 0,
     updatedAt: r.updatedAt ?? 0,
   };

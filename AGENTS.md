@@ -96,6 +96,10 @@ Consequences you must preserve:
 - `round.cardId` is an index into `deckFor(room.lang)`, not a global
   deck. `lang` is written at `createRoom` and never changes — Arabic and
   English rooms can share one Firebase project without mixing words.
+- `kit` is written at `createRoom` (half classic mint/chili, half cafe
+  coffee/شاهي) and never changes. Engine IDs stay `mint`/`chili`; the
+  kit only swaps names, colours and marks. Old rooms without `kit`
+  render as classic.
 
 ### 5. Digits are always 0–9
 
@@ -189,7 +193,7 @@ table down with it — the describer's device is the only one that deals a
 card, so the turn could never start and everyone else sat on
 "بانتظار البطاقة" forever.
 
-`test/ui/run.mjs` renders every screen for every role across 180
+`test/ui/run.mjs` renders every screen for every role across 192
 combinations, deliberately including **rooms missing fields that a later
 deploy added** — among them a `live` room with no `turn` on it and a
 player with no team, both of which are shapes only an older deploy

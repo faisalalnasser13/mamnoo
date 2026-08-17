@@ -47,6 +47,8 @@ input, textarea { -webkit-user-select: text; user-select: text }
 .glow { position: fixed; inset: 0; pointer-events: none; z-index: 1; transition: background .5s; }
 .glow-mint  { background: radial-gradient(120% 42% at 50% -6%, rgba(47,214,188,.26), transparent 62%); }
 .glow-chili { background: radial-gradient(120% 42% at 50% -6%, rgba(255,77,121,.26), transparent 62%); }
+.glow-coffee { background: radial-gradient(120% 42% at 50% -6%, rgba(196,132,58,.32), transparent 62%); }
+.glow-tea    { background: radial-gradient(120% 42% at 50% -6%, rgba(226,93,53,.32), transparent 62%); }
 /* Soft orange cue at 15s — no blink, just a warmer edge. */
 .glow-warn {
   background: radial-gradient(120% 50% at 50% -4%, rgba(255,154,60,.22), transparent 65%);

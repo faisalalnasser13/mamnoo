@@ -5,7 +5,7 @@ import {
   membersOf, NAME_MAX, OTHER, ROUND_SECS_OPTIONS, ROUNDS_PER_TEAM_OPTIONS, totalTurns,
 } from "../lib/rules";
 import type { Lang, Room, TeamId } from "../lib/types";
-import { Avatar, Btn, Flash, Label, TEAM, Waiting, Wordmark, YouChip } from "../components/ui";
+import { Avatar, Btn, Flash, Label, look, TeamMark, Waiting, Wordmark, YouChip } from "../components/ui";
 import { QR } from "../components/QR";
 import { S } from "../lib/strings";
 
@@ -226,7 +226,7 @@ function TeamPanel({
   team: TeamId; room: Room; isHost: boolean; me: string; mine: boolean;
   onKick: (uid: string) => void; onMove: (uid: string, t: TeamId) => void;
 }) {
-  const t = TEAM[team];
+  const t = look(room.kit, team);
   const s = S(room.lang);
   const members = membersOf(room.players, team);
   const join = () => onMove(me, team);
@@ -235,7 +235,7 @@ function TeamPanel({
     <div
       role={mine ? undefined : "button"}
       tabIndex={mine ? undefined : 0}
-      aria-label={mine ? undefined : `${s.team[team]} — ${s.tapToSwitch}`}
+      aria-label={mine ? undefined : `${s.team[room.kit][team]} — ${s.tapToSwitch}`}
       onClick={mine ? undefined : join}
       onKeyDown={mine ? undefined : (e) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); join(); }
@@ -246,8 +246,8 @@ function TeamPanel({
       style={mine ? { borderColor: t.hex, background: `${t.hex}1F` } : undefined}
     >
       <div className="mb-2.5 flex items-baseline gap-1.5">
-        <h4 className="text-[12.5px] font-black" style={{ color: t.hex }}>
-          {t.emoji} {s.team[team]}
+        <h4 className="flex items-center gap-1 text-[12.5px] font-black" style={{ color: t.hex }}>
+          <TeamMark kit={room.kit} team={team} size={14} /> {s.team[room.kit][team]}
         </h4>
         <span
           className="ms-auto shrink-0 text-[9.5px] font-black tracking-[.1em]"
@@ -263,7 +263,7 @@ function TeamPanel({
 
       {members.map((uid) => (
         <div key={uid} className="mb-2 flex items-center gap-2 text-[14px]">
-          <Avatar name={room.players[uid].name} team={team} />
+          <Avatar name={room.players[uid].name} team={team} kit={room.kit} />
           <span className="min-w-0 truncate text-start">
             {room.players[uid].name}{uid === me ? s.you : ""}
           </span>
@@ -306,7 +306,7 @@ export function Lobby({ room, uid }: { room: Room; uid: string }) {
 
   return (
     <div className="shell">
-      {me?.team && <YouChip team={me.team} />}
+      {me?.team && <YouChip team={me.team} kit={room.kit} />}
       <div className="h-2" />
 
       <div className="rotate-[1deg] rounded-[20px] bg-tang px-3.5 py-3 text-center text-[#3A1D00] shadow-[0_6px_0_#CC6F1B]">

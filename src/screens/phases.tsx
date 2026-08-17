@@ -7,7 +7,7 @@ import {
 } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
 import { S, type Strings } from "../lib/strings";
-import { Btn, Flash, Gavel, Label, TEAM, Title, Waiting, YouChip } from "../components/ui";
+import { Btn, Flash, Gavel, Label, look, Title, Waiting, YouChip } from "../components/ui";
 import { HostControls, PausedBanner, ScoreBoard } from "../components/host";
 import { Card, CardSkeleton, Feed, Heat, Hud, RunLine } from "../components/game";
 
@@ -80,9 +80,9 @@ export function LivePhase({ room, uid, card }: Ctx) {
 
     return (
       <div className="shell">
-        {team && <YouChip team={team} />}
+        {team && <YouChip team={team} kit={room.kit} />}
         <div className="h-1.5" />
-        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
+        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} kit={room.kit} />
         <div className="h-3.5" />
 
         {card
@@ -124,9 +124,9 @@ export function LivePhase({ room, uid, card }: Ctx) {
   if (role === "judge") {
     return (
       <div className="shell">
-        {team && <YouChip team={team} />}
+        {team && <YouChip team={team} kit={room.kit} />}
         <div className="h-1.5" />
-        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} />
+        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} kit={room.kit} />
         <div className="h-3.5" />
         {card
           ? <Card word={card.word} taboo={card.taboo} buzzed={buzzed} small stamp={s.stamp} />
@@ -162,9 +162,9 @@ export function LivePhase({ room, uid, card }: Ctx) {
   if (buzzed) {
     return (
       <div className="shell">
-        {team && <YouChip team={team} />}
+        {team && <YouChip team={team} kit={room.kit} />}
         <div className="h-1.5" />
-        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
+        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud kit={room.kit} />
         <div className="flex-1" />
         <p className="text-center font-display text-[64px] leading-none text-minus">{s.floorBuzz}</p>
         <p className="mt-3 text-center text-[15px] font-bold text-muted">
@@ -184,9 +184,9 @@ export function LivePhase({ room, uid, card }: Ctx) {
   if (mine) {
     return (
       <div className="shell">
-        {team && <YouChip team={team} />}
+        {team && <YouChip team={team} kit={room.kit} />}
         <div className="h-1.5" />
-        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
+        <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud kit={room.kit} />
         <div className="h-5" />
         <Label>{s.explainingNow}</Label>
         <p className="mt-1 text-center font-display text-[32px]">
@@ -214,9 +214,9 @@ export function LivePhase({ room, uid, card }: Ctx) {
      stand to take, not with what the opponents are scoring. */
   return (
     <div className="shell">
-      {team && <YouChip team={team} />}
+      {team && <YouChip team={team} kit={room.kit} />}
       <div className="h-1.5" />
-      <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
+      <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud kit={room.kit} />
       <div className="h-5" />
       <Label>{s.theirTurn}</Label>
       <p className="mt-1 text-center font-display text-[28px]">
@@ -239,7 +239,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
 
       <div className="mt-4 rounded-[16px] bg-black/25 px-4 py-3 text-center">
         <span className="text-[13px] font-bold text-muted">{s.theyScored}</span>
-        <p className="font-display text-[30px]" style={{ color: TEAM[turn.team].hex }}>
+        <p className="font-display text-[30px]" style={{ color: look(room.kit, turn.team).hex }}>
           +{room.round.points}
         </p>
       </div>
@@ -285,11 +285,11 @@ export function StealPhase({ room, uid, card }: Ctx) {
 
   return (
     <div className="shell">
-      {team && <YouChip team={team} />}
+      {team && <YouChip team={team} kit={room.kit} />}
       <div className="h-1.5" />
-      <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
+      <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud kit={room.kit} />
       <div className="h-5" />
-      <Label>{s.timeUpOn(s.team[room.turn.team])}</Label>
+      <Label>{s.timeUpOn(s.team[room.kit][room.turn.team])}</Label>
       <p className="mt-1 text-center font-display text-[42px] text-tang">{s.stealYell}</p>
       <p className="mt-2 text-center text-[14.5px] leading-relaxed text-muted">
         {body}
@@ -340,14 +340,14 @@ export function RecapPhase({ room, uid, rounds }: Ctx) {
 
   return (
     <div className="shell">
-      {team && <YouChip team={team} />}
+      {team && <YouChip team={team} kit={room.kit} />}
       <div className="h-1.5" />
       <Label>{s.recapExplained(nameOf(room, room.turn.clueGiverUid))}</Label>
       {/* Team colour regardless of sign — mint-for-plus / chili-for-minus
           made a chili +5 look like mint had scored, and a mint −1 like
           chili had. The board under this number is already team-coloured. */}
       <p className="mt-0.5 text-center font-display text-[68px] leading-none"
-         style={{ color: TEAM[room.turn.team].hex }}>
+         style={{ color: look(room.kit, room.turn.team).hex }}>
         {pts > 0 ? "+" : ""}{pts}
       </p>
       <ScoreBoard room={room} uid={uid} rounds={rounds} />
@@ -440,8 +440,8 @@ function Wheel({
         }}
       >
         <span className="tabular-nums text-muted/70" dir="ltr">{k + 1}</span>
-        <span style={{ color: TEAM[row.team].hex }}>🎤 {nameOf(room, row.clueGiverUid)}</span>
-        <span className="inline-flex items-center gap-0.5" style={{ color: TEAM[OTHER[row.team]].hex }}>
+        <span style={{ color: look(room.kit, row.team).hex }}>🎤 {nameOf(room, row.clueGiverUid)}</span>
+        <span className="inline-flex items-center gap-0.5" style={{ color: look(room.kit, OTHER[row.team]).hex }}>
           <Gavel size={far ? 11 : 13} />
           {nameOf(room, row.judgeUid)}
         </span>
@@ -459,7 +459,7 @@ function Wheel({
       <span className="shrink-0">{mark}</span>
       <span
         className="truncate font-display text-[20px] leading-none"
-        style={{ color: TEAM[t].hex }}
+        style={{ color: look(room.kit, t).hex }}
       >
         {who}
       </span>
@@ -516,7 +516,7 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
 
   return (
     <div className="shell">
-      {team && <YouChip team={team} />}
+      {team && <YouChip team={team} kit={room.kit} />}
       <div className="mt-2 flex gap-1.5">
         {Array.from({ length: pipCount }, (_, i) => (
           <i key={i} className="h-[5px] flex-1 rounded-full"
