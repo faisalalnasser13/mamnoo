@@ -2,7 +2,7 @@ import React from "react";
 import type { Kit, LogEntry, Lang, TeamId } from "../lib/types";
 import { HEAT_EVERY } from "../lib/rules";
 import { S } from "../lib/strings";
-import { look, Tally } from "./ui";
+import { Tally } from "./ui";
 
 /* ------------------------------------------------------------------ */
 
@@ -124,49 +124,27 @@ export function Hud({
 /* ------------------------------------------------------------------ */
 
 /**
- * Heat under the card — option C.
+ * Heat — option I.
  *
- * Three fuse slots, always. The third lights and a ×2 appears; every
- * صح after that is a smaller pip, so a long streak doesn't become a
- * necklace. Lit marks take the describing team's colour and breathe
- * once heat is on (streak ≥ 3).
+ * Three fuse slots, always, with ×2 beside them from streak 0. Empty is
+ * a circle; lit is 🔥 the same size, extras after ×2 included. The
+ * emoji licks (stretch + sway from the base). Fire is the streak, not
+ * the team.
  */
-export function Heat({
-  streak, kit, team,
-}: {
-  streak: number;
-  kit: Kit;
-  team: TeamId;
-}) {
-  const hex = look(kit, team).hex;
+export function Heat({ streak }: { streak: number }) {
   const lit = Math.min(HEAT_EVERY, Math.max(0, streak));
   const extra = Math.max(0, streak - HEAT_EVERY);
   const hot = streak >= HEAT_EVERY;
-  const off = `color-mix(in srgb, ${hex} 18%, transparent)`;
+  const flame = (key: string, delay: number) => (
+    <i key={key} className="heat-flame" style={{ animationDelay: `${delay}s` }}>🔥</i>
+  );
   return (
-    <div
-      className={`heat ${hot ? "heat-hot" : ""}`}
-      aria-hidden
-    >
-      {Array.from({ length: HEAT_EVERY }, (_, i) => (
-        <i
-          key={i}
-          className={`heat-pip ${i < lit ? "heat-on" : ""}`}
-          style={i < lit
-            ? { background: hex, boxShadow: `0 0 12px ${hex}` }
-            : { background: off }}
-        />
-      ))}
-      {hot && (
-        <span className="heat-x2" style={{ color: hex }}>×2</span>
+    <div className="heat" aria-hidden>
+      {Array.from({ length: HEAT_EVERY }, (_, i) =>
+        i < lit ? flame(String(i), i * 0.11) : <i key={i} className="heat-ash" />,
       )}
-      {Array.from({ length: extra }, (_, i) => (
-        <i
-          key={`e${i}`}
-          className="heat-extra heat-on"
-          style={{ background: hex, boxShadow: `0 0 8px ${hex}` }}
-        />
-      ))}
+      <span className={`heat-x2 ${hot ? "heat-x2-on" : ""}`}>×2</span>
+      {Array.from({ length: extra }, (_, i) => flame(`e${i}`, (HEAT_EVERY + i) * 0.11))}
     </div>
   );
 }

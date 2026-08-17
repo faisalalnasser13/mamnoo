@@ -272,7 +272,7 @@ once, at turn start. A 60-second round costs one write, not sixty.
 | The judge is on the *other* team | That's the design. It's what keeps the non-active team listening instead of checking their phone |
 | The original hinter judges the steal | They already hold the card. The original judge is on the stealing team and would spoil the guess if they kept seeing it |
 | A skip costs −0.5 and is unlimited | Correct. It also kills the streak; only the last 10s lock it |
-| The third correct and every one after are worth 2 | Heat stays on until skip/buzz. A 6-streak scores 1,1,2,2,2,2. Fuse is three pips; ×2 appears at three; extras stay small |
+| The third correct and every one after are worth 2 | Heat stays on until skip/buzz. A 6-streak scores 1,1,2,2,2,2. Fuse is three slots with ×2 always beside them; lit is a licking 🔥, extras the same size |
 | The idle team's screen leads with the steal, not the score | Those players have no button for a whole minute. Framing the wait as preparation is the only thing that makes listening rational rather than polite |
 | Guessers get a full-screen "ممنوع!" | The judge and describer both get a stamped card. Without this branch the rest of the table saw *nothing* for 900ms, then a quiet line in a list — the loudest moment in the game, invisible to most of the room |
 | Skip is disabled in the last 10 seconds | `SKIP_LOCKOUT_MS`. Without it the steal is trivially defused: with seconds left the describer skips, burning the card the opponents were listening to and dealing one they've heard nothing about. Enforced in `resolve()`, not just by greying the button |

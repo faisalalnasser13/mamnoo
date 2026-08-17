@@ -83,7 +83,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
               kicker={buzzed ? "…" : rush ? s.hurry : s.explainIt} buzzed={buzzed} />
           : <CardSkeleton note={s.drawing} unknown={s.unknownCard} />}
 
-        <Heat streak={room.round.streak} kit={room.kit} team={turn.team} />
+        <Heat streak={room.round.streak} />
 
         {(buzzed || room.round.points !== 0) && (
           <RunLine tone={buzzed || room.round.points < 0 ? "minus" : "plus"}>
@@ -131,7 +131,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
             {s.stalled(nameOf(room, turn.clueGiverUid))}
           </p>
         )}
-        <Heat streak={room.round.streak} kit={room.kit} team={turn.team} />
+        <Heat streak={room.round.streak} />
         {room.paused && <PausedBanner lang={room.lang} />}
         <Flash msg={msg} />
         <div className="flex-1" />
@@ -185,7 +185,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <p className="mt-1 text-center font-display text-[32px]">
           {nameOf(room, turn.clueGiverUid)} 🎤
         </p>
-        <Heat streak={room.round.streak} kit={room.kit} team={turn.team} />
+        <Heat streak={room.round.streak} />
         {/* A long turn banks a dozen cards; without a cap the list pushes
             the rest of the screen off the bottom. */}
         <div className="max-h-[34vh] overflow-y-auto">
@@ -215,7 +215,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
       <p className="mt-1 text-center font-display text-[28px]">
         {s.explaining(nameOf(room, turn.clueGiverUid))}
       </p>
-      <Heat streak={room.round.streak} kit={room.kit} team={turn.team} />
+      <Heat streak={room.round.streak} />
 
       {/* Once skip locks, the card on the table is the one that will be
           stolen. Telling the idle team that turns a dead minute into a

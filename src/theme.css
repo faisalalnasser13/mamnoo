@@ -156,8 +156,12 @@ html[data-kit="cafe"] .glow-warn {
   20% { transform: translateX(-9px) } 40% { transform: translateX(8px) }
   60% { transform: translateX(-5px) } 80% { transform: translateX(4px) }
 }
-@keyframes heatpulse {
-  50% { transform: scale(1.22); filter: brightness(1.18); }
+@keyframes heatlick {
+  0%, 100% { transform: scaleY(1) scaleX(1) rotate(0deg); }
+  18% { transform: scaleY(1.22) scaleX(.88) rotate(-9deg); }
+  42% { transform: scaleY(1.08) scaleX(1.08) rotate(7deg); }
+  61% { transform: scaleY(1.28) scaleX(.9) rotate(-5deg); }
+  82% { transform: scaleY(.96) scaleX(1.04) rotate(4deg); }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important } }
 
@@ -204,20 +208,23 @@ html[data-kit="cafe"] .btn-tang:active { box-shadow: 0 2px 0 var(--plate-shadow)
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
   gap: 8px; margin-top: 14px;
 }
-.heat-pip {
-  width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+.heat-ash {
+  width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+  background: var(--heat-off);
 }
-.heat-extra {
-  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; opacity: .85;
+.heat-flame {
+  width: 16px; height: 16px; flex-shrink: 0;
+  display: grid; place-items: center;
+  font-size: 15px; line-height: 1; font-style: normal;
+  animation: heatlick .42s ease-in-out infinite;
+  transform-origin: 50% 88%;
 }
 .heat-x2 {
   font-family: "Baloo Bhaijaan 2", sans-serif;
-  font-size: 13px; font-weight: 800; line-height: 1;
+  font-size: 15px; font-weight: 800; line-height: 1;
+  color: var(--muted);
 }
-.heat-hot .heat-on, .heat-hot .heat-x2 {
-  animation: heatpulse 1.15s ease-in-out infinite;
-  transform-origin: 50% 50%;
-}
+.heat-x2-on { color: #FF7A2F; }
 
 .card {
   background: var(--paper); color: var(--ink); border-radius: 24px;
