@@ -35,7 +35,7 @@ export function Card({
       {kicker && (
         <span
           className="inline-block rounded-full px-3 py-1 text-[10px] font-black tracking-[.2em] text-white"
-          style={{ background: buzzed ? "#FF4D79" : "#FF9A3C" }}
+          style={{ background: buzzed ? "#E1584F" : "#FF9A3C" }}
         >
           {kicker}
         </span>
@@ -91,10 +91,10 @@ export function Hud({
   const secs = Math.ceil((remaining ?? 0) / 1000);
   const text = remaining == null ? "—" : `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
   const bar =
-    rush ? "bg-chili bar-rush"
+    rush ? "bg-minus bar-rush"
     : warn ? "bg-tang bar-warn"
     : "bg-lemon";
-  const color = rush ? "#FF4D79" : warn ? "#FF9A3C" : "#FFD84D";
+  const color = rush ? "#E1584F" : warn ? "#FF9A3C" : "#FFD84D";
   const size = rush ? 34 : warn ? 30 : 26;
   return (
     <div>
@@ -151,7 +151,7 @@ export function RunLine({ children, red }: { children: React.ReactNode; red?: bo
     <div
       className="mt-3 rounded-full px-3 py-2 text-center text-[14px] font-black"
       style={red
-        ? { background: "rgba(255,77,121,.18)", color: "#FF4D79" }
+        ? { background: "rgba(225,88,79,.18)", color: "#E1584F" }
         : { background: "rgba(255,216,77,.12)", color: "#FFD84D" }}
     >
       {children}
@@ -162,10 +162,10 @@ export function RunLine({ children, red }: { children: React.ReactNode; red?: bo
 /* ------------------------------------------------------------------ */
 
 const OUTCOME: Record<LogEntry["res"], { sym: string; cls: string; label: (p: number) => string }> = {
-  ok:    { sym: "✓", cls: "bg-mint text-[#10322D]", label: (p) => (p === 2 ? "+2 🔥" : "+1") },
-  buzz:  { sym: "✕", cls: "bg-chili text-white",    label: () => "ممنوع −1" },
+  ok:    { sym: "✓", cls: "bg-plus text-[#10322D]", label: (p) => (p === 2 ? "+2 🔥" : "+1") },
+  buzz:  { sym: "✕", cls: "bg-minus text-white",    label: () => "ممنوع −1" },
   skip:  { sym: "↷", cls: "bg-white/15 text-muted", label: () => "تخطي −0.5" },
-  steal: { sym: "⚡", cls: "bg-chili text-white",    label: () => "سرقة +1" },
+  steal: { sym: "⚡", cls: "bg-tang text-[#241638]", label: () => "سرقة +1" },
   // Word is already "host +1" / "host −1"; no trailing label.
   host:  { sym: "★", cls: "bg-tang text-[#241638]", label: () => "" },
 };

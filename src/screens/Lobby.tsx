@@ -60,12 +60,12 @@ export function Home({
           البطاقات والشاشات كلها بهذه اللغة · Cards and screens both follow it
         </p>
         <div className="h-7" />
-        <Btn variant="chili" disabled={busy}
+        <Btn variant="lemon" disabled={busy}
           onClick={() => run(async () => (await api.createRoom({ name, lang: "ar" })).roomId, "ar")}>
           ممنوع · عربي
         </Btn>
         <div className="h-3" />
-        <Btn variant="mint" disabled={busy}
+        <Btn variant="tang" disabled={busy}
           onClick={() => run(async () => (await api.createRoom({ name, lang: "en" })).roomId, "en")}>
           Banned · English
         </Btn>
@@ -147,7 +147,7 @@ export function Home({
         value={name} onChange={(e) => setName(e.target.value)}
       />
       <div className="h-3.5" />
-      <Btn variant="chili" disabled={busy} onClick={() => {
+      <Btn variant="lemon" disabled={busy} onClick={() => {
         if (!name.trim()) return flash("اكتب اسمك أولًا. · Enter your name first.");
         setPicking(true);
       }}>
@@ -275,7 +275,7 @@ function TeamPanel({
                 aria-label={s.moveAria}
               >⇄</button>
               <button
-                className="px-1 text-[15px] font-black text-chili"
+                className="px-1 text-[15px] font-black text-minus"
                 onClick={(e) => { e.stopPropagation(); onKick(uid); }}
                 aria-label={s.kickAria}
               >✕</button>
@@ -367,7 +367,7 @@ export function Lobby({ room, uid }: { room: Room; uid: string }) {
 
       <div className="flex flex-col gap-3">
         {isHost
-          ? <Btn variant="mint" onClick={() => call(api.startGame({ roomId: room.id }))}>{s.startPlay}</Btn>
+          ? <Btn variant="lemon" onClick={() => call(api.startGame({ roomId: room.id }))}>{s.startPlay}</Btn>
           : <Waiting>{s.waitingHostBegin}</Waiting>}
         <Btn variant="ghost" onClick={share}>{s.sendLink}</Btn>
         <Btn variant="ghost" onClick={() => call(api.leaveRoom({ roomId: room.id }).then(() => { location.hash = ""; location.reload(); }))}>

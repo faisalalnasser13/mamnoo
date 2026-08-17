@@ -73,7 +73,7 @@ export function Wordmark({ size = 58, lang }: { size?: number; lang?: Lang }) {
 export function Btn({
   variant = "lemon", huge, className = "", ...rest
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "lemon" | "mint" | "chili" | "tang" | "ghost";
+  variant?: "lemon" | "ok" | "ban" | "tang" | "ghost";
   huge?: boolean;
 }) {
   return <button className={`btn btn-${variant} ${huge ? "btn-huge" : ""} ${className}`} {...rest} />;
@@ -213,7 +213,7 @@ export function Tally({
 export function Flash({ msg }: { msg: FlashMsg | null }) {
   if (!msg) return null;
   return (
-    <p className={`mt-2 text-center text-[13px] font-bold ${msg.ok ? "text-mint" : "text-chili"}`}>
+    <p className={`mt-2 text-center text-[13px] font-bold ${msg.ok ? "text-plus" : "text-minus"}`}>
       {msg.text}
     </p>
   );

@@ -270,15 +270,15 @@ export function HostControls({ room }: { room: Room }) {
       <div className="flex flex-col gap-2">
         {guessTeam && (
           <>
-            <Ctl onClick={() => run("plusGuess")} label={s.plusGuess(guessName)} tone="#2FD6BC"
+            <Ctl onClick={() => run("plusGuess")} label={s.plusGuess(guessName)} tone="#4CBE7B"
                  hint={s.guessHint} />
-            <Ctl onClick={() => run("minusGuess")} label={s.minusGuess(guessName)} tone="#FF9A3C"
+            <Ctl onClick={() => run("minusGuess")} label={s.minusGuess(guessName)} tone="#E1584F"
                  hint={s.guessHint} />
           </>
         )}
         {inTurn && (
           room.paused
-            ? <Ctl onClick={() => run("resume")} label={s.resume} tone="#2FD6BC" />
+            ? <Ctl onClick={() => run("resume")} label={s.resume} tone="#4CBE7B" />
             : <Ctl onClick={() => run("pause")} label={s.pause} tone="#FFD84D" />
         )}
         {inTurn && (
@@ -291,7 +291,7 @@ export function HostControls({ room }: { room: Room }) {
         )}
         {kickable.length > 0 && (
           <div className="rounded-[13px] bg-black/30 px-3 py-2.5">
-            <div className="text-[14.5px] font-black text-chili">{s.kickPlayer}</div>
+            <div className="text-[14.5px] font-black text-minus">{s.kickPlayer}</div>
             <small className="block text-[11px] font-normal text-muted">{s.kickHint}</small>
             <div className="mt-2 flex flex-col gap-1.5">
               {kickable.map(([u, p]) => (
@@ -304,17 +304,17 @@ export function HostControls({ room }: { room: Room }) {
                     {p.name}
                     {p.team ? ` · ${TEAM[p.team].emoji}` : ""}
                   </span>
-                  <span className="shrink-0 text-[12px] font-black text-chili">{s.kick}</span>
+                  <span className="shrink-0 text-[12px] font-black text-minus">{s.kick}</span>
                 </button>
               ))}
             </div>
           </div>
         )}
-        <Ctl onClick={() => run("endGame")} label={s.endGame} tone="#FF4D79"
+        <Ctl onClick={() => run("endGame")} label={s.endGame} tone="#E1584F"
              hint={s.endGameHint} />
       </div>
 
-      {err && <p className="mt-2 text-center text-[12px] font-bold text-chili">{err}</p>}
+      {err && <p className="mt-2 text-center text-[12px] font-bold text-minus">{err}</p>}
     </div>
   );
 }

@@ -51,9 +51,9 @@ input, textarea { -webkit-user-select: text; user-select: text }
 .glow-warn {
   background: radial-gradient(120% 50% at 50% -4%, rgba(255,154,60,.22), transparent 65%);
 }
-/* Hard red rush at 10s. */
+/* Hard red rush at 10s — polarity red, not chili. */
 .glow-rush {
-  background: radial-gradient(130% 110% at 50% 50%, transparent 38%, rgba(255,77,121,.34) 100%);
+  background: radial-gradient(130% 110% at 50% 50%, transparent 38%, rgba(225,88,79,.34) 100%);
   animation: rushbg .7s steps(1, end) infinite;
 }
 
@@ -96,8 +96,8 @@ input, textarea { -webkit-user-select: text; user-select: text }
 .btn:active { transform: translateY(4px) }
 .btn:disabled { opacity: .45; pointer-events: none }
 .btn-lemon { background: #FFD84D; box-shadow: 0 6px 0 #C9A423 } .btn-lemon:active { box-shadow: 0 2px 0 #C9A423 }
-.btn-mint  { background: #2FD6BC; box-shadow: 0 6px 0 #159C88 } .btn-mint:active  { box-shadow: 0 2px 0 #159C88 }
-.btn-chili { background: #FF4D79; color: #fff; box-shadow: 0 6px 0 #C22F55 } .btn-chili:active { box-shadow: 0 2px 0 #C22F55 }
+.btn-ok    { background: #4CBE7B; box-shadow: 0 6px 0 #2E9A58 } .btn-ok:active    { box-shadow: 0 2px 0 #2E9A58 }
+.btn-ban   { background: #E1584F; color: #fff; box-shadow: 0 6px 0 #B33D36 } .btn-ban:active { box-shadow: 0 2px 0 #B33D36 }
 .btn-tang  { background: #FF9A3C; box-shadow: 0 6px 0 #CC6F1B } .btn-tang:active  { box-shadow: 0 2px 0 #CC6F1B }
 .btn-ghost {
   background: transparent; border: 2px solid #4A3568; color: #A99BC4;
@@ -133,15 +133,15 @@ input, textarea { -webkit-user-select: text; user-select: text }
    legibility. It also leaves red-that-cancels exclusively to the ممنوع
    stamp, which is what should own it. */
 .rail {
-  border-inline-start: 4px solid #FF4D79;
+  border-inline-start: 4px solid #E1584F;
   border-radius: 0 12px 12px 0;
-  background: rgba(255,77,121,.08);
+  background: rgba(225,88,79,.08);
   padding: 11px 10px 11px 0;
   padding-inline-start: 13px;
   text-align: start;
 }
 .rail > b {
-  display: block; font-weight: 800; color: #B7203E; margin-bottom: 6px;
+  display: block; font-weight: 800; color: #9B2C28; margin-bottom: 6px;
 }
 .rail > b:last-child { margin-bottom: 0 }
 
@@ -153,7 +153,7 @@ input, textarea { -webkit-user-select: text; user-select: text }
   position: absolute; top: 50%; inset-inline: 0;
   width: fit-content; margin-inline: auto;
   transform: translateY(-50%) rotate(-15deg);
-  border: 6px solid #FF4D79; color: #FF4D79; border-radius: 14px;
+  border: 6px solid #E1584F; color: #E1584F; border-radius: 14px;
   font-family: "Baloo Bhaijaan 2", sans-serif; font-weight: 800;
   font-size: 40px; line-height: 1.1; padding: 6px 22px 10px;
   white-space: nowrap; animation: stampin .2s ease-out;

@@ -104,7 +104,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <div className="flex-1" />
         {room.hostUid === uid && <HostControls room={room} />}
         <div className="mt-2 flex flex-col gap-3">
-          <Btn variant="mint" disabled={buzzed || cardId === null}
+          <Btn variant="ok" disabled={buzzed || cardId === null}
             onClick={() => cardId !== null && call(api.resolve({ roomId: room.id, res: "ok", fromCardId: cardId }))}>
             {s.correct}
           </Btn>
@@ -113,7 +113,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
             onClick={() => cardId !== null && call(api.resolve({ roomId: room.id, res: "skip", fromCardId: cardId }))}>
             {locked
               ? s.skipLocked(SKIP_LOCKOUT_MS / 1000)
-              : <>{s.skip} <span className="text-chili">−0.5</span></>}
+              : <>{s.skip} <span className="text-minus">−0.5</span></>}
           </Btn>
         </div>
       </div>
@@ -143,7 +143,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <Flash msg={msg} />
         <div className="flex-1" />
         {room.hostUid === uid && <HostControls room={room} />}
-        <Btn variant="chili" huge disabled={buzzed || cardId === null}
+        <Btn variant="ban" huge disabled={buzzed || cardId === null}
           onClick={() => cardId !== null && call(api.buzz({ roomId: room.id, fromCardId: cardId }))}>
           {s.buzz}
         </Btn>
@@ -166,7 +166,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <div className="h-1.5" />
         <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
         <div className="flex-1" />
-        <p className="text-center font-display text-[64px] leading-none text-chili">{s.floorBuzz}</p>
+        <p className="text-center font-display text-[64px] leading-none text-minus">{s.floorBuzz}</p>
         <p className="mt-3 text-center text-[15px] font-bold text-muted">
           {s.saidTaboo(nameOf(room, turn.clueGiverUid))}
         </p>
@@ -227,9 +227,9 @@ export function LivePhase({ room, uid, card }: Ctx) {
           stolen. Telling the idle team that turns a dead minute into a
           ten-second countdown they have a reason to watch. */}
       <div className={`mt-5 rounded-[18px] border-2 px-4 py-4 text-center transition ${
-        locked ? "border-chili bg-chili/20" : "border-chili/30 bg-chili/10"
+        locked ? "border-tang bg-tang/20" : "border-tang/30 bg-tang/10"
       }`}>
-        <p className="font-display text-[19px] text-chili">
+        <p className="font-display text-[19px] text-tang">
           {locked ? s.skipLockedIdle : s.rememberClues}
         </p>
         <p className="mt-1.5 text-[13.5px] leading-relaxed text-muted">
@@ -290,7 +290,7 @@ export function StealPhase({ room, uid, card }: Ctx) {
       <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud />
       <div className="h-5" />
       <Label>{s.timeUpOn(s.team[room.turn.team])}</Label>
-      <p className="mt-1 text-center font-display text-[42px] text-chili">{s.stealYell}</p>
+      <p className="mt-1 text-center font-display text-[42px] text-tang">{s.stealYell}</p>
       <p className="mt-2 text-center text-[14.5px] leading-relaxed text-muted">
         {body}
       </p>
@@ -311,7 +311,7 @@ export function StealPhase({ room, uid, card }: Ctx) {
       {giver
         ? (
           <div className="mt-2 flex flex-col gap-3">
-            <Btn variant="chili"
+            <Btn variant="tang"
               onClick={() => call(api.claimSteal({ roomId: room.id }))}>
               {s.stealAward}
             </Btn>
