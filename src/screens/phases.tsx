@@ -71,13 +71,6 @@ export function LivePhase({ room, uid, card }: Ctx) {
 
   /* ---- describer ---- */
   if (role === "giver") {
-    const own = room.scores[turn.team];
-    const opp = room.scores[OTHER[turn.team]];
-    const gap = own - opp;
-    // No tatweel (ـ) anywhere in the UI — it renders as a gap in Tajawal.
-    const gapText = gap > 0 ? s.aheadBy(gap)
-      : gap < 0 ? s.behindBy(-gap) : s.tied;
-
     return (
       <div className="shell">
         {team && <YouChip team={team} kit={room.kit} />}
@@ -90,14 +83,13 @@ export function LivePhase({ room, uid, card }: Ctx) {
               kicker={buzzed ? "…" : rush ? s.hurry : s.explainIt} buzzed={buzzed} />
           : <CardSkeleton note={s.drawing} unknown={s.unknownCard} />}
 
-        <Heat streak={room.round.streak}
-          note={buzzed ? s.heatOff
-            : room.round.streak >= 2 ? s.heatNext
-            : undefined} />
+        <Heat streak={room.round.streak} kit={room.kit} team={turn.team} />
 
-        <RunLine red={buzzed}>
-          {buzzed ? s.burned : s.thisRound(room.round.points, gapText)}
-        </RunLine>
+        {(buzzed || room.round.points !== 0) && (
+          <RunLine tone={buzzed || room.round.points < 0 ? "minus" : "plus"}>
+            {buzzed ? s.burned : s.thisRound(room.round.points)}
+          </RunLine>
+        )}
 
         {room.paused && <PausedBanner lang={room.lang} />}
         <Flash msg={msg} />
@@ -139,6 +131,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
             {s.stalled(nameOf(room, turn.clueGiverUid))}
           </p>
         )}
+        <Heat streak={room.round.streak} kit={room.kit} team={turn.team} />
         {room.paused && <PausedBanner lang={room.lang} />}
         <Flash msg={msg} />
         <div className="flex-1" />
@@ -192,7 +185,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <p className="mt-1 text-center font-display text-[32px]">
           {nameOf(room, turn.clueGiverUid)} 🎤
         </p>
-        <Heat streak={room.round.streak} />
+        <Heat streak={room.round.streak} kit={room.kit} team={turn.team} />
         {/* A long turn banks a dozen cards; without a cap the list pushes
             the rest of the screen off the bottom. */}
         <div className="max-h-[34vh] overflow-y-auto">
@@ -222,14 +215,15 @@ export function LivePhase({ room, uid, card }: Ctx) {
       <p className="mt-1 text-center font-display text-[28px]">
         {s.explaining(nameOf(room, turn.clueGiverUid))}
       </p>
+      <Heat streak={room.round.streak} kit={room.kit} team={turn.team} />
 
       {/* Once skip locks, the card on the table is the one that will be
           stolen. Telling the idle team that turns a dead minute into a
           ten-second countdown they have a reason to watch. */}
-      <div className={`mt-5 rounded-[18px] border-2 px-4 py-4 text-center transition ${
-        locked ? "border-tang bg-tang/20" : "border-tang/30 bg-tang/10"
+      <div className={`mt-5 rounded-[18px] border-2 px-4 py-4 text-center transition steal-prep ${
+        locked ? "steal-prep-on" : ""
       }`}>
-        <p className="font-display text-[19px] text-tang">
+        <p className="steal-prep-title font-display text-[19px]">
           {locked ? s.skipLockedIdle : s.rememberClues}
         </p>
         <p className="mt-1.5 text-[13.5px] leading-relaxed text-muted">
@@ -290,7 +284,7 @@ export function StealPhase({ room, uid, card }: Ctx) {
       <Hud remaining={remaining} pct={pct} warn={warn} rush={rush} scores={room.scores} loud kit={room.kit} />
       <div className="h-5" />
       <Label>{s.timeUpOn(s.team[room.kit][room.turn.team])}</Label>
-      <p className="mt-1 text-center font-display text-[42px] text-tang">{s.stealYell}</p>
+      <p className="mt-1 text-center font-display text-[42px]" style={{ color: "var(--plate)" }}>{s.stealYell}</p>
       <p className="mt-2 text-center text-[14.5px] leading-relaxed text-muted">
         {body}
       </p>
@@ -420,7 +414,7 @@ function Wheel({
     if (!row) {
       return (
         <div className="flex items-center justify-center" style={{ height }} aria-hidden>
-          <i className="h-[2px] w-5 rounded-full bg-white/[.06]" />
+          <i className="h-[2px] w-5 rounded-full" style={{ background: "var(--hairline)" }} />
         </div>
       );
     }
@@ -477,7 +471,7 @@ function Wheel({
           a word between them read as two separate cards to compare. */}
       <div
         className="my-1 flex items-center gap-2 rounded-[18px] bg-black/25 px-3 py-2.5"
-        style={{ boxShadow: "0 0 0 2px rgba(255,216,77,.16)" }}
+        style={{ boxShadow: "0 0 0 2px var(--duel-ring)" }}
       >
         <Side t={turn.team} mark={<span className="text-[18px] leading-none">🎤</span>} who={nameOf(room, turn.clueGiverUid)} />
         <span className="shrink-0 text-[20px] leading-none" role="img" aria-label={s.vs}>⚔️</span>
@@ -521,8 +515,8 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
         {Array.from({ length: pipCount }, (_, i) => (
           <i key={i} className="h-[5px] flex-1 rounded-full"
              style={{
-               background: i < room.turnIndex ? "#FFD84D" : i === room.turnIndex ? "#FF9A3C" : "rgba(255,246,233,.15)",
-               boxShadow: i === room.turnIndex ? "0 0 12px rgba(255,154,60,.7)" : undefined,
+               background: i < room.turnIndex ? "var(--pip-done)" : i === room.turnIndex ? "var(--pip-now)" : "var(--pip-empty)",
+               boxShadow: i === room.turnIndex ? "0 0 12px color-mix(in srgb, var(--pip-now) 70%, transparent)" : undefined,
              }} />
         ))}
       </div>
@@ -537,7 +531,7 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
       {yourTurnNote && (
         <>
           <div className="h-2" />
-          <Label tone="#FF9A3C">{yourTurnNote}</Label>
+          <Label tone="var(--lemon)">{yourTurnNote}</Label>
         </>
       )}
 
@@ -549,7 +543,7 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
       {room.hostUid === uid
         ? (
           <>
-            <Btn variant="tang"
+            <Btn variant={room.kit === "cafe" ? "lemon" : "tang"}
               onClick={() => api.startTurn({ roomId: room.id }).catch((e) => flash(errText(e, room.lang)))}>
               {s.startTurn(nameOf(room, room.turn.clueGiverUid))}
             </Btn>
@@ -658,7 +652,7 @@ function EndButtons({
   return (
     <div className="flex flex-col gap-3">
       {room.hostUid === uid && (
-        <Btn variant="tang" onClick={() => api.rematch({ roomId: room.id }).catch((e) => flash(errText(e, room.lang)))}>
+        <Btn variant={room.kit === "cafe" ? "lemon" : "tang"} onClick={() => api.rematch({ roomId: room.id }).catch((e) => flash(errText(e, room.lang)))}>
           {s.rematch}
         </Btn>
       )}

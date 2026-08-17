@@ -28,9 +28,9 @@ export function QR({ url, size = 216 }: { url: string; size?: number }) {
   return (
     <svg viewBox={`0 0 ${span} ${span}`} width={size} height={size}
          shapeRendering="crispEdges" role="img" aria-label={url}
-         style={{ background: "#FFF6E9", borderRadius: 14, display: "block" }}>
+         style={{ background: "var(--paper)", borderRadius: 14, display: "block" }}>
       <g transform={`translate(${quiet} ${quiet})`}>
-        <path d={path} fill="#241638" />
+        <path d={path} fill="var(--ink)" />
       </g>
     </svg>
   );

@@ -101,7 +101,7 @@ export function Wordmark({ size = 58, lang }: { size?: number; lang?: Lang }) {
   );
 
   return (
-    <div className="flex flex-col items-center gap-2 text-cream">
+    <div className="flex flex-col items-center gap-2">
       <Line {...lead} />
       <i className="block h-[2px] w-8 rounded-full bg-lemon/40" />
       <Line {...echo} />
@@ -147,7 +147,7 @@ export function Title({ children, tone }: { children: React.ReactNode; tone?: st
   return (
     <div className="flex items-center gap-3">
       {rule}
-      <h2 className="shrink-0 font-display text-[20px] leading-none" style={{ color: tone ?? "#FFF6E9" }}>
+      <h2 className="shrink-0 font-display text-[20px] leading-none" style={{ color: tone ?? "var(--fg)" }}>
         {children}
       </h2>
       {rule}
@@ -158,7 +158,7 @@ export function Title({ children, tone }: { children: React.ReactNode; tone?: st
 export function Label({ children, tone }: { children: React.ReactNode; tone?: string }) {
   return (
     <p className="text-center text-[11.5px] font-bold tracking-[.18em]"
-       style={{ color: tone ?? "#A99BC4" }}>
+       style={{ color: tone ?? "var(--muted)" }}>
       {children}
     </p>
   );

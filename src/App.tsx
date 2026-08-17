@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { ensureAuth } from "./lib/firebase";
 import {
   useCard, useCardDealer, useCountdown, usePhaseDriver, useBuzzDriver, useRoom, useRounds,
@@ -36,13 +36,15 @@ export default function App() {
   const { room, missing } = useRoom(uid ? roomId : null);
   const me = room && uid ? room.players[uid] : null;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const en = room?.lang === "en";
     document.documentElement.lang = en ? "en" : "ar";
     document.documentElement.dir = en ? "ltr" : "rtl";
     document.title = !room || !me
       ? "ممنوع · Banned"
       : en ? "Banned" : "ممنوع";
+    if (room?.kit === "cafe") document.documentElement.setAttribute("data-kit", "cafe");
+    else document.documentElement.removeAttribute("data-kit");
   }, [room, me]);
 
   // Only the people entitled to the card even open the listener.

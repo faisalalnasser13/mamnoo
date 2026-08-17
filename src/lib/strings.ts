@@ -36,7 +36,7 @@ export interface Strings {
   heatOff: string;
   heatNext: string;
   burned: string;
-  thisRound: (pts: number, gap: string) => string;
+  thisRound: (pts: number) => string;
   aheadBy: (n: number) => string;
   behindBy: (n: number) => string;
   tied: string;
@@ -214,7 +214,7 @@ export const AR: Strings = {
   heatOff: "💧 انطفأ الحماس",
   heatNext: "🔥 القادمة بنقطتين",
   burned: "−1 · البطاقة محروقة",
-  thisRound: (pts, gap) => `+${pts} هذه الجولة · ${gap}`,
+  thisRound: (pts) => `${pts > 0 ? "+" : pts < 0 ? "−" : ""}${pts === 0 ? "0" : Math.abs(pts)} هذه الجولة`,
   aheadBy: (n) => `فريقك متقدّم بفارق ${n}`,
   behindBy: (n) => `فريقك متأخر بفارق ${n}`,
   tied: "تعادل",
@@ -394,7 +394,7 @@ export const EN: Strings = {
   heatOff: "💧 Heat's out",
   heatNext: "🔥 Next one's worth two",
   burned: "−1 · card burned",
-  thisRound: (pts, gap) => `+${pts} this turn · ${gap}`,
+  thisRound: (pts) => `${pts > 0 ? "+" : pts < 0 ? "−" : ""}${pts === 0 ? "0" : Math.abs(pts)} this turn`,
   aheadBy: (n) => `Your team leads by ${n}`,
   behindBy: (n) => `Your team trails by ${n}`,
   tied: "Tied",

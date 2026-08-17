@@ -1,8 +1,8 @@
 import React from "react";
 import type { Kit, LogEntry, Lang, TeamId } from "../lib/types";
-import { HEAT_EVERY, heatPips } from "../lib/rules";
+import { HEAT_EVERY } from "../lib/rules";
 import { S } from "../lib/strings";
-import { Tally } from "./ui";
+import { look, Tally } from "./ui";
 
 /* ------------------------------------------------------------------ */
 
@@ -34,8 +34,11 @@ export function Card({
     <div className={`card ${buzzed ? "card-buzzed" : ""}`} style={small ? { padding: "18px 16px 16px" } : undefined}>
       {kicker && (
         <span
-          className="inline-block rounded-full px-3 py-1 text-[10px] font-black tracking-[.2em] text-white"
-          style={{ background: buzzed ? "#E1584F" : "#FF9A3C" }}
+          className="inline-block rounded-full px-3 py-1 text-[10px] font-black tracking-[.2em]"
+          style={{
+            background: buzzed ? "#E1584F" : "var(--kicker)",
+            color: buzzed ? "#fff" : "var(--plate-ink)",
+          }}
         >
           {kicker}
         </span>
@@ -72,7 +75,7 @@ export function CardSkeleton({ note, unknown }: { note: string; unknown?: string
 /**
  * Clock + both scores.
  *
- * Urgency steps: calm lemon → soft orange at 15s → red blink at 10s.
+ * Urgency steps: calm accent → soft orange at 15s → red blink at 10s.
  * The bar width snaps with the clock (no CSS transition) — a lagged
  * width animation read as a second timer strip trailing the real one.
  */
@@ -95,7 +98,7 @@ export function Hud({
     rush ? "bg-minus bar-rush"
     : warn ? "bg-tang bar-warn"
     : "bg-lemon";
-  const color = rush ? "#E1584F" : warn ? "#FF9A3C" : "#FFD84D";
+  const color = rush ? "#E1584F" : warn ? "#FF9A3C" : "var(--lemon)";
   const size = rush ? 34 : warn ? 30 : 26;
   return (
     <div>
@@ -121,39 +124,62 @@ export function Hud({
 /* ------------------------------------------------------------------ */
 
 /**
- * Heat pips under the card. Three empty slots to start; once the 3rd
- * correct lands, an empty next slot is always waiting — so at 3 you see
- * ●●●○, at 4 ●●●●○, and so on.
+ * Heat under the card — option C.
+ *
+ * Three fuse slots, always. The third lights and a ×2 appears; every
+ * صح after that is a smaller pip, so a long streak doesn't become a
+ * necklace. Lit marks take the describing team's colour and breathe
+ * once heat is on (streak ≥ 3).
  */
-export function Heat({ streak, note }: { streak: number; note?: string }) {
-  const on = heatPips(streak);
-  const slots = Math.max(HEAT_EVERY, on + 1);
+export function Heat({
+  streak, kit, team,
+}: {
+  streak: number;
+  kit: Kit;
+  team: TeamId;
+}) {
+  const hex = look(kit, team).hex;
+  const lit = Math.min(HEAT_EVERY, Math.max(0, streak));
+  const extra = Math.max(0, streak - HEAT_EVERY);
+  const hot = streak >= HEAT_EVERY;
+  const off = `color-mix(in srgb, ${hex} 18%, transparent)`;
   return (
-    <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2">
-      {Array.from({ length: slots }, (_, i) => (
+    <div
+      className={`heat ${hot ? "heat-hot" : ""}`}
+      aria-hidden
+    >
+      {Array.from({ length: HEAT_EVERY }, (_, i) => (
         <i
           key={i}
-          className="h-3 w-3 rounded-full"
-          style={
-            i < on
-              ? { background: "#FF9A3C", boxShadow: "0 0 14px rgba(255,154,60,.75)" }
-              : { background: "rgba(255,246,233,.15)" }
-          }
+          className={`heat-pip ${i < lit ? "heat-on" : ""}`}
+          style={i < lit
+            ? { background: hex, boxShadow: `0 0 12px ${hex}` }
+            : { background: off }}
         />
       ))}
-      {note && <span className="ms-1.5 text-[12px] font-bold text-tang">{note}</span>}
+      {hot && (
+        <span className="heat-x2" style={{ color: hex }}>×2</span>
+      )}
+      {Array.from({ length: extra }, (_, i) => (
+        <i
+          key={`e${i}`}
+          className="heat-extra heat-on"
+          style={{ background: hex, boxShadow: `0 0 8px ${hex}` }}
+        />
+      ))}
     </div>
   );
 }
 
-/** The lemon strip under the card: what you've banked, and the gap. */
-export function RunLine({ children, red }: { children: React.ReactNode; red?: boolean }) {
+/** Banked this turn, under the card. Sign is the colour — no gap copy. */
+export function RunLine({ children, tone }: { children: React.ReactNode; tone: "plus" | "minus" }) {
+  const minus = tone === "minus";
   return (
     <div
       className="mt-3 rounded-full px-3 py-2 text-center text-[14px] font-black"
-      style={red
+      style={minus
         ? { background: "rgba(225,88,79,.18)", color: "#E1584F" }
-        : { background: "rgba(255,216,77,.12)", color: "#FFD84D" }}
+        : { background: "rgba(76,190,123,.16)", color: "#4CBE7B" }}
     >
       {children}
     </div>
@@ -166,9 +192,9 @@ const OUTCOME: Record<LogEntry["res"], { sym: string; cls: string; label: (p: nu
   ok:    { sym: "✓", cls: "bg-plus text-[#10322D]", label: (p) => (p === 2 ? "+2 🔥" : "+1") },
   buzz:  { sym: "✕", cls: "bg-minus text-white",    label: () => "ممنوع −1" },
   skip:  { sym: "↷", cls: "bg-white/15 text-muted", label: () => "تخطي −0.5" },
-  steal: { sym: "⚡", cls: "bg-tang text-[#241638]", label: () => "سرقة +1" },
+  steal: { sym: "⚡", cls: "chip-plate", label: () => "سرقة +1" },
   // Word is already "host +1" / "host −1"; no trailing label.
-  host:  { sym: "★", cls: "bg-tang text-[#241638]", label: () => "" },
+  host:  { sym: "★", cls: "chip-plate", label: () => "" },
 };
 
 /**

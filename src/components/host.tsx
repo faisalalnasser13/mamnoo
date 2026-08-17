@@ -23,7 +23,7 @@ function Points({ n }: { n: number }) {
   // Off the team palette so a chili −2 is still "lost points", not
   // "chili's colour". Bright enough to survive the 42% dim on the
   // losing column of the finale.
-  const color = n > 0 ? "#4CBE7B" : n < 0 ? "#E1584F" : "#A99BC4";
+  const color = n > 0 ? "#4CBE7B" : n < 0 ? "#E1584F" : "var(--muted)";
   return (
     <b className="tabular-nums font-black" dir="ltr" style={{ color }}>
       {sign}{Math.abs(n)}
@@ -279,10 +279,10 @@ export function HostControls({ room }: { room: Room }) {
         {inTurn && (
           room.paused
             ? <Ctl onClick={() => run("resume")} label={s.resume} tone="#4CBE7B" />
-            : <Ctl onClick={() => run("pause")} label={s.pause} tone="#FFD84D" />
+            : <Ctl onClick={() => run("pause")} label={s.pause} tone="var(--lemon)" />
         )}
         {inTurn && (
-          <Ctl onClick={() => run("addTime")} label={s.addTime} tone="#FFD84D"
+          <Ctl onClick={() => run("addTime")} label={s.addTime} tone="var(--lemon)"
                hint={s.addTimeHint} />
         )}
         {inTurn && (

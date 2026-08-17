@@ -98,7 +98,7 @@ export function Home({
         <div className="h-6" />
         <Wordmark size={30} lang={joinLang} />
 
-        <div className="mt-6 rotate-[1deg] rounded-[20px] bg-tang px-3.5 py-3 text-center text-[#3A1D00] shadow-[0_6px_0_#CC6F1B]">
+        <div className="mt-6 room-plate">
           <small className="text-[11px] font-black tracking-[.18em] opacity-75">{s.invitedTo}</small>
           <div className="font-display text-[34px] leading-tight">{code}</div>
         </div>
@@ -251,7 +251,7 @@ function TeamPanel({
         </h4>
         <span
           className="ms-auto shrink-0 text-[9.5px] font-black tracking-[.1em]"
-          style={{ color: mine ? t.hex : "#A99BC4" }}
+          style={{ color: mine ? t.hex : "var(--muted)" }}
         >
           {mine ? s.youAreHere : s.tapToSwitch}
         </span>
@@ -309,7 +309,7 @@ export function Lobby({ room, uid }: { room: Room; uid: string }) {
       {me?.team && <YouChip team={me.team} kit={room.kit} />}
       <div className="h-2" />
 
-      <div className="rotate-[1deg] rounded-[20px] bg-tang px-3.5 py-3 text-center text-[#3A1D00] shadow-[0_6px_0_#CC6F1B]">
+      <div className="room-plate">
         <small className="text-[11px] font-black tracking-[.18em] opacity-75">{s.roomName}</small>
         <div className="font-display text-[34px] leading-tight">{room.id}</div>
       </div>
