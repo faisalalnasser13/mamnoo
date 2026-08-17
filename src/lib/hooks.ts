@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { collection, doc, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db, api } from "./firebase";
+import { now } from "./clock";
 import {
   CLOCK_SKEW_MS, TIMER_GRACE_MS, TIMER_WARN_MS, TIMER_RUSH_MS,
   BUZZ_HOLD_MS, liveStartPad,
@@ -29,7 +30,7 @@ function normalizeRoom(id: string, raw: Record<string, unknown>): Room {
     phase: r.phase ?? "lobby",
     turnIndex: r.turnIndex ?? 0,
     paused: r.paused ?? false,
-    phaseStartedAt: r.phaseStartedAt ?? Date.now(),
+    phaseStartedAt: r.phaseStartedAt ?? now(),
     phaseEndsAt: r.phaseEndsAt ?? null,
     settings: {
       roundSecs: r.settings?.roundSecs ?? 60,
@@ -184,16 +185,17 @@ export function useRounds(roomId: string | null, enabled: boolean) {
 /**
  * Counts down against the absolute `phaseEndsAt`. The clock is never
  * written during a turn — only the deadline is — so a 60-second round
- * costs one write, not sixty.
+ * costs one write, not sixty. `now()` is server-aligned (see clock.ts)
+ * so two phones with disagreeing wall clocks still show the same time.
  *
  * `rush` is the last ten seconds: that's what turns the timer red and
  * makes the screen edges pulse.
  */
 export function useCountdown(room: Room | null) {
-  const [now, setNow] = useState(() => Date.now());
+  const [nowMs, setNowMs] = useState(() => now());
 
   useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 200);
+    const t = setInterval(() => setNowMs(now()), 200);
     return () => clearInterval(t);
   }, []);
 
@@ -211,19 +213,22 @@ export function useCountdown(room: Room | null) {
     room.phase, room.phaseStartedAt, room.phaseEndsAt, room.settings.roundSecs,
   );
   const total = Math.max(1, span - startPad);
-  const inStartGrace = !room.paused && now < room.phaseStartedAt + startPad;
+  const inStartGrace = !room.paused && nowMs < room.phaseStartedAt + startPad;
+  const liveClock = !room.paused && !inStartGrace;
   const remaining = inStartGrace
     ? total
-    : Math.max(0, Math.min(total, room.phaseEndsAt - now));
-  const ticking = !room.paused && !inStartGrace && remaining > 0;
+    : Math.max(0, Math.min(total, room.phaseEndsAt - nowMs));
+  const ticking = liveClock && remaining > 0;
 
   return {
     remaining: room.paused ? null : remaining,
     total,
     pct: Math.max(0, Math.min(1, remaining / total)),
-    expired: !room.paused && now + CLOCK_SKEW_MS >= room.phaseEndsAt + TIMER_GRACE_MS,
+    expired: !room.paused && nowMs + CLOCK_SKEW_MS >= room.phaseEndsAt + TIMER_GRACE_MS,
     warn: ticking && remaining <= TIMER_WARN_MS && remaining > TIMER_RUSH_MS,
-    rush: ticking && remaining <= TIMER_RUSH_MS,
+    // Stay red through 0:00 — the grace beat after the visible clock
+    // hits zero used to drop `ticking` and snap the HUD back to lemon.
+    rush: liveClock && remaining <= TIMER_RUSH_MS,
     inStartGrace,
   };
 }
@@ -300,7 +305,7 @@ export function useBuzzDriver(room: Room | null, uid: string | null) {
     const isJudge = room.turn?.judgeUid === uid;
     if (!isGiver && !isJudge) return;
 
-    const wait = Math.max(0, buzzedAt + BUZZ_HOLD_MS - Date.now()) + (isGiver ? 0 : 1500);
+    const wait = Math.max(0, buzzedAt + BUZZ_HOLD_MS - now()) + (isGiver ? 0 : 1500);
     const t = setTimeout(() => {
       fired.current = stamp;
       api.advancePhase({
@@ -322,14 +327,14 @@ export function useCardDealer(room: Room | null, uid: string | null) {
     if (room.turn?.clueGiverUid !== uid) return;
     if (room.round.cardId !== null || room.round.buzzedAt !== null) return;
     if (room.phaseEndsAt === null) return;
-    if (Date.now() >= room.phaseEndsAt) return;
+    if (now() >= room.phaseEndsAt) return;
 
     // Hold the first card through the silent start beat — dealing during
     // grace burns description time the table hasn't started watching yet.
     const pad = liveStartPad(
       room.phase, room.phaseStartedAt, room.phaseEndsAt, room.settings.roundSecs,
     );
-    const wait = Math.max(0, room.phaseStartedAt + pad - Date.now());
+    const wait = Math.max(0, room.phaseStartedAt + pad - now());
 
     let alive = true;
     const deal = () => { if (alive) api.ensureCard({ roomId: room.id }).catch(() => {}); };

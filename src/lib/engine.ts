@@ -20,6 +20,7 @@ import {
   writeBatch, Transaction,
 } from "firebase/firestore";
 import { db, auth } from "./firebase";
+import { now } from "./clock";
 import {
   OTHER, SKIPS_PER_TURN, STEAL_MS, CLOCK_SKEW_MS,
   TIMER_GRACE_MS, TIMER_START_GRACE_MS, BUZZ_HOLD_MS, DEFAULTS, NAME_MAX,
@@ -154,11 +155,11 @@ async function createRoom({ name, lang }: { name: string; lang: Lang }) {
       const snap = await tx.get(roomRef(id));
       if (snap.exists()) {
         const prev = snap.data() as { updatedAt?: number };
-        if (Date.now() - (prev.updatedAt ?? 0) < STALE_ROOM_MS) return false;
+        if (now() - (prev.updatedAt ?? 0) < STALE_ROOM_MS) return false;
         // Stale: take it over. tx.set replaces the document wholesale,
         // so no stray field from the old game survives.
       }
-      const t = Date.now();
+      const t = now();
       tx.set(roomRef(id), {
         hostUid: uid,
         lang: L,
@@ -197,7 +198,7 @@ async function joinRoom({ roomId, name }: { roomId: string; name: string }) {
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
 
     if (room.players[uid]) {
-      tx.update(roomRef(roomId), { [`players.${uid}.name`]: clean, updatedAt: Date.now() });
+      tx.update(roomRef(roomId), { [`players.${uid}.name`]: clean, updatedAt: now() });
       return;
     }
     if (room.phase !== "lobby") {
@@ -212,9 +213,9 @@ async function joinRoom({ roomId, name }: { roomId: string; name: string }) {
       [`players.${uid}`]: {
         name: clean,
         team: pickBalancedTeam(mintN, chiliN, uid),
-        joinedAt: Date.now(),
+        joinedAt: now(),
       },
-      updatedAt: Date.now(),
+      updatedAt: now(),
     });
   });
   return { ok: true };
@@ -230,7 +231,7 @@ async function leaveRoom({ roomId }: { roomId: string }) {
     if (!rest.length) { tx.delete(roomRef(roomId)); return; }
     const patch: Record<string, unknown> = {
       [`players.${uid}`]: deleteField(),
-      updatedAt: Date.now(),
+      updatedAt: now(),
     };
     // Hand the room over rather than orphaning it.
     if (room.hostUid === uid) patch.hostUid = rest[0];
@@ -252,7 +253,7 @@ async function kickPlayer({ roomId, uid: target }: { roomId: string; uid: string
     const remaining = { ...room.players };
     delete remaining[target];
     const rest = Object.keys(remaining);
-    const t = Date.now();
+    const t = now();
 
     if (!rest.length) {
       tx.delete(cardRef(roomId));
@@ -325,7 +326,7 @@ async function updateSettings({ roomId, settings }: { roomId: string; settings: 
       roundSecs: snapSetting(settings.roundSecs ?? room.settings.roundSecs, ROUND_SECS_OPTIONS),
       roundsPerTeam: snapSetting(settings.roundsPerTeam ?? room.settings.roundsPerTeam, ROUNDS_PER_TEAM_OPTIONS),
     };
-    tx.update(roomRef(roomId), { settings: next, updatedAt: Date.now() });
+    tx.update(roomRef(roomId), { settings: next, updatedAt: now() });
   });
   return { ok: true };
 }
@@ -339,7 +340,7 @@ async function shuffleTeams({ roomId }: { roomId: string }) {
     requireHost(room, uid);
     if (room.phase !== "lobby") throw new GameError("failed-precondition", S(room.lang).err.shuffleLobby);
     const teams = shuffledTeams(Object.keys(room.players), rand);
-    const patch: Record<string, unknown> = { updatedAt: Date.now() };
+    const patch: Record<string, unknown> = { updatedAt: now() };
     for (const [u, t] of Object.entries(teams)) patch[`players.${u}.team`] = t;
     tx.update(roomRef(roomId), patch);
   });
@@ -356,7 +357,7 @@ async function setTeam({ roomId, uid: target, team }: { roomId: string; uid: str
       throw new GameError("permission-denied", S(room.lang).err.moveOthers);
     }
     if (room.phase !== "lobby") throw new GameError("failed-precondition", S(room.lang).err.switchLobby);
-    tx.update(roomRef(roomId), { [`players.${target}.team`]: team, updatedAt: Date.now() });
+    tx.update(roomRef(roomId), { [`players.${target}.team`]: team, updatedAt: now() });
   });
   return { ok: true };
 }
@@ -392,9 +393,9 @@ async function startGame({ roomId }: { roomId: string }) {
       usedCards: room.usedCards ?? [],
       winner: null,
       endReason: null,
-      phaseStartedAt: Date.now(),
+      phaseStartedAt: now(),
       phaseEndsAt: null,
-      updatedAt: Date.now(),
+      updatedAt: now(),
     });
   });
   return { ok: true };
@@ -414,7 +415,7 @@ async function startTurn({ roomId }: { roomId: string }) {
     if (room.phase !== "transition") return; // idempotent
     if (!room.turn) throw new GameError("failed-precondition", S(room.lang).err.noTurn);
 
-    const t = Date.now();
+    const t = now();
     // Bake the silent start beat into the deadline so the table still
     // gets a full roundSecs of visible countdown after it.
     tx.update(roomRef(roomId), {
@@ -456,7 +457,7 @@ async function ensureCard({ roomId }: { roomId: string }) {
     const pad = liveStartPad(
       room.phase, room.phaseStartedAt, room.phaseEndsAt, room.settings.roundSecs,
     );
-    if (Date.now() < room.phaseStartedAt + pad) return;
+    if (now() < room.phaseStartedAt + pad) return;
 
     const deck = deckFor(room.lang);
     picked = drawFrom(deck.length, room.usedCards ?? [], rand);
@@ -467,13 +468,13 @@ async function ensureCard({ roomId }: { roomId: string }) {
       word: deck[picked.id].w,
       taboo: deck[picked.id].t,
       turnIndex: room.turnIndex,
-      at: Date.now(),
+      at: now(),
     });
     tx.update(roomRef(roomId), {
       "round.cardId": picked.id,
-      "round.cardAt": Date.now(),
+      "round.cardAt": now(),
       usedCards: used,
-      updatedAt: Date.now(),
+      updatedAt: now(),
     });
   });
   return { ok: true, cardId: picked ? (picked as { id: number }).id : null };
@@ -502,7 +503,7 @@ async function resolve({
       // The button is disabled during the lockout, but a stale render or
       // a queued tap must not slip through — this is the rule that keeps
       // the steal winnable, so it's enforced here too.
-      const left = (room.phaseEndsAt ?? 0) - Date.now();
+      const left = (room.phaseEndsAt ?? 0) - now();
       if (left <= SKIP_LOCKOUT_MS) {
         throw new GameError("failed-precondition", S(room.lang).err.skipLocked);
       }
@@ -512,7 +513,7 @@ async function resolve({
     if (!card) return;
     const r = resolveCard(res, room.round.streak, room.round.skipsLeft);
     const team = room.turn.team;
-    const t = Date.now();
+    const t = now();
 
     tx.update(roomRef(roomId), {
       "round.cardId": null,
@@ -550,7 +551,7 @@ async function buzz({ roomId, fromCardId }: { roomId: string; fromCardId: number
     if (room.turn?.judgeUid !== uid) {
       throw new GameError("permission-denied", S(room.lang).err.judgeBuzz);
     }
-    tx.update(roomRef(roomId), { "round.buzzedAt": Date.now(), updatedAt: Date.now() });
+    tx.update(roomRef(roomId), { "round.buzzedAt": now(), updatedAt: now() });
   });
   return { ok: true };
 }
@@ -615,12 +616,12 @@ async function advancePhase({
 
     const expired =
       room.phaseEndsAt !== null
-      && Date.now() + CLOCK_SKEW_MS >= room.phaseEndsAt + TIMER_GRACE_MS;
+      && now() + CLOCK_SKEW_MS >= room.phaseEndsAt + TIMER_GRACE_MS;
 
     if (room.phase === "live") {
       // A pending buzz outranks the clock: the card is already dead.
       if (room.round.buzzedAt !== null) {
-        if (Date.now() - room.round.buzzedAt < BUZZ_HOLD_MS && !force) return;
+        if (now() - room.round.buzzedAt < BUZZ_HOLD_MS && !force) return;
         applyBuzz(tx, room);
         return;
       }
@@ -630,10 +631,10 @@ async function advancePhase({
       if (room.round.cardId !== null) {
         tx.update(roomRef(roomId), {
           phase: "steal" as Phase,
-          "round.stealEndsAt": Date.now() + STEAL_MS,
-          phaseStartedAt: Date.now(),
-          phaseEndsAt: Date.now() + STEAL_MS,
-          updatedAt: Date.now(),
+          "round.stealEndsAt": now() + STEAL_MS,
+          phaseStartedAt: now(),
+          phaseEndsAt: now() + STEAL_MS,
+          updatedAt: now(),
         });
         return;
       }
@@ -660,7 +661,7 @@ function applyBuzz(tx: Transaction, room: Room) {
   const card = deckFor(room.lang)[id];
   if (!card) return;
   const r = resolveCard("buzz", room.round.streak, room.round.skipsLeft);
-  const t = Date.now();
+  const t = now();
   tx.update(roomRef(room.id), {
     "round.cardId": null,
     "round.cardAt": null,
@@ -685,7 +686,7 @@ function writeRecap(
 ) {
   if (!room.turn) return;
   const log = opts.extraLog ? [...room.round.log, opts.extraLog] : room.round.log;
-  const t = Date.now();
+  const t = now();
 
   const scores = { ...room.scores };
   if (opts.stealTo) scores[opts.stealTo] = applyPoints(scores[opts.stealTo], 1);
@@ -718,7 +719,7 @@ function writeRecap(
 function nextTurnIn(tx: Transaction, room: Room) {
   const next = room.turnIndex + 1;
   const reason = isOver(room.scores, next, room.settings);
-  const t = Date.now();
+  const t = now();
 
   if (reason) {
     tx.update(roomRef(room.id), {
@@ -792,7 +793,7 @@ async function hostControl({
     if (!snap.exists()) throw new GameError("not-found", S("ar").err.roomMissing);
     const room = asRoom(roomId, snap.data() as Record<string, unknown>);
     requireHost(room, uid);
-    const t = Date.now();
+    const t = now();
 
     if (action === "pause") {
       if (room.paused || room.phaseEndsAt === null) return;
@@ -921,9 +922,9 @@ async function rematch({ roomId }: { roomId: string }) {
       usedCards: room.usedCards ?? [],
       winner: null,
       endReason: null,
-      phaseStartedAt: Date.now(),
+      phaseStartedAt: now(),
       phaseEndsAt: null,
-      updatedAt: Date.now(),
+      updatedAt: now(),
     });
   });
   return { ok: true };

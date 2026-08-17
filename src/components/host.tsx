@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { api, errText } from "../lib/firebase";
 import type { HostAction } from "../lib/engine";
-import { membersOf, OTHER, pointsByPlayer, rolesForTurn, totalTurns } from "../lib/rules";
+import { OTHER } from "../lib/rules";
 import type { Room, RoundRecord, TeamId } from "../lib/types";
 import { look, TeamMark } from "./ui";
 import { S } from "../lib/strings";
@@ -34,10 +34,11 @@ function Points({ n }: { n: number }) {
 /**
  * One board, not two.
  *
- * Team total is the centred heading. During the game, per-player rows
- * appear only after that person has described. On the final screen
- * (`highlight` set) every roster name shows, the winning side gets a
- * trophy, and winners wear a gold medal.
+ * Team total is the centred heading. Under it, one row per finished
+ * turn — not one row per hinter. A player who describes twice shows
+ * twice, each with that turn's points, so a later turn cannot rewrite
+ * an earlier one. On the final screen (`highlight` set) the winning
+ * side gets a trophy, and each of its turn rows wears a gold medal.
  */
 export function ScoreBoard({
   room, uid, rounds, highlight, compact,
@@ -46,37 +47,59 @@ export function ScoreBoard({
   uid: string;
   rounds: RoundRecord[];
   compact?: boolean;
-  /** Winning team (or draw) — enables trophy / medals / full roster. */
+  /** Winning team (or draw) — enables trophy / medals. */
   highlight?: TeamId | "draw" | null;
 }) {
   const s = S(room.lang);
-  const scored = pointsByPlayer(rounds);
-  const total = totalTurns(room.settings);
   const finale = highlight != null;
-
-  /**
-   * Describers in the order they actually come up. The horizon runs past
-   * the schedule in overtime, or a player who only described after the
-   * last scheduled turn would bank points and never appear.
-   */
-  const order = (team: TeamId) => {
-    const seen: string[] = [];
-    const horizon = Math.max(total, room.turnIndex + 1);
-    for (let i = 0; i < horizon; i++) {
-      const r = rolesForTurn(room.players, i);
-      if (r?.team === team && !seen.includes(r.clueGiverUid)) seen.push(r.clueGiverUid);
-    }
-    return seen;
-  };
+  // Recap writes the round doc in the same transaction as the phase
+  // flip, but the rounds listener can lag the room listener by a
+  // snapshot. Until it lands, synthesise the turn that just ended so
+  // the new row is on the board with the big number above it.
+  const listed =
+    room.phase === "recap" && room.turn && !rounds.some((r) => r.index === room.turnIndex)
+      ? [...rounds, {
+          index: room.turnIndex,
+          team: room.turn.team,
+          clueGiverUid: room.turn.clueGiverUid,
+          judgeUid: room.turn.judgeUid,
+          points: room.round.points,
+          log: room.round.log,
+          at: 0,
+        }]
+      : rounds;
+  const of = (team: TeamId) => listed.filter((r) => r.team === team);
 
   const cellDim = (team: TeamId) =>
     finale && highlight !== "draw" && highlight !== team ? 0.42 : 1;
 
-  /* ---- in-game: independent columns (only played rows) ---- */
+  const TurnRow = ({
+    team, rd, medal, pad,
+  }: {
+    team: TeamId;
+    rd: RoundRecord;
+    medal?: boolean;
+    pad?: boolean;
+  }) => (
+    <div
+      className={`grid grid-cols-[1.25rem_minmax(0,1fr)_2.25rem] items-baseline gap-1 text-[12.5px] font-medium ${
+        pad ? "h-[26px] items-center px-3" : ""
+      }`}
+      style={finale ? { opacity: cellDim(team) } : undefined}
+    >
+      <span className="text-center leading-none">{medal ? "🥇" : ""}</span>
+      <span className="truncate text-start" style={{ opacity: 0.85 }}>
+        {room.players[rd.clueGiverUid]?.name ?? "…"}{rd.clueGiverUid === uid ? s.you : ""}
+      </span>
+      <span className="text-end"><Points n={rd.points} /></span>
+    </div>
+  );
+
+  /* ---- in-game: independent columns (only finished turns) ---- */
   if (!finale) {
     const Column = ({ team }: { team: TeamId }) => {
       const hex = look(room.kit, team).hex;
-      const rows = order(team).filter((u) => u in scored);
+      const rows = of(team);
       return (
         <div className={`flex min-w-0 flex-1 flex-col px-3 ${compact ? "py-2" : "py-3"}`}>
           <div className="text-center">
@@ -89,17 +112,8 @@ export function ScoreBoard({
           </div>
           {rows.length > 0 && (
             <div className={`flex flex-col gap-1 ${compact ? "mt-1.5" : "mt-2.5"}`}>
-              {rows.map((u) => (
-                <div
-                  key={u}
-                  className="grid grid-cols-[1.25rem_minmax(0,1fr)_2.25rem] items-baseline gap-1 text-[12.5px] font-medium"
-                >
-                  <span />
-                  <span className="truncate text-start" style={{ opacity: 0.85 }}>
-                    {room.players[u]?.name ?? "…"}{u === uid ? s.you : ""}
-                  </span>
-                  <span className="text-end"><Points n={scored[u]} /></span>
-                </div>
+              {rows.map((rd) => (
+                <TurnRow key={rd.index} team={team} rd={rd} />
               ))}
             </div>
           )}
@@ -115,9 +129,9 @@ export function ScoreBoard({
     );
   }
 
-  /* ---- finale: one 2-col grid so every roster row shares a baseline ---- */
-  const mintRows = membersOf(room.players, "mint");
-  const chiliRows = membersOf(room.players, "chili");
+  /* ---- finale: one 2-col grid so every turn row shares a baseline ---- */
+  const mintRows = of("mint");
+  const chiliRows = of("chili");
   const rowCount = Math.max(mintRows.length, chiliRows.length);
 
   const Header = ({ team }: { team: TeamId }) => {
@@ -138,28 +152,6 @@ export function ScoreBoard({
         <div className="mt-0.5 font-display text-[34px] leading-none" style={{ color: hex }} dir="ltr">
           {room.scores[team]}
         </div>
-      </div>
-    );
-  };
-
-  const Row = ({ team, playerUid }: { team: TeamId; playerUid: string | undefined }) => {
-    const won = highlight === team;
-    if (!playerUid) {
-      return <div className="h-[26px] px-3" style={{ opacity: cellDim(team) }} aria-hidden />;
-    }
-    const played = playerUid in scored;
-    return (
-      <div
-        className="grid h-[26px] grid-cols-[1.25rem_minmax(0,1fr)_2.25rem] items-center gap-1 px-3 text-[12.5px] font-medium"
-        style={{ opacity: cellDim(team) }}
-      >
-        <span className="text-center leading-none">{won ? "🥇" : ""}</span>
-        <span className="truncate text-start" style={{ opacity: played ? 1 : 0.55 }}>
-          {room.players[playerUid]?.name ?? "…"}{playerUid === uid ? s.you : ""}
-        </span>
-        <span className="text-end" dir="ltr" style={{ opacity: played ? 1 : 0.55 }}>
-          {played ? <Points n={scored[playerUid]} /> : "–"}
-        </span>
       </div>
     );
   };
@@ -188,8 +180,12 @@ export function ScoreBoard({
         <Header team="chili" />
         {Array.from({ length: rowCount }, (_, i) => (
           <React.Fragment key={i}>
-            <Row team="mint" playerUid={mintRows[i]} />
-            <Row team="chili" playerUid={chiliRows[i]} />
+            {mintRows[i]
+              ? <TurnRow team="mint" rd={mintRows[i]} medal={highlight === "mint"} pad />
+              : <div className="h-[26px] px-3" style={{ opacity: cellDim("mint") }} aria-hidden />}
+            {chiliRows[i]
+              ? <TurnRow team="chili" rd={chiliRows[i]} medal={highlight === "chili"} pad />
+              : <div className="h-[26px] px-3" style={{ opacity: cellDim("chili") }} aria-hidden />}
           </React.Fragment>
         ))}
       </div>

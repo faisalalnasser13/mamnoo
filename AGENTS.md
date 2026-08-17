@@ -262,6 +262,9 @@ explicitly or clients fight:
 
 The timer is **never written during a turn**. Only `phaseEndsAt` is,
 once, at turn start. A 60-second round costs one write, not sixty.
+Deadlines and the on-screen countdown use `now()` from `clock.ts` —
+each phone's offset from Firestore server time — so a table whose wall
+clocks disagree by a few seconds still shows the same remaining time.
 
 ---
 
@@ -287,7 +290,7 @@ once, at turn start. A 60-second round costs one write, not sixty.
 | The host can end a turn mid-play | `hostControl({ action: "skipTurn" })`. It's the only way out of a turn whose describer dropped off: the card is dealt by their device, and a round with no card can't be ended by the clock either |
 | The host can kick mid-game | Lobby and host menu. Kicking the describer mid-turn closes the turn; emptying a side ends the game |
 | Pausing banks the remaining time | `pausedLeft`. Resuming from a fresh full timer would hand out free seconds |
-| One scoreboard, not two | Team total and per-player breakdown are the same information at two zoom levels, so the total is the heading of the list that produces it |
+| One scoreboard, not two | Team total and the turn list are the same information at two zoom levels, so the total is the heading of the turns that produce it. A hinter who goes twice gets two rows |
 | A buzz at zero makes the score −1 | `applyPoints` does not floor. A free pass at 0 made ممنوع cost nothing when you were already losing |
 | Games always finish the round counter | No early target score — a tie past the last turn goes to overtime until someone leads |
 | Room names get a digit suffix | The 50 words ran out. Better than a random code, which nobody can say on a call |

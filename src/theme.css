@@ -206,20 +206,36 @@ html[data-kit="cafe"] .btn-tang:active { box-shadow: 0 2px 0 var(--plate-shadow)
 
 .heat {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: 8px; margin-top: 14px;
+  gap: 8px; margin-top: 18px;
+  /* Same 16px slot as ash and ×2. Lick grows up into this padding so
+     the row stays aligned and the tips are not clipped. */
+  padding: 16px 8px 4px;
+  overflow: visible;
+  flex-shrink: 0;
+  position: relative; z-index: 2;
+}
+.heat-ash,
+.heat-flame,
+.heat-x2 {
+  height: 16px; flex-shrink: 0;
 }
 .heat-ash {
-  width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+  width: 16px; border-radius: 50%;
   background: var(--heat-off);
 }
 .heat-flame {
-  width: 16px; height: 16px; flex-shrink: 0;
+  width: 16px;
   display: grid; place-items: center;
-  font-size: 15px; line-height: 1; font-style: normal;
+  overflow: visible; font-style: normal;
+}
+.heat-flame > span {
+  display: block;
+  font-size: 16px; line-height: 1; font-style: normal;
+  transform-origin: 50% 100%;
   animation: heatlick .42s ease-in-out infinite;
-  transform-origin: 50% 88%;
 }
 .heat-x2 {
+  display: flex; align-items: center;
   font-family: "Baloo Bhaijaan 2", sans-serif;
   font-size: 15px; font-weight: 800; line-height: 1;
   color: var(--muted);

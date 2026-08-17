@@ -136,7 +136,9 @@ export function Heat({ streak }: { streak: number }) {
   const extra = Math.max(0, streak - HEAT_EVERY);
   const hot = streak >= HEAT_EVERY;
   const flame = (key: string, delay: number) => (
-    <i key={key} className="heat-flame" style={{ animationDelay: `${delay}s` }}>🔥</i>
+    <i key={key} className="heat-flame">
+      <span style={{ animationDelay: `${delay}s` }}>🔥</span>
+    </i>
   );
   return (
     <div className="heat" aria-hidden>

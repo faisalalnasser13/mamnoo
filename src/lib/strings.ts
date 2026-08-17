@@ -29,8 +29,6 @@ export interface Strings {
   chipYourTurn: string;
   chipTheirTurn: string;
 
-  explainIt: string;
-  hurry: string;
   drawing: string;
   waitingCard: string;
   heatOff: string;
@@ -110,10 +108,7 @@ export interface Strings {
   yourNamePh: string;
   joinCta: string;
   otherRoom: string;
-  youAreHere: string;
-  tapToSwitch: string;
   nobodyYet: string;
-  teamsHint: string;
   showQr: string;
   hideQr: string;
   scanToJoin: string;
@@ -207,8 +202,6 @@ export const AR: Strings = {
   chipYourTurn: "جولتكم",
   chipTheirTurn: "جولتهم",
 
-  explainIt: "اشرحها",
-  hurry: "بسرعة!",
   drawing: "جاري السحب…",
   waitingCard: "بانتظار البطاقة…",
   heatOff: "💧 انطفأ الحماس",
@@ -289,10 +282,7 @@ export const AR: Strings = {
   yourNamePh: "سعد بن صالح",
   joinCta: "ادخل الغرفة",
   otherRoom: "غرفة ثانية",
-  youAreHere: "أنت هنا",
-  tapToSwitch: "اضغط للانتقال",
   nobodyYet: "ما في أحد بعد",
-  teamsHint: "اضغط على الفريق الآخر لتنتقل له",
   showQr: "▦ رمز QR",
   hideQr: "إخفاء رمز QR",
   scanToJoin: "امسح الرمز بالكاميرا للدخول",
@@ -387,8 +377,6 @@ export const EN: Strings = {
   chipYourTurn: "Your turn",
   chipTheirTurn: "Their turn",
 
-  explainIt: "Describe it",
-  hurry: "Hurry!",
   drawing: "Drawing…",
   waitingCard: "Waiting for the card…",
   heatOff: "💧 Heat's out",
@@ -469,10 +457,7 @@ export const EN: Strings = {
   yourNamePh: "Your name",
   joinCta: "Join the room",
   otherRoom: "Different room",
-  youAreHere: "You're here",
-  tapToSwitch: "Tap to switch",
   nobodyYet: "Nobody yet",
-  teamsHint: "Tap the other side to switch teams",
   showQr: "▦ QR code",
   hideQr: "Hide QR code",
   scanToJoin: "Scan this with a camera to join",

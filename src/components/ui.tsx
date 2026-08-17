@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import type { FlashMsg } from "../lib/hooks";
 import type { Kit, Lang, TeamId } from "../lib/types";
 
@@ -196,7 +196,7 @@ export function Avatar({ name, team, kit, big }: { name: string; team: TeamId; k
  * mint. `loud` is the spectator size — guessers have no card, so the
  * tick has room to be the event.
  */
-export function Tally({
+export const Tally = memo(function Tally({
   scores, loud, kit,
 }: {
   scores: Record<TeamId, number>;
@@ -219,37 +219,38 @@ export function Tally({
       }
     });
     prev.current = scores;
-    if (any) setHit(next);
+    if (!any) return;
+    setHit(next);
+    const id = window.setTimeout(() => setHit({}), 650);
+    return () => window.clearTimeout(id);
   }, [scores.mint, scores.chili]);
-
-  const Pill = ({ team }: { team: TeamId }) => {
-    const L = look(kit, team);
-    const h = hit[team];
-    const up = h != null && h.d > 0;
-    return (
-      <span
-        className={`tally-pill ${loud ? "tally-loud" : ""} ${h ? (up ? "tally-up" : "tally-down") : ""}`}
-        style={{ background: L.hex, color: L.ink }}
-      >
-        {h && <i key={`r${h.k}`} className="tally-ring" aria-hidden />}
-        <span className="tally-em"><TeamMark kit={kit} team={team} size={loud ? 22 : 16} /></span>
-        <span className="tally-num">{scores[team]}</span>
-        {h && (
-          <span key={`g${h.k}`} className="tally-ghost" aria-hidden>
-            {h.d > 0 ? "+" : "−"}{Math.abs(h.d)}
-          </span>
-        )}
-      </span>
-    );
-  };
 
   return (
     <div className="flex gap-1.5" dir="ltr">
-      <Pill team="mint" />
-      <Pill team="chili" />
+      {(["mint", "chili"] as const).map((team) => {
+        const L = look(kit, team);
+        const h = hit[team];
+        const up = h != null && h.d > 0;
+        return (
+          <span
+            key={team}
+            className={`tally-pill ${loud ? "tally-loud" : ""} ${h ? (up ? "tally-up" : "tally-down") : ""}`}
+            style={{ background: L.hex, color: L.ink }}
+          >
+            {h && <i key={`r${h.k}`} className="tally-ring" aria-hidden />}
+            <span className="tally-em"><TeamMark kit={kit} team={team} size={loud ? 22 : 16} /></span>
+            <span className="tally-num">{scores[team]}</span>
+            {h && (
+              <span key={`g${h.k}`} className="tally-ghost" aria-hidden>
+                {h.d > 0 ? "+" : "−"}{Math.abs(h.d)}
+              </span>
+            )}
+          </span>
+        );
+      })}
     </div>
   );
-}
+});
 
 export function Flash({ msg }: { msg: FlashMsg | null }) {
   if (!msg) return null;

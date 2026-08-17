@@ -30,7 +30,7 @@ const pick = (arr) => arr[Math.floor(rand() * arr.length)];
 const as = (uid) => fs.__setUser(uid);
 const roomOf = async (id) => (await api.loadRoom(id));
 
-/** Fake the clock forward — the engine reads Date.now() for deadlines. */
+/** Fake the clock forward — the engine reads now() (Date.now + offset). */
 let clockShift = 0;
 const realNow = Date.now;
 Date.now = () => realNow() + clockShift;

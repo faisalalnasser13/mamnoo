@@ -214,8 +214,7 @@ function Chips({
  * name — a target the width of the text, on a panel that gave no sign of
  * which side you were already on, so a tap that did nothing (your own
  * panel) and a tap that moved you looked identical. The side you're on
- * is now lit in its own colour and says so, and the other side says what
- * a tap will do.
+ * is now lit in its own colour; the other is dashed.
  *
  * The host's per-player ⇄ and ✕ stop propagation, or moving someone else
  * would also move the host.
@@ -235,7 +234,7 @@ function TeamPanel({
     <div
       role={mine ? undefined : "button"}
       tabIndex={mine ? undefined : 0}
-      aria-label={mine ? undefined : `${s.team[room.kit][team]} — ${s.tapToSwitch}`}
+      aria-label={mine ? undefined : s.team[room.kit][team]}
       onClick={mine ? undefined : join}
       onKeyDown={mine ? undefined : (e) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); join(); }
@@ -245,17 +244,9 @@ function TeamPanel({
       }`}
       style={mine ? { borderColor: t.hex, background: `${t.hex}1F` } : undefined}
     >
-      <div className="mb-2.5 flex items-baseline gap-1.5">
-        <h4 className="flex items-center gap-1 text-[12.5px] font-black" style={{ color: t.hex }}>
-          <TeamMark kit={room.kit} team={team} size={14} /> {s.team[room.kit][team]}
-        </h4>
-        <span
-          className="ms-auto shrink-0 text-[9.5px] font-black tracking-[.1em]"
-          style={{ color: mine ? t.hex : "var(--muted)" }}
-        >
-          {mine ? s.youAreHere : s.tapToSwitch}
-        </span>
-      </div>
+      <h4 className="mb-2.5 flex items-center gap-1 text-[12.5px] font-black" style={{ color: t.hex }}>
+        <TeamMark kit={room.kit} team={team} size={14} /> {s.team[room.kit][team]}
+      </h4>
 
       {members.length === 0 && (
         <p className="text-[12px] font-bold text-muted/70">{s.nobodyYet}</p>
@@ -332,7 +323,6 @@ export function Lobby({ room, uid }: { room: Room; uid: string }) {
             onMove={(u, to) => call(api.setTeam({ roomId: room.id, uid: u, team: to }))} />
         ))}
       </div>
-      <p className="mt-1.5 text-center text-[11px] text-muted/70">{s.teamsHint}</p>
 
       {isHost && (
         <Btn variant="ghost" className="mt-2.5"

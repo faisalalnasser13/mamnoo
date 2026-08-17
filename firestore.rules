@@ -79,5 +79,12 @@ service cloud.firestore {
     match /rooms/{roomId}/rounds/{roundId} {
       allow read, write: if inRoom(roomId);
     }
+
+    // Per-device clock ping. serverTimestamp in, read back, so every
+    // phone can count the same phaseEndsAt even when wall clocks differ.
+    // Never the room — a clock write must not touch game state.
+    match /clock/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
   }
 }

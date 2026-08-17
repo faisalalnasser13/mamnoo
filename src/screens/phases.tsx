@@ -79,8 +79,7 @@ export function LivePhase({ room, uid, card }: Ctx) {
         <div className="h-3.5" />
 
         {card
-          ? <Card word={card.word} taboo={card.taboo} stamp={s.stamp}
-              kicker={buzzed ? "…" : rush ? s.hurry : s.explainIt} buzzed={buzzed} />
+          ? <Card word={card.word} taboo={card.taboo} stamp={s.stamp} buzzed={buzzed} />
           : <CardSkeleton note={s.drawing} unknown={s.unknownCard} />}
 
         <Heat streak={room.round.streak} />
@@ -564,7 +563,7 @@ export function TransitionPhase({ room, uid, rounds }: Ctx) {
  * The reveal, on one screen without scrolling.
  *
  * The scoreboard is the hero — winning side gets a trophy and gold
- * medals on every name. Stats sit under it in one panel.
+ * medals on each of its turns. Stats sit under it in one panel.
  */
 export function EndPhase({ room, uid, rounds }: Ctx) {
   const { msg, flash } = useFlash();

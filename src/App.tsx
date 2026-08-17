@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { ensureAuth } from "./lib/firebase";
+import { ensureAuth, syncClock, watchClockSync } from "./lib/firebase";
 import {
   useCard, useCardDealer, useCountdown, usePhaseDriver, useBuzzDriver, useRoom, useRounds,
 } from "./lib/hooks";
@@ -22,7 +22,15 @@ export default function App() {
   const [roomId, setRoomId] = useState<string | null>(() => hashRoom() || null);
 
   useEffect(() => {
-    ensureAuth().then((u) => setUid(u.uid)).catch(() => setAuthFailed(true));
+    let stop = () => {};
+    ensureAuth()
+      .then(async (u) => {
+        await syncClock().catch(() => {});
+        setUid(u.uid);
+        stop = watchClockSync();
+      })
+      .catch(() => setAuthFailed(true));
+    return () => stop();
   }, []);
 
   useEffect(() => {
