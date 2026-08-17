@@ -211,13 +211,14 @@ export function HostControls({ room }: { room: Room }) {
   const [err, setErr] = useState<string | null>(null);
   const s = S(room.lang);
 
+  const SCORE: HostAction[] = ["plusGuess", "plusHalf", "minusHalf", "minusGuess"];
   const run = (action: HostAction) => {
     setErr(null);
     api.hostControl({ roomId: room.id, action })
       .then(() => {
-        // Keep the menu open for score taps so the host can correct
+        // Keep the sheet open for score taps so the host can correct
         // more than once without reopening.
-        if (action !== "plusGuess" && action !== "minusGuess") setOpen(false);
+        if (!SCORE.includes(action)) setOpen(false);
       })
       .catch((e) => setErr(errText(e, room.lang)));
   };
@@ -257,61 +258,108 @@ export function HostControls({ room }: { room: Room }) {
   }
 
   return (
-    <div className="mt-2 rounded-[16px] border border-white/10 bg-black/35 p-3">
-      <div className="mb-2 flex items-center">
-        <span className="text-[11px] font-black tracking-[.16em] text-muted">{s.hostMenu}</span>
-        <button onClick={() => setOpen(false)} className="ms-auto text-[15px] text-muted">✕</button>
-      </div>
+    <>
+      <button
+        type="button"
+        className="fixed inset-0 z-20 bg-black/55"
+        onClick={() => setOpen(false)}
+        aria-label={s.hostClose}
+      />
+      <div
+        role="dialog"
+        aria-label={s.hostMenu}
+        className="fixed inset-x-0 bottom-0 z-30 mx-auto flex max-h-[88dvh] w-full max-w-[460px] flex-col rounded-t-[26px] border border-white/10 bg-black/80 p-4 pb-[calc(22px+var(--safe-b))]"
+      >
+        <div className="relative mb-4 min-h-[44px] pe-12">
+          <h3 className="pt-1 font-display text-[24px] leading-tight">{s.hostMenu}</h3>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="absolute end-0 top-0 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-[20px] font-black text-muted"
+            aria-label={s.hostClose}
+          >
+            ✕
+          </button>
+        </div>
 
-      <div className="flex flex-col gap-2">
-        {guessTeam && (
-          <>
-            <Ctl onClick={() => run("plusGuess")} label={s.plusGuess(guessName)} tone="#4CBE7B"
-                 hint={s.guessHint} />
-            <Ctl onClick={() => run("minusGuess")} label={s.minusGuess(guessName)} tone="#E1584F"
-                 hint={s.guessHint} />
-          </>
-        )}
-        {inTurn && (
-          room.paused
-            ? <Ctl onClick={() => run("resume")} label={s.resume} tone="#4CBE7B" />
-            : <Ctl onClick={() => run("pause")} label={s.pause} tone="var(--lemon)" />
-        )}
-        {inTurn && (
-          <Ctl onClick={() => run("addTime")} label={s.addTime} tone="var(--lemon)"
-               hint={s.addTimeHint} />
-        )}
-        {inTurn && (
-          <Ctl onClick={() => run("skipTurn")} label={s.skipTurn} tone="#FF9A3C"
-               hint={s.skipTurnHint} />
-        )}
-        {kickable.length > 0 && (
-          <div className="rounded-[13px] bg-black/30 px-3 py-2.5">
-            <div className="text-[14.5px] font-black text-minus">{s.kickPlayer}</div>
-            <small className="block text-[11px] font-normal text-muted">{s.kickHint}</small>
-            <div className="mt-2 flex flex-col gap-1.5">
-              {kickable.map(([u, p]) => (
-                <button
-                  key={u}
-                  onClick={() => kick(u)}
-                  className="flex items-center gap-2 rounded-[10px] bg-black/25 px-2.5 py-2 text-start"
-                >
-                  <span className="min-w-0 flex-1 truncate text-[13.5px] font-bold">
-                    {p.name}
-                    {p.team ? <span className="inline-flex items-center gap-1"> · <TeamMark kit={room.kit} team={p.team} size={14} /></span> : ""}
-                  </span>
-                  <span className="shrink-0 text-[12px] font-black text-minus">{s.kick}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        <Ctl onClick={() => run("endGame")} label={s.endGame} tone="#E1584F"
-             hint={s.endGameHint} />
-      </div>
+        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
+          {guessTeam && (
+            <section>
+              <p className="mb-2 text-[12px] font-black tracking-[.08em] text-muted">
+                {s.scoreSection} · {guessName}
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                <Pad onClick={() => run("plusGuess")} tone="#4CBE7B" label="+1" aria={s.plusGuess(guessName)} />
+                <Pad onClick={() => run("plusHalf")} tone="#4CBE7B" label="+0.5" aria={s.plusHalf(guessName)} />
+                <Pad onClick={() => run("minusHalf")} tone="#E1584F" label="−0.5" aria={s.minusHalf(guessName)} />
+                <Pad onClick={() => run("minusGuess")} tone="#E1584F" label="−1" aria={s.minusGuess(guessName)} />
+              </div>
+              <p className="mt-1.5 text-[11px] text-muted">{s.guessHint}</p>
+            </section>
+          )}
 
-      {err && <p className="mt-2 text-center text-[12px] font-bold text-minus">{err}</p>}
-    </div>
+          {inTurn && (
+            <section>
+              <p className="mb-2 text-[12px] font-black tracking-[.08em] text-muted">{s.turnSection}</p>
+              <div className="grid grid-cols-2 gap-2">
+                {room.paused
+                  ? <Ctl onClick={() => run("resume")} label={s.resume} tone="#4CBE7B" />
+                  : <Ctl onClick={() => run("pause")} label={s.pause} tone="var(--lemon)" />}
+                <Ctl onClick={() => run("addTime")} label={s.addTime} tone="var(--lemon)"
+                     hint={s.addTimeHint} />
+              </div>
+              <div className="mt-2">
+                <Ctl onClick={() => run("skipTurn")} label={s.skipTurn} tone="#FF9A3C"
+                     hint={s.skipTurnHint} />
+              </div>
+            </section>
+          )}
+
+          {kickable.length > 0 && (
+            <section className="rounded-[16px] bg-white/5 px-3 py-3">
+              <div className="text-[15px] font-black text-minus">{s.kickPlayer}</div>
+              <small className="block text-[11px] font-normal text-muted">{s.kickHint}</small>
+              <div className="mt-2.5 flex flex-col gap-1.5">
+                {kickable.map(([u, p]) => (
+                  <button
+                    key={u}
+                    onClick={() => kick(u)}
+                    className="flex items-center gap-2 rounded-[12px] bg-black/30 px-3 py-2.5 text-start"
+                  >
+                    <span className="min-w-0 flex-1 truncate text-[15px] font-bold">
+                      {p.name}
+                      {p.team ? <span className="inline-flex items-center gap-1"> · <TeamMark kit={room.kit} team={p.team} size={14} /></span> : ""}
+                    </span>
+                    <span className="shrink-0 text-[13px] font-black text-minus">{s.kick}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <Ctl onClick={() => run("endGame")} label={s.endGame} tone="#E1584F"
+               hint={s.endGameHint} />
+        </div>
+
+        {err && <p className="mt-3 text-center text-[12px] font-bold text-minus">{err}</p>}
+      </div>
+    </>
+  );
+}
+
+function Pad({
+  onClick, tone, label, aria,
+}: { onClick: () => void; tone: string; label: string; aria: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={aria}
+      className="rounded-[16px] bg-white/10 py-4 text-center font-display text-[26px] leading-none"
+      style={{ color: tone }}
+    >
+      {label}
+    </button>
   );
 }
 
@@ -321,10 +369,10 @@ function Ctl({
   return (
     <button
       onClick={onClick}
-      className="rounded-[13px] bg-black/30 px-3 py-2.5 text-start"
+      className="w-full rounded-[16px] bg-white/10 px-3 py-3.5 text-start"
       style={{ color: tone }}
     >
-      <span className="text-[14.5px] font-black">{label}</span>
+      <span className="text-[16px] font-black">{label}</span>
       {hint && <small className="block text-[11px] font-normal text-muted">{hint}</small>}
     </button>
   );

@@ -225,7 +225,7 @@ built straight from `taboo_deck.json` via `scripts/build-deck.mjs`.
 src/lib/rules.ts      pure logic: turn order, scoring, heat, end, stats. No Firebase.
 src/lib/engine.ts     every state transition, as a guarded transaction
 src/lib/hooks.ts      live subscriptions, countdown, phase/buzz/deal drivers
-src/lib/deck.ts       ~994 Arabic cards (from taboo_deck.json) + 50 room-name words
+src/lib/deck.ts       ~1030 Arabic cards (from taboo_deck.json) + 50 room-name words
 src/lib/deck.en.ts    ~680 English cards (from taboo_deck_680_us.json) + 50 room-name words
 src/lib/strings.ts    AR/EN copy; room.lang picks the pack from lobby onward
 src/lib/arabic.ts     normalisation (from تشفير)
@@ -321,7 +321,7 @@ clocks disagree by a few seconds still shows the same remaining time.
 - **No presence indicator.** Firestore has no `onDisconnect`. If this
   matters, it's the one thing worth a Realtime Database instance
   alongside — Spark allows both.
-- **~994 Arabic cards** (from taboo_deck.json) and **~680 English cards**
+- **~1030 Arabic cards** (from taboo_deck.json) and **~680 English cards**
   (from taboo_deck_680_us.json), both kept as-is. A single game uses about
   27 and never repeats one. `usedCards` is written in the same transaction
   that deals the card, and rematches in the same room keep that list so

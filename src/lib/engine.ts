@@ -756,7 +756,14 @@ function nextTurnIn(tx: Transaction, room: Room) {
 
 export type HostAction =
   | "pause" | "resume" | "skipTurn" | "endGame"
-  | "addTime" | "plusGuess" | "minusGuess";
+  | "addTime" | "plusGuess" | "minusGuess" | "plusHalf" | "minusHalf";
+
+const HOST_DELTA: Partial<Record<HostAction, number>> = {
+  plusGuess: 1,
+  minusGuess: -1,
+  plusHalf: 0.5,
+  minusHalf: -0.5,
+};
 
 /**
  * Team the host ± buttons apply to.
@@ -781,8 +788,8 @@ function guessingTeamOf(room: Room): TeamId | null {
  * `pause` is for the doorbell. `skipTurn` is the recovery hatch: if the
  * describer's phone dies or their tab crashes, no card is ever dealt and
  * the turn cannot end on its own — someone has to be able to move the
- * table on. `endGame` jumps to the final screen. `addTime` / ±guess are
- * table-side corrections the host makes out loud on the call.
+ * table on. `endGame` jumps to the final screen. `addTime` / ±1 / ±0.5
+ * are table-side corrections the host makes out loud on the call.
  */
 async function hostControl({
   roomId, action,
@@ -845,13 +852,18 @@ async function hostControl({
       return;
     }
 
-    if (action === "plusGuess" || action === "minusGuess") {
+    const delta = HOST_DELTA[action];
+    if (delta != null) {
       if (room.phase !== "live" && room.phase !== "steal" && room.phase !== "recap") return;
       const team = guessingTeamOf(room);
       if (!team || !room.turn) return;
-      const delta = action === "plusGuess" ? 1 : -1;
+      const pack = S(room.lang);
+      const word = delta === 1 ? pack.hostPlus
+        : delta === -1 ? pack.hostMinus
+        : delta === 0.5 ? pack.hostPlusHalf
+        : pack.hostMinusHalf;
       const entry = {
-        w: delta > 0 ? S(room.lang).hostPlus : S(room.lang).hostMinus,
+        w: word,
         res: "host" as Outcome,
         pts: delta,
         t: Math.max(0, t - room.phaseStartedAt),

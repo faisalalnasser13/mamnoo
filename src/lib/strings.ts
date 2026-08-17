@@ -17,6 +17,8 @@ export interface Strings {
   stealWord: string;
   hostPlus: string;
   hostMinus: string;
+  hostPlusHalf: string;
+  hostMinusHalf: string;
   /** Face-down card: the steal, and the beat before the first deal. */
   unknownCard: string;
 
@@ -128,7 +130,12 @@ export interface Strings {
   guessTeamFallback: string;
   plusGuess: (team: string) => string;
   minusGuess: (team: string) => string;
+  plusHalf: (team: string) => string;
+  minusHalf: (team: string) => string;
   guessHint: string;
+  scoreSection: string;
+  turnSection: string;
+  hostClose: string;
   resume: string;
   pause: string;
   addTime: string;
@@ -191,6 +198,8 @@ export const AR: Strings = {
   stealWord: "سرقة",
   hostPlus: "host +1",
   hostMinus: "host −1",
+  hostPlusHalf: "host +0.5",
+  hostMinusHalf: "host −0.5",
   unknownCard: "؟ ؟ ؟",
 
   chipExplain: "اشرح!",
@@ -303,7 +312,12 @@ export const AR: Strings = {
   guessTeamFallback: "فريق التخمين",
   plusGuess: (team) => `＋ نقطة لـ${team}`,
   minusGuess: (team) => `− نقطة من ${team}`,
+  plusHalf: (team) => `＋ 0.5 لـ${team}`,
+  minusHalf: (team) => `− 0.5 من ${team}`,
   guessHint: "فريق التخمين — حتى تبدأ الجولة التالية",
+  scoreSection: "النقاط",
+  turnSection: "الجولة",
+  hostClose: "إغلاق",
   resume: "▶︎ كمّل",
   pause: "⏸ وقّف مؤقتًا",
   addTime: "⏱ أضف 5 ثوانٍ",
@@ -366,6 +380,8 @@ export const EN: Strings = {
   stealWord: "Steal",
   hostPlus: "host +1",
   hostMinus: "host −1",
+  hostPlusHalf: "host +0.5",
+  hostMinusHalf: "host −0.5",
   unknownCard: "? ? ?",
 
   chipExplain: "Describe!",
@@ -478,7 +494,12 @@ export const EN: Strings = {
   guessTeamFallback: "guessing team",
   plusGuess: (team) => `＋ point for ${team}`,
   minusGuess: (team) => `− point from ${team}`,
+  plusHalf: (team) => `＋ 0.5 for ${team}`,
+  minusHalf: (team) => `− 0.5 from ${team}`,
   guessHint: "Guessing team — until the next turn starts",
+  scoreSection: "Score",
+  turnSection: "Turn",
+  hostClose: "Close",
   resume: "▶︎ Resume",
   pause: "⏸ Pause",
   addTime: "⏱ Add 5 seconds",
