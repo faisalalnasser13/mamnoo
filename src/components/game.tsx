@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import type { Kit, LogEntry, Lang, TeamId } from "../lib/types";
 import { HEAT_EVERY } from "../lib/rules";
+import { tabooFor } from "../lib/decks";
 import { S } from "../lib/strings";
 import { Tally } from "./ui";
 
@@ -10,8 +11,9 @@ import { Tally } from "./ui";
  * Step the word down instead of letting it wrap to three lines. The
  * English deck has entries twice the length of a typical Arabic one.
  */
-function wordSize(word: string, small?: boolean): number {
+function wordSize(word: string, small?: boolean, mini?: boolean): number {
   const n = word.length;
+  if (mini) return n > 18 ? 18 : n > 12 ? 20 : 22;
   if (small) return n > 18 ? 22 : n > 12 ? 25 : 28;
   return n > 18 ? 29 : n > 12 ? 35 : 42;
 }
@@ -21,7 +23,7 @@ function wordSize(word: string, small?: boolean): number {
  * `small` is the judge's variant — they need to read it, not perform it.
  */
 export function Card({
-  word, taboo, kicker, buzzed, small, stamp,
+  word, taboo, kicker, buzzed, small, stamp, mini,
 }: {
   word: string;
   taboo: string[];
@@ -29,9 +31,15 @@ export function Card({
   buzzed?: boolean;
   small?: boolean;
   stamp?: string;
+  /** Flat embed — recap peek. No tilt, no deal-in. */
+  mini?: boolean;
 }) {
+  const compact = Boolean(small || mini);
   return (
-    <div className={`card ${buzzed ? "card-buzzed" : ""}`} style={small ? { padding: "18px 16px 16px" } : undefined}>
+    <div
+      className={`card ${buzzed ? "card-buzzed" : ""} ${mini ? "card-mini" : ""}`}
+      style={small && !mini ? { padding: "18px 16px 16px" } : undefined}
+    >
       {kicker && (
         <span
           className="inline-block rounded-full px-3 py-1 text-[10px] font-black tracking-[.2em]"
@@ -45,14 +53,14 @@ export function Card({
       )}
       <div
         className="card-word"
-        style={{ fontSize: wordSize(word, small), margin: small ? "6px 0 11px" : "9px 0 13px" }}
+        style={{ fontSize: wordSize(word, compact, mini), margin: compact ? "6px 0 11px" : "9px 0 13px" }}
       >
         {word}
       </div>
       <div className="card-rule mb-3" />
       <div className="rail">
         {taboo.map((t) => (
-          <b key={t} style={{ fontSize: small ? 16 : 17.5 }}>{t}</b>
+          <b key={t} style={{ fontSize: mini ? 13.5 : compact ? 16 : 17.5 }}>{t}</b>
         ))}
       </div>
       {buzzed && <div className="stamp">{stamp ?? "ممنوع"}</div>}
@@ -180,15 +188,21 @@ const OUTCOME: Record<LogEntry["res"], { sym: string; cls: string; label: (p: nu
  * What has happened this turn. The guessers see this live — it's what
  * keeps them in the game while they wait, and it never leaks the card
  * currently in play, only cards that have already left it.
+ *
+ * `peek` (recap only) lets a tap open the spent card's taboo list.
+ * Live feed stays inert: those players are listening, not reviewing.
  */
 export function Feed({
-  log, newestFirst, lang,
+  log, newestFirst, lang, peek,
 }: {
   log?: LogEntry[];
   newestFirst?: boolean;
   lang?: Lang;
+  peek?: boolean;
 }) {
   const safe = log ?? [];
+  const [open, setOpen] = useState<number | null>(null);
+  useEffect(() => { setOpen(null); }, [safe.length]);
   if (!safe.length) return null;
   const s = S(lang);
   const label = (res: LogEntry["res"], p: number) => {
@@ -203,13 +217,41 @@ export function Feed({
     <div className="mt-3.5 flex flex-col gap-2">
       {items.map((e, i) => {
         const o = OUTCOME[e.res];
-        return (
-          <div key={`${e.w}-${i}`} className="flex items-center gap-3 rounded-[15px] bg-black/25 px-3.5 py-2.5 text-[14.5px]">
+        const taboo = peek && lang && (e.res === "ok" || e.res === "skip" || e.res === "buzz")
+          ? tabooFor(lang, e.w)
+          : null;
+        const opened = open === i && !!taboo;
+        const row = (
+          <div className="flex items-center gap-3 px-3.5 py-2.5 text-[14.5px]">
             <span className={`grid h-[22px] w-[22px] shrink-0 place-items-center rounded-full text-[12px] font-black ${o.cls}`}>
               {o.sym}
             </span>
             {e.w}
             <span className="ms-auto text-[12.5px] font-bold text-muted">{label(e.res, e.pts)}</span>
+          </div>
+        );
+        if (taboo) {
+          return (
+            <button
+              key={`${e.w}-${i}`}
+              type="button"
+              aria-expanded={opened}
+              className="w-full rounded-[15px] bg-black/25 text-start"
+              style={{ border: 0, color: "inherit", font: "inherit" }}
+              onClick={() => setOpen(opened ? null : i)}
+            >
+              {row}
+              {opened && (
+                <div className="px-3 pb-3">
+                  <Card word={e.w} taboo={taboo} mini />
+                </div>
+              )}
+            </button>
+          );
+        }
+        return (
+          <div key={`${e.w}-${i}`} className="rounded-[15px] bg-black/25">
+            {row}
           </div>
         );
       })}

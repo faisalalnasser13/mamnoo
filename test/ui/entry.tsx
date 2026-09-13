@@ -16,6 +16,7 @@
 import { renderToString } from "react-dom/server";
 import type { ReactElement } from "react";
 import { Lobby } from "../../src/screens/Lobby";
+import { Card } from "../../src/components/game";
 import {
   EndPhase, LivePhase, RecapPhase, StealPhase, TransitionPhase,
 } from "../../src/screens/phases";
@@ -248,6 +249,8 @@ export function cases(): Case[] {
   phase("transition · describer left the room", {
     ...orphaned, phase: "transition", phaseEndsAt: null,
   }, null, ROUNDS, TransitionPhase as never);
+
+  add("card mini", <Card word="قهوة" taboo={["بن", "ستاربكس", "دلة", "كافيين", "شاهي"]} mini />);
 
   return out;
 }

@@ -346,7 +346,7 @@ export function RecapPhase({ room, uid, rounds }: Ctx) {
       </p>
       <ScoreBoard room={room} uid={uid} rounds={rounds} />
       <div className="max-h-[36vh] overflow-y-auto">
-        <Feed log={room.round.log} lang={room.lang} />
+        <Feed log={room.round.log} lang={room.lang} peek />
       </div>
       <Flash msg={msg} />
       <div className="flex-1" />

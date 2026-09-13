@@ -7,6 +7,12 @@ export function deckFor(lang: Lang): Card[] {
   return lang === "en" ? DECK_EN : DECK;
 }
 
+/** Taboo list for a word that has already left play. Null if it isn't a card. */
+export function tabooFor(lang: Lang, word: string): string[] | null {
+  const card = deckFor(lang).find((c) => c.w === word);
+  return card ? card.t : null;
+}
+
 export function roomWordsFor(lang: Lang): string[] {
   return lang === "en" ? ROOM_WORDS_EN : ROOM_WORDS;
 }

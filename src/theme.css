@@ -248,6 +248,13 @@ html[data-kit="cafe"] .btn-tang:active { box-shadow: 0 2px 0 var(--plate-shadow)
   box-shadow: var(--card-shadow);
 }
 .card-buzzed { animation: shake .4s ease-in-out }
+/* Recap peek — same stock, sits in the list instead of dealing in. */
+.card-mini {
+  rotate: 0;
+  animation: none;
+  padding: 12px 12px 10px;
+  border-radius: 18px;
+}
 /* English cards carry two-word entries («ROLLER COASTER»), which at the
    Arabic size ran off the card stock. Wrapping is allowed and the size
    steps down by word length in `Card`. */
