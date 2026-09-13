@@ -182,29 +182,28 @@ export function useRounds(roomId: string | null, enabled: boolean) {
 /* countdown                                                          */
 /* ------------------------------------------------------------------ */
 
+export interface Countdown {
+  remaining: number | null;
+  total: number | null;
+  pct: number;
+  expired: boolean;
+  warn: boolean;
+  rush: boolean;
+  inStartGrace: boolean;
+}
+
+const IDLE_COUNTDOWN: Countdown = {
+  remaining: null, total: null, pct: 1, expired: false,
+  warn: false, rush: false, inStartGrace: false,
+};
+
 /**
- * Counts down against the absolute `phaseEndsAt`. The clock is never
- * written during a turn — only the deadline is — so a 60-second round
- * costs one write, not sixty. `now()` is server-aligned (see clock.ts)
- * so two phones with disagreeing wall clocks still show the same time.
- *
- * `rush` is the last ten seconds: that's what turns the timer red and
- * makes the screen edges pulse.
+ * Pure read of the clock at `nowMs`. The hook below just ticks this.
+ * Screens and the glow must share one result — two intervals at the
+ * 15s step used to paint lemon 0:16 and orange 0:15 in the same frame.
  */
-export function useCountdown(room: Room | null) {
-  const [nowMs, setNowMs] = useState(() => now());
-
-  useEffect(() => {
-    const t = setInterval(() => setNowMs(now()), 200);
-    return () => clearInterval(t);
-  }, []);
-
-  if (!room || room.phaseEndsAt == null) {
-    return {
-      remaining: null, total: null, pct: 1, expired: false,
-      warn: false, rush: false, inStartGrace: false,
-    };
-  }
+export function readCountdown(room: Room | null, nowMs: number): Countdown {
+  if (!room || room.phaseEndsAt == null) return IDLE_COUNTDOWN;
 
   // A live turn's wall span is start-grace + roundSecs. Anything shorter
   // (a resume mid-turn) has already spent the silent beat.
@@ -233,6 +232,26 @@ export function useCountdown(room: Room | null) {
   };
 }
 
+/**
+ * Counts down against the absolute `phaseEndsAt`. The clock is never
+ * written during a turn — only the deadline is — so a 60-second round
+ * costs one write, not sixty. `now()` is server-aligned (see clock.ts)
+ * so two phones with disagreeing wall clocks still show the same time.
+ *
+ * `rush` is the last ten seconds: that's what turns the timer red and
+ * makes the screen edges pulse.
+ */
+export function useCountdown(room: Room | null) {
+  const [nowMs, setNowMs] = useState(() => now());
+
+  useEffect(() => {
+    const t = setInterval(() => setNowMs(now()), 200);
+    return () => clearInterval(t);
+  }, []);
+
+  return readCountdown(room, nowMs);
+}
+
 /* ------------------------------------------------------------------ */
 /* drivers                                                            */
 /* ------------------------------------------------------------------ */
@@ -249,8 +268,7 @@ export function useCountdown(room: Room | null) {
  * must clear it, or a room snapshot arriving between arming and firing
  * leaves the phase stuck until refresh.
  */
-export function usePhaseDriver(room: Room | null, uid: string | null) {
-  const { expired } = useCountdown(room);
+export function usePhaseDriver(room: Room | null, uid: string | null, expired: boolean) {
   const fired = useRef("");
   const inFlight = useRef(false);
 

@@ -72,11 +72,12 @@ export default function App() {
     room?.phase === "over" || room?.phase === "transition" || room?.phase === "recap",
   );
 
-  usePhaseDriver(room, uid);
+  const countdown = useCountdown(room);
+  usePhaseDriver(room, uid, countdown.expired);
   useBuzzDriver(room, uid);
   useCardDealer(room, uid);
 
-  const { warn, rush } = useCountdown(room);
+  const { warn, rush } = countdown;
   const inClock = room?.phase === "live" || room?.phase === "steal";
   const cafe = room?.kit === "cafe";
   const glow =
@@ -126,7 +127,7 @@ export default function App() {
     // Known room, but we're not in it — the join form, prefilled.
     body = <Home onEnter={enter} initialCode={room.id} joinLang={room.lang} />;
   } else {
-    const ctx = { room, uid, card, rounds };
+    const ctx = { room, uid, card, rounds, countdown };
     body =
       room.phase === "lobby" ? <Lobby room={room} uid={uid} />
       : room.phase === "transition" ? <TransitionPhase {...ctx} />

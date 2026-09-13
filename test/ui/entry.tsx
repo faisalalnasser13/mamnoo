@@ -20,7 +20,7 @@ import {
   EndPhase, LivePhase, RecapPhase, StealPhase, TransitionPhase,
 } from "../../src/screens/phases";
 import type { Room, RoundRecord, TeamId } from "../../src/lib/types";
-import type { LiveCard } from "../../src/lib/hooks";
+import { readCountdown, type LiveCard } from "../../src/lib/hooks";
 
 const UIDS = ["a", "b", "c", "x", "y", "z"];
 const NAMES: Record<string, string> = {
@@ -108,10 +108,14 @@ export function cases(): Case[] {
     r: Room,
     card: LiveCard | null,
     rounds: RoundRecord[],
-    Comp: (p: { room: Room; uid: string; card: LiveCard | null; rounds: RoundRecord[] }) => ReactElement | null,
+    Comp: (p: {
+      room: Room; uid: string; card: LiveCard | null;
+      rounds: RoundRecord[]; countdown: ReturnType<typeof readCountdown>;
+    }) => ReactElement | null,
   ) => {
     for (const uid of UIDS) {
-      add(`${label} · ${NAMES[uid]}`, <Comp room={r} uid={uid} card={card} rounds={rounds} />);
+      add(`${label} · ${NAMES[uid]}`,
+        <Comp room={r} uid={uid} card={card} rounds={rounds} countdown={readCountdown(r, Date.now())} />);
     }
   };
 

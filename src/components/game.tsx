@@ -75,9 +75,12 @@ export function CardSkeleton({ note, unknown }: { note: string; unknown?: string
 /**
  * Clock + both scores.
  *
- * Urgency steps: calm accent → soft orange at 15s → red blink at 10s.
- * The bar width snaps with the clock (no CSS transition) — a lagged
- * width animation read as a second timer strip trailing the real one.
+ * Urgency steps: calm accent → soft orange at 15s → red at 10s.
+ * The digits stay one size and never fade — growing them and blinking
+ * opacity at the 15s step left a composited 0:16 under the orange clock.
+ * The bar width snaps (no CSS transition); a lagged strip used to read
+ * as a second timer trailing the real one. Blink lives on the bar and
+ * the screen wash, not on the number.
  */
 export function Hud({
   remaining, pct, warn, rush, scores, right, loud, kit,
@@ -99,7 +102,6 @@ export function Hud({
     : warn ? "bg-tang bar-warn"
     : "bg-lemon";
   const color = rush ? "#E1584F" : warn ? "#FF9A3C" : "var(--lemon)";
-  const size = rush ? 34 : warn ? 30 : 26;
   return (
     <div>
       <div className="h-[9px] overflow-hidden rounded-full bg-black/30">
@@ -109,10 +111,7 @@ export function Hud({
         />
       </div>
       <div className="mt-2.5 flex items-center justify-between">
-        <span
-          className={`clock ${rush ? "clock-rush" : warn ? "clock-warn" : ""}`}
-          style={{ fontSize: size, color }}
-        >
+        <span className="clock" style={{ color }}>
           {text}
         </span>
         {right ?? (scores && <Tally scores={scores} loud={loud} kit={kit ?? "classic"} />)}

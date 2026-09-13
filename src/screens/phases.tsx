@@ -1,6 +1,6 @@
 import React from "react";
 import { api, errText } from "../lib/firebase";
-import { useBuzzHaptic, useCountdown, useFlash, type LiveCard } from "../lib/hooks";
+import { useBuzzHaptic, useFlash, type Countdown, type LiveCard } from "../lib/hooks";
 import {
   canSkip, computeStats, inLockout, membersOf, nextTurnFor, OTHER,
   rolesForTurn, SKIP_LOCKOUT_MS, totalTurns,
@@ -16,6 +16,7 @@ type Ctx = {
   uid: string;
   card: LiveCard | null;
   rounds: RoundRecord[];
+  countdown: Countdown;
 };
 
 const nameOf = (room: Room, uid: string) => room.players[uid]?.name ?? "…";
@@ -37,8 +38,8 @@ export function roleOf(room: Room, uid: string): "giver" | "judge" | "guesser" {
 /* live                                                               */
 /* ------------------------------------------------------------------ */
 
-export function LivePhase({ room, uid, card }: Ctx) {
-  const { remaining, pct, warn, rush } = useCountdown(room);
+export function LivePhase({ room, uid, card, countdown }: Ctx) {
+  const { remaining, pct, warn, rush } = countdown;
   const { msg, flash } = useFlash();
   const s = S(room.lang);
   const role = roleOf(room, uid);
@@ -254,8 +255,8 @@ function mineTurn(room: Room, uid: string) {
 /* steal                                                              */
 /* ------------------------------------------------------------------ */
 
-export function StealPhase({ room, uid, card }: Ctx) {
-  const { remaining, pct, warn, rush } = useCountdown(room);
+export function StealPhase({ room, uid, card, countdown }: Ctx) {
+  const { remaining, pct, warn, rush } = countdown;
   const { msg, flash } = useFlash();
   if (!room.turn) return null;
   const s = S(room.lang);
