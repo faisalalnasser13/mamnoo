@@ -600,6 +600,10 @@ async function denySteal({ roomId }: { roomId: string }) {
  * Any client may call this. The transaction re-reads the room and bails
  * if someone already advanced, so six phones racing produces one
  * transition, not six.
+ *
+ * `force` is the buzz driver's "I already waited" flag — it skips
+ * `BUZZ_HOLD_MS` on a pending mark, nothing else. Clock transitions
+ * still require `expired`.
  */
 async function advancePhase({
   roomId, fromPhase, fromTurn, force,
@@ -620,12 +624,16 @@ async function advancePhase({
 
     if (room.phase === "live") {
       // A pending buzz outranks the clock: the card is already dead.
+      // `force` only skips the stamp hold — the buzz driver already
+      // waited on the client. It must not skip the expiry check below:
+      // a late force after the mark is spent (judge fallback, or the
+      // giver's tab thawing) used to close the turn with time left.
       if (room.round.buzzedAt !== null) {
         if (now() - room.round.buzzedAt < BUZZ_HOLD_MS && !force) return;
         applyBuzz(tx, room);
         return;
       }
-      if (!expired && !force) return;
+      if (!expired) return;
       // Time is up. A card still in play is always worth one steal
       // attempt — even if it was dealt in the last seconds.
       if (room.round.cardId !== null) {
@@ -643,7 +651,7 @@ async function advancePhase({
     }
 
     if (room.phase === "steal") {
-      if (!expired && !force) return;
+      if (!expired) return;
       writeRecap(tx, room, {});
       return;
     }

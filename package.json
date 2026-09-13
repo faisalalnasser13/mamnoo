@@ -10,7 +10,7 @@
     "deploy": "npm run build && firebase deploy",
     "test": "npm run test:units && npm run test:negative && npm run test:sim && npm run test:ui",
     "test:units": "node test/sim/run.mjs rules.mjs",
-    "test:sim": "node test/sim/run.mjs sim.cjs 300",
+    "test:sim": "node test/sim/run.mjs premature.cjs && node test/sim/run.mjs sim.cjs 300",
     "test:negative": "node test/sim/run.mjs negative.cjs",
     "test:ui": "node test/ui/run.mjs"
   },

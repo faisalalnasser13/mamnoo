@@ -130,6 +130,17 @@ async function playOneGame(n) {
         invariant("a double-buzz scored twice",
           before[room.turn.team] - after.scores[room.turn.team] <= 1,
           `turn ${room.turnIndex}`);
+        // Same call the judge's fallback (and a thawed giver tab) make
+        // once the mark is already spent. Must not close the turn.
+        if (after.phase === "live") {
+          as(judge);
+          await api.advancePhase({
+            roomId, fromPhase: "live", fromTurn: room.turnIndex, force: true,
+          });
+          const again = await roomOf(roomId);
+          invariant("a spent buzz force ended the turn",
+            again.phase === "live", `turn ${room.turnIndex}`);
+        }
       } else if (roll < 0.24) {
         const left = (room.phaseEndsAt ?? 0) - Date.now();
         as(giver);
