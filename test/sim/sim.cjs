@@ -186,6 +186,7 @@ async function playOneGame(n) {
     if (room.phase === "steal") {
       const before = { ...room.scores };
       const thief = R.OTHER[room.turn.team];
+      const pendingWord = fs.__peek(`rooms/${roomId}/secret/card`)?.word ?? null;
       // The original judge is on the stealing team and must not award.
       as(room.turn.judgeUid);
       await api.claimSteal({ roomId }).catch(() => {});
@@ -204,6 +205,9 @@ async function playOneGame(n) {
           after.scores[room.turn.team] === before[room.turn.team], `turn ${room.turnIndex}`);
         invariant("a double steal scored twice",
           after.scores[thief] - before[thief] <= 1, `turn ${room.turnIndex}`);
+        invariant("the stolen word vanished from the recap",
+          !pendingWord || after.round.log.some((e) => e.w === pendingWord),
+          `turn ${room.turnIndex}`);
       } else if (roll < 0.65) {
         as(room.turn.clueGiverUid);
         await api.denySteal({ roomId });
@@ -213,12 +217,19 @@ async function playOneGame(n) {
           after.scores[thief] === before[thief], `turn ${room.turnIndex}`);
         invariant("a missed steal left steal phase",
           after.phase === "recap", `turn ${room.turnIndex}`);
+        invariant("the leftover card vanished from the recap",
+          !pendingWord || after.round.log.some((e) => e.w === pendingWord && e.res === "left"),
+          `turn ${room.turnIndex}`);
       } else {
         advanceClock(R.STEAL_MS + R.TIMER_GRACE_MS + 500);
         for (const u of uids) {
           as(u);
           await api.advancePhase({ roomId, fromPhase: "steal", fromTurn: room.turnIndex });
         }
+        const after = await roomOf(roomId);
+        invariant("the leftover card vanished from the recap",
+          !pendingWord || after.round.log.some((e) => e.w === pendingWord && e.res === "left"),
+          `turn ${room.turnIndex}`);
       }
       continue;
     }
@@ -288,7 +299,7 @@ async function playOneGame(n) {
   for (let i = 0; i <= room.turnIndex; i++) {
     const rec = fs.__peek(`rooms/${roomId}/rounds/${i}`);
     if (!rec) continue;
-    for (const e of rec.log) if (e.res !== "steal") wordsSeen.push(e.w);
+    for (const e of rec.log) if (e.res !== "host") wordsSeen.push(e.w);
   }
   invariant("a player saw the same word twice in one game",
     wordsSeen.length === new Set(wordsSeen).size,

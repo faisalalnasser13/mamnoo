@@ -488,7 +488,7 @@ async function ensureCard({ roomId }: { roomId: string }) {
  */
 async function resolve({
   roomId, res, fromCardId,
-}: { roomId: string; res: Exclude<Outcome, "steal">; fromCardId: number }) {
+}: { roomId: string; res: Exclude<Outcome, "steal" | "left" | "host">; fromCardId: number }) {
   const uid = me();
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(roomRef(roomId));
@@ -569,7 +569,7 @@ async function claimSteal({ roomId }: { roomId: string }) {
     }
     const thief = OTHER[room.turn.team];
     writeRecap(tx, room, {
-      extraLog: { w: S(room.lang).stealWord, res: "steal" as Outcome, pts: 1, t: room.settings.roundSecs * 1000 },
+      extraLog: { w: pendingWord(room) ?? S(room.lang).stealWord, res: "steal" as Outcome, pts: 1, t: room.settings.roundSecs * 1000 },
       stealTo: thief,
     });
   });
@@ -686,6 +686,12 @@ function applyBuzz(tx: Transaction, room: Room) {
   tx.delete(cardRef(room.id));
 }
 
+/** Word still on the table — gone from the public log until recap writes it. */
+function pendingWord(room: Room): string | null {
+  if (room.round.cardId === null) return null;
+  return deckFor(room.lang)[room.round.cardId]?.w ?? null;
+}
+
 /** Freeze the turn into a round record and show the recap. */
 function writeRecap(
   tx: Transaction,
@@ -693,7 +699,27 @@ function writeRecap(
   opts: { extraLog?: Room["round"]["log"][number]; stealTo?: TeamId },
 ) {
   if (!room.turn) return;
-  const log = opts.extraLog ? [...room.round.log, opts.extraLog] : room.round.log;
+  // The card in play never sat on the room log (guessers must not see
+  // it). Recap is the first safe moment: steal already resolved, or the
+  // clock/host closed the turn with it unanswered.
+  const word = pendingWord(room);
+  let extra = opts.extraLog;
+  if (extra?.res === "steal" && word) extra = { ...extra, w: word };
+  const leftover = !extra && word
+    ? {
+        w: word,
+        res: "left" as Outcome,
+        pts: 0,
+        t: room.phase === "steal"
+          ? room.settings.roundSecs * 1000
+          : Math.max(0, now() - room.phaseStartedAt),
+      }
+    : null;
+  const log = extra
+    ? [...room.round.log, extra]
+    : leftover
+      ? [...room.round.log, leftover]
+      : room.round.log;
   const t = now();
 
   const scores = { ...room.scores };

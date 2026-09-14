@@ -238,6 +238,12 @@ export function LivePhase({ room, uid, card, countdown }: Ctx) {
         </p>
       </div>
 
+      {/* Spent cards only — the live word is never in the log. Peek is
+          the same recap tap: these players have a minute with no button. */}
+      <div className="max-h-[28vh] overflow-y-auto">
+        <Feed log={room.round.log} newestFirst lang={room.lang} peek />
+      </div>
+
       {room.paused && <PausedBanner lang={room.lang} />}
       <div className="flex-1" />
       {room.hostUid === uid && <HostControls room={room} />}

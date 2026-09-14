@@ -12,7 +12,7 @@ export type Lang = "ar" | "en";
 export type Phase = "lobby" | "transition" | "live" | "steal" | "recap" | "over";
 
 /** How a card left play — or a host score correction on the call. */
-export type Outcome = "ok" | "skip" | "buzz" | "steal" | "host";
+export type Outcome = "ok" | "skip" | "buzz" | "steal" | "host" | "left";
 
 // TEAMS / OTHER live in rules.ts: this file stays declaration-only so
 // `import type` from it erases completely and rules.ts compiles to a

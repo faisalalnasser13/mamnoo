@@ -155,6 +155,7 @@ export interface Strings {
   feedBuzz: string;
   feedSkip: string;
   feedSteal: string;
+  feedLeft: string;
 
   err: {
     signIn: string;
@@ -337,6 +338,7 @@ export const AR: Strings = {
   feedBuzz: "ممنوع −1",
   feedSkip: "تخطي −0.5",
   feedSteal: "سرقة +1",
+  feedLeft: "باقي",
 
   err: {
     signIn: "سجّل الدخول أولًا.",
@@ -519,6 +521,7 @@ export const EN: Strings = {
   feedBuzz: "Banned −1",
   feedSkip: "Skip −0.5",
   feedSteal: "Steal +1",
+  feedLeft: "Left",
 
   err: {
     signIn: "Sign in first.",

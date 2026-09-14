@@ -284,7 +284,8 @@ export function computeStats(rounds: RoundRecord[]): Stats {
         run = 0;
       }
       if (e.res === "buzz") buzzed[rd.judgeUid] = (buzzed[rd.judgeUid] ?? 0) + 1;
-      // Steal/host have no card on the table — skip time-on-table.
+      // Steal/host have no card sitting through a live gap — skip
+      // time-on-table. A leftover unanswered card does.
       if (e.res !== "steal" && e.res !== "host") {
         const ms = e.t - prevT;
         // Under a second is a double-tap, not a struggle.

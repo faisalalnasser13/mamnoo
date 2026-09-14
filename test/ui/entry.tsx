@@ -167,6 +167,17 @@ export function cases(): Case[] {
   }), CARD, [], StealPhase as never);
 
   phase("recap", room({ phase: "recap", phaseEndsAt: null }), null, ROUNDS, RecapPhase as never);
+  phase("recap · leftover card", room({
+    phase: "recap", phaseEndsAt: null,
+    round: {
+      ...room().round,
+      cardId: null,
+      log: [
+        ...room().round.log,
+        { w: "مطر", res: "left", pts: 0, t: 60000 },
+      ],
+    },
+  }), null, ROUNDS, RecapPhase as never);
   phase("recap · no rounds yet", room({ phase: "recap", phaseEndsAt: null }),
     null, [], RecapPhase as never);
   phase("live · paused", room({ paused: true }), CARD, [], LivePhase as never);

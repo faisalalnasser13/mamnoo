@@ -182,6 +182,7 @@ const OUTCOME: Record<LogEntry["res"], { sym: string; cls: string; label: (p: nu
   steal: { sym: "⚡", cls: "chip-plate", label: () => "سرقة +1" },
   // Word is already "host +1" / "host −1"; no trailing label.
   host:  { sym: "★", cls: "chip-plate", label: () => "" },
+  left:  { sym: "○", cls: "bg-white/15 text-muted", label: () => "باقي" },
 };
 
 /**
@@ -189,8 +190,8 @@ const OUTCOME: Record<LogEntry["res"], { sym: string; cls: string; label: (p: nu
  * keeps them in the game while they wait, and it never leaks the card
  * currently in play, only cards that have already left it.
  *
- * `peek` (recap only) lets a tap open the spent card's taboo list.
- * Live feed stays inert: those players are listening, not reviewing.
+ * `peek` lets a tap open a spent card's taboo list — recap, and the
+ * idle side during live. Guessers' live feed stays inert.
  */
 export function Feed({
   log, newestFirst, lang, peek,
@@ -210,6 +211,7 @@ export function Feed({
     if (res === "buzz") return s.feedBuzz;
     if (res === "skip") return s.feedSkip;
     if (res === "steal") return s.feedSteal;
+    if (res === "left") return s.feedLeft;
     return "";
   };
   const items = newestFirst ? [...safe].reverse() : safe;
@@ -217,7 +219,7 @@ export function Feed({
     <div className="mt-3.5 flex flex-col gap-2">
       {items.map((e, i) => {
         const o = OUTCOME[e.res];
-        const taboo = peek && lang && (e.res === "ok" || e.res === "skip" || e.res === "buzz")
+        const taboo = peek && lang && (e.res === "ok" || e.res === "skip" || e.res === "buzz" || e.res === "steal" || e.res === "left")
           ? tabooFor(lang, e.w)
           : null;
         const opened = open === i && !!taboo;

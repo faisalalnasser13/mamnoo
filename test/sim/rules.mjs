@@ -230,6 +230,19 @@ ok("lockout is off with no clock", !R.inLockout(null));
 }
 
 {
+  // The card still on the table when the clock died is a real word.
+  const s = R.computeStats([{
+    index: 0, team: "mint", clueGiverUid: "a", judgeUid: "x", points: 1, at: 0,
+    log: [
+      { w: "بحر", res: "ok", pts: 1, t: 5000 },
+      { w: "مطر", res: "left", pts: 0, t: 60000 },
+    ],
+  }]);
+  eq("an unanswered leftover can be the longest card", s.longest, { word: "مطر", ms: 55000 });
+  eq("an unanswered leftover is not a card explained", s.talker, { uid: "a", n: 1 });
+}
+
+{
   const s = R.computeStats([{
     index: 0, team: "mint", clueGiverUid: "a", judgeUid: "x", points: 1, at: 0,
     log: [
